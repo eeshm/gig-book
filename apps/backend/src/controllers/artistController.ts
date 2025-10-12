@@ -86,7 +86,7 @@ export const getArtists = async (req: Request, res: Response) => {
         }
 
         if (Number.isNaN(parsedLimit) || parsedLimit < 1 || parsedLimit > 100) {
-            return res.status(400).json({ message: "Invalid limit value" });
+                return res.status(400).json({ message: "Invalid limit value" });
         }
 
         const offset = (parsedPage - 1) * parsedLimit;
@@ -163,7 +163,6 @@ export const getArtistById = async (req: Request, res: Response) => {
         if (!isUuid) {
             return res.status(400).json({ message: "Invalid artist ID" });
         }
-
         const artist = await prisma.artistProfile.findUnique({
             where: { id },
             include: { user: { select: { id: true, name: true, email: true } } }

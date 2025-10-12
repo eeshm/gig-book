@@ -1,8 +1,5 @@
 import { ArtistType, Prisma } from '@prisma/client';
-import { Decimal } from '@prisma/client/runtime/library';
-import { parse } from 'path';
 import { z} from 'zod';
-import prisma from '../prisma.js';
 
 export const artistCreateSchema = z.object({
     artistType: z.enum(['DJ','LIVE_PERFORMER','SINGER','INSTRUMENTALIST','BAND','OTHER']),

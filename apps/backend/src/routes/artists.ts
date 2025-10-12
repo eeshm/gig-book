@@ -9,7 +9,6 @@ import {
 } from "../controllers/artistController.js";
 import auth from "../middleware/auth.js";
 import { requireRole } from "../middleware/roles.js";
-import type { ar } from "zod/locales";
 
 const artistRoutes= express.Router();
 artistRoutes.get("/", getArtists);

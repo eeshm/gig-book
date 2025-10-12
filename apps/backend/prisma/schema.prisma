@@ -42,6 +42,8 @@ model ArtistProfile{
   @@index([artistType, location])
 }
 
+
+//add mediaUrls field to VenueProfile
 model VenueProfile{
   id               String @id @default(uuid())
   user             User @relation(fields: [userId], references:[id], onDelete: Cascade, onUpdate: Cascade)
@@ -49,6 +51,7 @@ model VenueProfile{
   venueName        String
   location         String
   description      String 
+  mediaUrls        String[] @default([])
   bookings         Booking[] @relation("VenueBookings")
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
