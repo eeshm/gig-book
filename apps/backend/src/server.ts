@@ -3,13 +3,17 @@ import dotenv from "dotenv"
 import cors from "cors"
 import helmet from "helmet"
 import morgan from "morgan"
+import artistRoutes from "./routes/artists.js"
+import authRoutes from "./routes/auth.js"
+import bookingRoutes from "./routes/bookings.js"
+import venueRoutes from "./routes/venues.js"
 
 
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+
 
 app.use(helmet());
 app.use(cors());
@@ -20,5 +24,10 @@ app.use(cors({
     origin: process.env.FRONTEND_URL || "*",
     credentials:true,
 }))
+
+app.use('/api/auth' , authRoutes)
+app.use("/api/artists",artistRoutes)
+app.use("/api/venues",venueRoutes)
+app.use("/api/bookings",bookingRoutes)
 
 export default app;

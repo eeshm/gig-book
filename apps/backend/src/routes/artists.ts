@@ -9,14 +9,15 @@ import {
 } from "../controllers/artistController.js";
 import auth from "../middleware/auth.js";
 import { requireRole } from "../middleware/roles.js";
+import type { ar } from "zod/locales";
 
-const router = express.Router();
-router.get("/", getArtists);
-router.get("/:id", getArtistById);
-router.post("/", auth, requireRole("ARTIST"), createArtist);
-router.put("/:id", auth, requireRole("ARTIST"), updateArtist);
-router.delete("/:id", auth, requireRole("ARTIST"), deleteArtist);
+const artistRoutes= express.Router();
+artistRoutes.get("/", getArtists);
+artistRoutes.get("/:id", getArtistById);
+artistRoutes.post("/", auth, requireRole("ARTIST"), createArtist);
+artistRoutes.put("/:id", auth, requireRole("ARTIST"), updateArtist);
+artistRoutes.delete("/:id", auth, requireRole("ARTIST"), deleteArtist);
 
-export default router;
-
+export default artistRoutes;
+ 
 
