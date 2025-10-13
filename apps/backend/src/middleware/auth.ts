@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import type { Request, Response, NextFunction } from "express";
 import prisma from "../prisma.js";
+import { de } from "zod/locales";
 
 type JwtPayload = {
     userId: string;
@@ -31,4 +32,3 @@ export default async function auth(req: Request, res: Response, next: NextFuncti
         return res.status(401).json({ message: "Invalid token" });
     }
 }
-

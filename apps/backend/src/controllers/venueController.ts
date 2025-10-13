@@ -212,5 +212,4 @@ export const venueController = {
     getVenueById,
     updateVenue,
     deleteVenue
-
 }
