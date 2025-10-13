@@ -169,7 +169,6 @@ export const getBookingById = async (req: Request, res: Response) => {
         return res.status(500).json({ error: "Internal server error" })
     }
 }
-
 export const updateBookingStatus = async (req: Request, res: Response) => {
     try {
         if (!req.user) {
