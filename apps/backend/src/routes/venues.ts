@@ -14,8 +14,8 @@ const venueRoutes = express.Router();
 
 venueRoutes.get("/:id", getVenueById);
 venueRoutes.get("/", getVenues);
-venueRoutes.post("/", auth, requireRole("ARTIST"), createVenue);
-venueRoutes.put("/:id", auth, requireRole("ARTIST"), updateVenue);
-venueRoutes.delete("/:id", auth, requireRole("ARTIST"), deleteVenue);
+venueRoutes.post("/", auth, requireRole("VENUE"), createVenue);
+venueRoutes.put("/:id", auth, requireRole("VENUE"), updateVenue);
+venueRoutes.delete("/:id", auth, requireRole("VENUE"), deleteVenue);
 
 export default venueRoutes;

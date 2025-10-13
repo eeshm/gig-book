@@ -256,7 +256,7 @@ export const deleteBooking = async (req: Request, res: Response) => {
             return res.status(403).json({error: "Forbidden"})
         }   
         await prisma.booking.delete({where:{id}})
-        return res.status(204).send()
+        return res.status(204).json("Deleted successfully")
     }catch(error){
         console.error("Error deleting booking:", error)
         return res.status(500).json({ error: "Internal server error" })

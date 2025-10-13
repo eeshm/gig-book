@@ -7,6 +7,7 @@ import artistRoutes from "./routes/artists.js"
 import authRoutes from "./routes/auth.js"
 import bookingRoutes from "./routes/bookings.js"
 import venueRoutes from "./routes/venues.js"
+import { errorHandler } from "./middleware/errorHandler.js"
 
 
 
@@ -25,9 +26,12 @@ app.use(cors({
     credentials:true,
 }))
 
-app.use('/api/auth' , authRoutes)
-app.use("/api/artists",artistRoutes)
-app.use("/api/venues",venueRoutes)
-app.use("/api/bookings",bookingRoutes)
+
+app.use('/api/auth', authRoutes)
+app.use("/api/artists", artistRoutes)
+app.use("/api/venues", venueRoutes)
+app.use("/api/bookings", bookingRoutes)
+
+app.use(errorHandler)
 
 export default app;
