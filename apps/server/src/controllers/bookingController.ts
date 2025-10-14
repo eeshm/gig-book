@@ -1,22 +1,3 @@
-// POST /api/bookings → Venue creates a booking request
-
-// GET /api/bookings → List bookings relevant to user (artist gets bookings for their artistProfile; venue gets bookings they requested)
-
-// PUT /api/bookings/:id/status → Artist accepts/rejects (only artist role)
-
-// GET /api/bookings/:id → fetch single booking
-
-// Create booking controller (important validations):
-
-// Validate body (artistId, date, message)
-
-// Ensure req.user.role === 'VENUE'
-
-// Ensure artistId exists
-
-// Ensure date is in the future
-// Ensure venue (req.user.id) has a venueProfile
-// Create booking with status 'PENDING', link to artistProfileId and venueProfileId
 import type { Request, Response } from "express"
 import { Prisma } from "@prisma/client"
 import prisma from "../prisma.js"
