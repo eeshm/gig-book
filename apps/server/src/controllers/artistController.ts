@@ -153,6 +153,30 @@ export const getArtists = async (req: Request, res: Response) => {
     }
 };
 
+//this function is to get the artist profile of the logged in user (only for ARTIST role)
+export const getMyArtist = async (req: Request, res: Response) => {
+    try {
+        if (!req.user) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+        //verify user role from middleware
+        if (req.user.role !== "ARTIST") {
+            return res.status(403).json({ message: "Forbidden" });
+        }
+        const artist = await prisma.artistProfile.findUnique({
+            where: { userId: req.user.id },
+            include: { user: { select: { id: true, name: true, email: true } } }
+        });
+        if (!artist) {
+            return res.status(404).json({ message: "Artist profile not found" });
+        }
+        res.status(200).json(formatArtist(artist));
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
 export const getArtistById = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
@@ -289,5 +313,6 @@ export const artistController = {
     getArtistById,
     updateArtist,
     deleteArtist,
+    getMyArtist
 };
 

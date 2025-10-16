@@ -5,12 +5,14 @@ import {
     getArtists,
     getArtistById,
     updateArtist,
-    deleteArtist
+    deleteArtist,
+    getMyArtist
 } from "../controllers/artistController.js";
 import auth from "../middleware/auth.js";
 import { requireRole } from "../middleware/roles.js";
 
 const artistRoutes= express.Router();
+artistRoutes.get("/me", auth, requireRole("ARTIST"), getMyArtist);
 artistRoutes.get("/", getArtists);
 artistRoutes.get("/:id", getArtistById);
 artistRoutes.post("/", auth, requireRole("ARTIST"), createArtist);

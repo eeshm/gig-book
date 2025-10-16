@@ -2,7 +2,6 @@ import type { Request,Response } from "express";
 import venueCreateSchema from "../schemas/venue.js";
 import { Prisma } from "@prisma/client";
 import prisma from "../prisma.js";
-import { ca, tr } from "zod/locales";
 
 export const createVenue = async (req: Request, res: Response) => {
     try {
@@ -45,6 +44,31 @@ export const createVenue = async (req: Request, res: Response) => {
         return res.status(500).json({ message: "Internal server error" });
     }
 }
+//this function is to get the profile of the logged in venue
+
+export const getMyVenueProfile = async (req: Request, res: Response) => {
+    try{
+        if(!req.user){
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+        if(req.user.role !== "VENUE"){
+            return res.status(403).json({message:"Forbidden"});
+        }
+        const venue = await prisma.venueProfile.findUnique({
+            where: { userId: req.user.id },
+            include:{user: { select: { id: true, name: true, email: true } } }
+        });
+        if(!venue){
+            return res.status(404).json({ message: "Venue profile not found" });
+        }
+        return res.status(200).json(venue);
+    }
+    catch(error){
+        console.log(error)
+        res.status(500).json("Internal server error !")
+    }
+}
+
 
 export const getVenues = async (req: Request, res: Response) => {
     try{
@@ -211,5 +235,6 @@ export const venueController = {
     getVenues,
     getVenueById,
     updateVenue,
-    deleteVenue
+    deleteVenue,
+    getMyVenueProfile
 }
