@@ -30,10 +30,10 @@ export interface Artist {
 export interface Venue {
   id: string;
   userId: string;
-  name: string;
+  venueName: string;
   location: string;
-  capacity: number;
   bio: string;
+  mediaUrls: string[];
   createdAt: string;
   updatedAt: string;
 }

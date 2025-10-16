@@ -39,7 +39,7 @@ export default function BookingsPage() {
         {/* Coming in Phase 3 */}
         <div className="mt-8 p-6 rounded-lg bg-slate-800/30 border border-slate-700 border-dashed">
           <p className="text-center text-slate-400">
-            🚀 Full booking management coming in Phase 3
+            Full booking management coming in Phase 3
           </p>
         </div>
       </div>

@@ -10,8 +10,8 @@ export default function Home() {
   const user = useSelector((state: RootState) => state.auth.user);
 
   return (
-    <main className="bg-black">
-      <div className="mx-auto flex min-h-screen flex-col justify-center items-center px-4 py-16 sm:px-6 lg:px-8">
+    <main className="bg-[#000000]">
+      <div className="mx-auto flex min-h-screen flex-col items-center px-4 py-16 sm:px-6 lg:px-8">
         <div className="space-y-20">
           {/* Hero Section */}
           <section className="relative overflow-hidden px-4 py-20 sm:px-6 lg:px-8">

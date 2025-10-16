@@ -1,4 +1,3 @@
-// app/(auth)/register/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -19,12 +18,7 @@ const registerSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
-  confirmPassword: z.string(),
-  //@ts-ignore
-  role: z.enum(["ARTIST", "VENUE"], { errorMap: () => ({ message: "Select a role" }) }),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ["confirmPassword"],
+  role: z.enum(["ARTIST", "VENUE"])
 });
 
 type RegisterFormData = z.infer<typeof registerSchema>;
@@ -35,7 +29,7 @@ export default function RegisterPage() {
   const dispatch = useDispatch<AppDispatch>();
   const { loading, error, user } = useSelector((state: RootState) => state.auth);
   const [selectedRole, setSelectedRole] = useState<"ARTIST" | "VENUE">(
-    (searchParams.get("role") as "ARTIST" | "VENUE") || "ARTIST"
+    (searchParams.get("role")?.toUpperCase() as "ARTIST" | "VENUE") || "ARTIST"
   );
 
   const {
@@ -111,7 +105,7 @@ export default function RegisterPage() {
           </div>
 
           {/* Role Selection */}
-          <div>
+          {/* <div>
             <Label className="text-slate-200 block mb-2">I am a...</Label>
             <div className="flex gap-3">
               <button
@@ -137,7 +131,7 @@ export default function RegisterPage() {
                 Venue
               </button>
             </div>
-          </div>
+          </div> */}
 
           {/* Password */}
           <div>
@@ -154,22 +148,6 @@ export default function RegisterPage() {
             {errors.password && <p className="mt-1 text-xs text-red-400">{errors.password.message}</p>}
           </div>
 
-          {/* Confirm Password */}
-          <div>
-            <Label htmlFor="confirmPassword" className="text-slate-200">
-              Confirm Password
-            </Label>
-            <Input
-              id="confirmPassword"
-              type="password"
-              placeholder="••••••"
-              className="mt-2 bg-slate-700 border-slate-600 text-white placeholder:text-slate-500 focus:border-blue-500 focus:ring-blue-500/30"
-              {...register("confirmPassword")}
-            />
-            {errors.confirmPassword && (
-              <p className="mt-1 text-xs text-red-400">{errors.confirmPassword.message}</p>
-            )}
-          </div>
 
           {/* Error Message */}
           {error && (

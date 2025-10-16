@@ -1,10 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slices/authSlice";
+import artistReducer from "./slices/artistSlice";
+import venueReducer from "./slices/venueSlice";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+    artist: artistReducer,
+    venue: venueReducer,
   },
 });
 
