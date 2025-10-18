@@ -169,8 +169,6 @@ export const updateBookingStatus = async (req: Request, res: Response) => {
         if(!parsedBody.success){
             return res.status(400).json({error: "Invalid request body", details: parsedBody.error.format()})
         }
-
-
         //in this part we take the status from body and check if the booking exists, if the artist profile exists for the user, if the booking belongs to the artist, and if the booking is still pending
         const { status } = parsedBody.data
         const booking = await prisma.booking.findUnique({ where: { id } })

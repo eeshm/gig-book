@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import api from "@/lib/axios";
 import Cookies from "js-cookie";
-import { User, AuthResponse } from "@/types";
+import { User, LoginCredentials, RegisterCredentials, AuthResponse } from "@/types";
 
-interface AuthState {
+export interface AuthState {
   user: User | null;
+  isAuthenticated: boolean;
   loading: boolean;
   error: string | null;
 }
@@ -12,25 +13,21 @@ interface AuthState {
 
 const initialState: AuthState = {
   user: null,
+  isAuthenticated: false,
   loading: false,
   error: null,
 };
 
-export const registerUser = createAsyncThunk(
+export const register= createAsyncThunk(
   "auth/register",
   async (
-    payload: {
-      name: string;
-      email: string;
-      password: string;
-      role: "ARTIST" | "VENUE";
-    },
+    credentials: RegisterCredentials,
     { rejectWithValue }
   ) => {
     try {
-      const { data } = await api.post<AuthResponse>("/auth/register", payload);
-      Cookies.set("token", data.token);
-      return data.user;
+      const response = await api.post<AuthResponse>("/auth/register", credentials);
+      Cookies.set("token", response.data.token, { expires: 7 });
+      return response.data;
     } catch (err: any) {
       return rejectWithValue(
         err.response.data.message || "Registration failed"
@@ -39,16 +36,13 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-export const loginUser = createAsyncThunk(
+export const login = createAsyncThunk(
     "auth/login",
-    async(
-        payload:{email:string; password:string},
-        {rejectWithValue}
-    )=>{
+    async(credentials:LoginCredentials,{rejectWithValue})=>{
         try{
-            const {data} =await api.post<AuthResponse>("/auth/login", payload);
-            Cookies.set("token", data.token);
-            return data.user;
+            const response =await api.post<AuthResponse>("/auth/login", credentials);
+            Cookies.set("token", response.data.token);
+            return response.data;
         }catch(err:any){
             return rejectWithValue(
                 err.response.data.message || "Login failed"
@@ -57,29 +51,7 @@ export const loginUser = createAsyncThunk(
     }
 )
 
-// export const loadUserFromToken = createAsyncThunk(
-//     "auth/loadUser",
-//     async(_, {rejectWithValue})=>{
-//         const token = Cookies.get("token");
-//         if(!token){
-//             return rejectWithValue("No token found");
-//         }
-//         try{
-//             const {data} = await api.get<AuthResponse>("/auth/me", {
-//                 headers:{
-//                     Authorization: `Bearer ${token}`
-//                 }
-//             });
-//             return data.user;
-//         }catch(err:any){
-//             return rejectWithValue(
-//                 err.response.data.message || "Failed to load user"
-//             );
-//         }
-//     }
-// )
-
-export const logoutUser = createAsyncThunk("auth/logout", async () => {
+export const logout = createAsyncThunk("auth/logout", async () => {
   Cookies.remove("token");
 });
 
@@ -89,6 +61,7 @@ const authSlice = createSlice({
     reducers:{
         setUser(state,action :PayloadAction<User | null>){
             state.user = action.payload;
+            state.isAuthenticated = true;
         },
         clearError(state){
         state.error = null;
@@ -97,36 +70,39 @@ const authSlice = createSlice({
 
     extraReducers:(builder)=>{
         builder
-        .addCase(registerUser.pending,(state)=>{
+        .addCase(register.pending,(state)=>{
             state.loading=true;
             state.error=null;
         })
-        .addCase(registerUser.fulfilled,(state,action)=>{
+        .addCase(register.fulfilled,(state,action)=>{
             state.loading=false;
-            state.user=action.payload;
+            state.user=action.payload.user;
+            state.isAuthenticated=true;
         })
-        .addCase(registerUser.rejected,(state,action)=>{
+        .addCase(register.rejected,(state,action)=>{
             state.loading=false;
             state.error=action.payload as string;
         })
 
         builder
-        .addCase(loginUser.pending,(state)=>{
+        .addCase(login.pending,(state)=>{
             state.loading=true;
             state.error=null;
         })
-        .addCase(loginUser.fulfilled,(state,action)=>{
+        .addCase(login.fulfilled,(state,action)=>{
             state.loading=false;
-            state.user=action.payload;
+            state.user=action.payload.user;
+            state.isAuthenticated=true;
         })
-        .addCase(loginUser.rejected,(state,action)=>{
+        .addCase(login.rejected,(state,action)=>{
             state.loading=false;
             state.error=action.payload as string;
         })
 
         builder
-        .addCase(logoutUser.fulfilled,(state)=>{
+        .addCase(logout.fulfilled,(state)=>{
             state.user=null;
+            state.isAuthenticated=false;
         })
     },
 })

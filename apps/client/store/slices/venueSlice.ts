@@ -1,123 +1,79 @@
 //make veneue slice as per we made artist slice
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "@/lib/axios";
-import { Venue } from "@/types";
+import { Venue,CreateVenueData } from "@/types";
 import toast from "react-hot-toast";
 
-interface VenueState {
+export interface VenueState {
   profile: Venue | null;
+  venues: Venue[];
   loading: boolean;
-  uploading: boolean;
   error: string | null;
 }
 const initialState: VenueState = {
   profile: null,
+  venues: [],
   loading: false,
-  uploading: false,
   error: null,
 };
-export const fetchVenueProfile = createAsyncThunk(
-  "venue/fetchProfile",
-  async (venueId: string, { rejectWithValue }) => {
+export const fetchMyVenueProfile = createAsyncThunk(
+  "venue/fetchMyProfile",
+  async (_, { rejectWithValue }) => {
     try {
-      const { data } = await api.get<{ venue: Venue }>(`/venues/${venueId}`);
-      return data.venue;
+      const response= await api.get<Venue>("/api/venues/me");
+      return response.data;
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || err.message);
+      return rejectWithValue(err.response?.data?.message ||"Failed to fetch venue profile");
     }
   }
 );
-
 export const createVenueProfile = createAsyncThunk(
   "venue/createProfile",
   async (
-    payload: {
-      venueName: string;
-      location: string;
-      description: string;
-      mediaUrls: string[];
-    },
+    data: CreateVenueData,
     { rejectWithValue }
   ) => {
     try {
-      const { data } = await api.post<{ venue: Venue }>("/venues", payload);
-      return data.venue;
+      const response = await api.post<Venue>("/api/venues", data);
+      return response.data;
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || err.message);
+      return rejectWithValue(err.response?.data?.message || "Failed to create venue profile");
     }
   }
 );
 export const updateVenueProfile = createAsyncThunk(
   "venue/updateProfile",
-  async (
-    payload: {
-      venueName?: string;
-      location?: string;
-      description?: string;
-      mediaUrls?: string[];
-    },
-    { rejectWithValue }
-  ) => {
+  async ( {id, data}: {id: string; data: Partial<CreateVenueData>}, { rejectWithValue }) => {
     try {
-      const { data } = await api.put<{ venue: Venue }>("/venues", payload);
-      return data.venue;
+      const response = await api.put<Venue>(`/api/venues/${id}`, { id, ...data });
+      return response.data;
     } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || err.message);
-    }
-  }
-);
-export const uploadMedia = createAsyncThunk(
-  "artist/uploadMedia",
-  async (file: File, { getState, dispatch, rejectWithValue }) => {
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append(
-        "upload_preset",
-        process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!
-      );
-      const clouddinaryUrl = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
-      const response = await fetch(clouddinaryUrl, {
-        method: "POST",
-        body: formData,
-      });
-      if (!response.ok) {
-        throw new Error("Failed to upload media");
-      }
-      const data = await response.json();
-      const mediaUrl = data.secure_url;
-
-      const state = getState() as { venue: VenueState };
-      const currentMedia = state.venue.profile?.mediaUrls || [];
-      await dispatch(
-        updateVenueProfile({
-          mediaUrls: [...currentMedia, mediaUrl],
-        })
-      );
-
-      return mediaUrl;
-    } catch (err: any) {
-      toast.error(err.message || "Failed to upload media");
-      return rejectWithValue(err.message || "Failed to upload media");
+      return rejectWithValue(err.response?.data?.message || "Failed to update venue profile");
     }
   }
 );
 
-export const deleteMedia = createAsyncThunk(
-  "artist/deleteMedia",
-  async (mediaUrl: string, { getState, dispatch, rejectWithValue }) => {
+export const fetchAllVenues = createAsyncThunk(
+  "venue/fetchAllVenues",
+  async (_, { rejectWithValue }) => {
     try {
-      const state = getState() as { venue: VenueState };
-      const currentMedia = state.venue.profile?.mediaUrls || [];
-      await dispatch(
-        updateVenueProfile({
-          mediaUrls: currentMedia.filter((url) => url !== mediaUrl),
-        })
-      );
-      return mediaUrl;
+      const response = await api.get<Venue[]>("/api/venues");
+      return response.data;
+    }
+    catch (err: any) {
+      return rejectWithValue(err.response?.data?.message || "Failed to fetch venues");
+    }
+  }
+);
+
+export const fetchVenueById = createAsyncThunk(
+  "venue/fetchVenueById",
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await api.get<Venue>(`/api/venues/${id}`);
+      return response.data;
     } catch (err: any) {
-      toast.error(err.message || "Failed to delete media");
-      return rejectWithValue(err.message || "Failed to delete media");
+      return rejectWithValue(err.response?.data?.message || "Failed to fetch venue");
     }
   }
 );
@@ -126,102 +82,92 @@ export const venueSlice = createSlice({
   name: "venue",
   initialState,
   reducers: {
-    clearProfile: (state) => {
-      state.profile = null;
-      state.loading = false;
-      state.uploading = false;
-      state.error = null;
-    },
-    clearError: (state) => {
+    clearVenueError:(state) =>{
       state.error = null;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchVenueProfile.pending, (state) => {
+      .addCase(fetchMyVenueProfile.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
-      .addCase(
-        fetchVenueProfile.fulfilled,
-        (state, action: PayloadAction<Venue>) => {
+      builder.addCase(
+        fetchMyVenueProfile.fulfilled,
+        (state, action) => {
           state.loading = false;
           state.profile = action.payload;
-        }
-      )
+        })
       .addCase(
-        fetchVenueProfile.rejected,
-        (state, action: PayloadAction<any>) => {
+        fetchMyVenueProfile.rejected,
+        (state, action) => {
           state.loading = false;
-          state.error = action.payload;
+          state.error = action.payload as string;
         }
       );
 
     builder
       .addCase(createVenueProfile.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(
         createVenueProfile.fulfilled,
-        (state, action: PayloadAction<Venue>) => {
+        (state, action) => {
           state.loading = false;
           state.profile = action.payload;
         }
       )
       .addCase(
         createVenueProfile.rejected,
-        (state, action: PayloadAction<any>) => {
+        (state, action) => {
           state.loading = false;
-          state.error = action.payload;
+          state.error = action.payload as string;
         }
       );
     builder
       .addCase(updateVenueProfile.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(
         updateVenueProfile.fulfilled,
-        (state, action: PayloadAction<Venue>) => {
+        (state, action) => {
           state.loading = false;
           state.profile = action.payload;
         }
       )
       .addCase(
         updateVenueProfile.rejected,
-        (state, action: PayloadAction<any>) => {
+        (state, action) => {
           state.loading = false;
-          state.error = action.payload;
+          state.error = action.payload as string;
         }
       );
-    builder
-      .addCase(uploadMedia.pending, (state) => {
-        state.uploading = true;
-        state.error = null;
-      })
-      .addCase(uploadMedia.fulfilled, (state) => {
-        state.uploading = false;
-      })
-      .addCase(uploadMedia.rejected, (state, action: PayloadAction<any>) => {
-        state.uploading = false;
-        state.error = action.payload;
-      });
-    builder
 
-      .addCase(deleteMedia.pending, (state) => {
+      builder 
+      .addCase(fetchAllVenues.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
-      .addCase(deleteMedia.fulfilled, (state) => {
+      .addCase(fetchAllVenues.fulfilled, (state, action) => {
         state.loading = false;
+        state.venues = action.payload;
       })
-      .addCase(deleteMedia.rejected, (state, action: PayloadAction<any>) => {
+      .addCase(fetchAllVenues.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.payload as string;
+      });
+      builder
+      .addCase(fetchVenueById.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchVenueById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.profile = action.payload;
+      })
+      .addCase(fetchVenueById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       });
   },
 });
 
-export const { clearProfile, clearError } = venueSlice.actions;
+export const { clearVenueError } = venueSlice.actions;
 export default venueSlice.reducer;

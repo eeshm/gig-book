@@ -220,8 +220,6 @@ export const deleteVenue = async (req: Request, res: Response) => {
             include: { user: { select: { id: true, name: true, email: true } } }
         });
         return res.status(200).json({ message: "Venue deleted successfully" });
-
-
         
     }catch(error){
         console.log(error)

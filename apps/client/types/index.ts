@@ -1,5 +1,4 @@
-// types/index.ts
-
+// User & Auth Types
 export type UserRole = "ARTIST" | "VENUE";
 
 export interface User {
@@ -14,6 +13,19 @@ export interface AuthResponse {
   user: User;
 }
 
+export interface LoginCredentials {
+  email: string;
+  password: string;
+}
+
+export interface RegisterCredentials {
+  name: string;
+  email: string;
+  password: string;
+  role: UserRole;
+}
+
+// Artist Types
 export interface Artist {
   id: string;
   userId: string;
@@ -22,34 +34,66 @@ export interface Artist {
   bio: string;
   pricePerGig: number;
   mediaUrls: string[];
-  isAvailable: boolean;
-  createdAt: string;
-  updatedAt: string;
+  availability?: Record<string, any>;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
+export interface CreateArtistData {
+  artistType: string;
+  location: string;
+  bio: string;
+  pricePerGig: number;
+  mediaUrls?: string[];
+  availability?: Record<string, any>;
+}
+
+// Venue Types
 export interface Venue {
   id: string;
   userId: string;
   venueName: string;
   location: string;
-  bio: string;
-  mediaUrls: string[];
-  createdAt: string;
-  updatedAt: string;
+  description: string;
+  mediaUrls?: string[];
+  capacity?: number;
+  venueType?: string;
+  createdAt?: string;
+  updatedAt?: string;
+} 
+
+export interface CreateVenueData {
+  name: string;
+  location: string;
+  description: string;
+  mediaUrls?: string[];
+  capacity?: number;
+  venueType?: string;
 }
+
+// Booking Types
+export type BookingStatus = "PENDING" | "ACCEPTED" | "REJECTED";
 
 export interface Booking {
   id: string;
   artistId: string;
   venueId: string;
   date: string;
-  status: "PENDING" | "ACCEPTED" | "REJECTED";
-  message: string;
+  status: BookingStatus;
+  message?: string;
   createdAt: string;
-  updatedAt: string;
+  updatedAt?: string;
+  artist?: Artist;
+  venue?: Venue;
 }
 
-export interface ApiError {
-  message: string;
-  status: number;
+export interface CreateBookingData {
+  artistId: string;
+  date: string;
+  message?: string;
+}
+
+export interface UpdateBookingStatusData {
+  id: string;
+  status: BookingStatus;
 }
