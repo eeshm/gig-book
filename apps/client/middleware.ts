@@ -25,3 +25,6 @@
 // };
 
 // Currently, no middleware is implemented.
+export function middleware() {
+  return;
+}

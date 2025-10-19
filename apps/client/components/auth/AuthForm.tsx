@@ -28,6 +28,14 @@ const registerSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 type RegisterFormData = z.infer<typeof registerSchema>;
 
+// Superset type covering both login and register forms for React Hook Form generics
+type AuthFormValues = {
+  name?: string;
+  email: string;
+  password: string;
+  role?: "ARTIST" | "VENUE";
+};
+
 interface AuthFormProps {
   mode: "login" | "register";
 }
@@ -45,8 +53,9 @@ export default function AuthForm({ mode }: AuthFormProps) {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm({
-    resolver: zodResolver(schema),
+  } = useForm<AuthFormValues>({
+    // Cast resolver because schema varies by mode; our form value type is a superset
+    resolver: zodResolver(schema) as any,
     defaultValues: mode === "register" ? { role: "ARTIST" } : undefined,
   });
 
@@ -70,11 +79,20 @@ export default function AuthForm({ mode }: AuthFormProps) {
     }
   }, [error, dispatch]);
 
-  const onSubmit = async (data: LoginFormData | RegisterFormData) => {
+  const onSubmit = async (data: AuthFormValues) => {
     if (mode === "login") {
-      await dispatch(login(data as LoginFormData));
+      await dispatch(
+        login({ email: data.email, password: data.password })
+      );
     } else {
-      await dispatch(register(data as RegisterFormData));
+      await dispatch(
+        register({
+          name: data.name ?? "",
+          email: data.email,
+          password: data.password,
+          role: (data.role as UserRole) ?? selectedRole,
+        })
+      );
     }
   };
 
@@ -110,9 +128,9 @@ export default function AuthForm({ mode }: AuthFormProps) {
                   </div>
                 </Button>
               </div>
+              {/* Hidden field to register role with React Hook Form */}
+              <input type="hidden" {...registerField("role")} />
             </div>
-
-            {/* Name Field */}
             <div>
               <Label htmlFor="name">Name</Label>
               <Input

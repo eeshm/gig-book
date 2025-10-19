@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 import { cookies } from "next/dist/server/request/cookies";
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000",
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api",
   withCredentials: true,
 });
 

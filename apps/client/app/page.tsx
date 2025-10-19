@@ -1,56 +1,91 @@
-// apps/frontend/app/page.tsx
-import { Navbar } from '@/components/layout/navbar';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Music, Calendar, Users } from "lucide-react";
 
-export default function LandingPage() {
+export default function HomePage() {
   return (
-    <div className="relative min-h-screen bg-black text-white">
-      <Navbar />
-
-      {/* Background Video */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover opacity-30"
-          poster="/placeholder-poster.jpg" // Optional: Poster image for faster initial load
-        >
-          {/* Replace with your actual video file */}
-          <source src="/videos/hero-background.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      </div>
-
-      {/* Content */}
-      <main className="relative z-10 flex min-h-screen items-center justify-center">
-        <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center px-4">
-          {/* Left Section: Text and CTAs */}
-          <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-6">
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tighter">
-              Where Gigs Find Their Stage.
-            </h1>
-            <p className="max-w-md text-lg text-gray-300">
-              The seamless connection between talented artists and premier venues. Your next unforgettable event starts here.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700 text-lg py-7 px-8 w-full">
-                <Link href="/register?role=ARTIST">I am an Artist</Link>
+    <div className="min-h-screen bg-background">
+      {/* Hero Section */}
+      <section className="py-20 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
+            Connect Artists with <span className="text-primary">Perfect Venues</span>
+          </h1>
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            The ultimate platform for booking talented artists and finding the best venues for your events.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/register">
+              <Button size="lg" className="text-lg px-8">
+                Get Started Free
               </Button>
-              <Button asChild size="lg" variant="secondary" className="bg-gray-800 hover:bg-gray-700 text-lg py-7 px-8 w-full">
-                <Link href="/register?role=VENUE">I am a Venue</Link>
+            </Link>
+            <Link href="/artists">
+              <Button size="lg" variant="outline" className="text-lg px-8">
+                Browse Artists
               </Button>
-            </div>
-          </div>
-          
-          {/* Right Section: Deliberately empty for the video background to show through */}
-          <div className="hidden md:block">
-            {/* This space is visually filled by the video on the right side of the screen */}
+            </Link>
           </div>
         </div>
-      </main>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-16 px-4 bg-card">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold text-center text-foreground mb-12">
+            Why Choose GigBook?
+          </h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Feature 1 */}
+            <div className="text-center p-6">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Music className="w-8 h-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-3">Discover Talent</h3>
+              <p className="text-muted-foreground">
+                Browse through a diverse collection of talented artists, from DJs to live performers.
+              </p>
+            </div>
+
+            {/* Feature 2 */}
+            <div className="text-center p-6">
+              <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Calendar className="w-8 h-8 text-secondary" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-3">Easy Booking</h3>
+              <p className="text-muted-foreground">
+                Send booking requests with just a few clicks and manage everything in one place.
+              </p>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="text-center p-6">
+              <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="w-8 h-8 text-accent" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-3">Build Connections</h3>
+              <p className="text-muted-foreground">
+                Connect venues with artists to create memorable events and lasting partnerships.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl font-bold text-foreground mb-6">Ready to Get Started?</h2>
+          <p className="text-lg text-muted-foreground mb-8">
+            Join thousands of artists and venues already using GigBook.
+          </p>
+          <Link href="/register">
+            <Button size="lg" className="text-lg px-8">
+              Create Your Account
+            </Button>
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }

@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 export default function Navbar() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { user, isAuthenticated } = useAppSelector((state) => state.auth);
+ const { user, isAuthenticated } = useAppSelector((state) => state.auth);
 
   const handleLogout = () => {
     dispatch(logout());
