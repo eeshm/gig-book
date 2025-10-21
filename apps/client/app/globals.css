@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+/* @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Oswald:wght@200..700&display=swap'); */
 
 @custom-variant dark (&:is(.dark *));
 
@@ -9,13 +10,9 @@ body {
   overflow-x: hidden;
   scroll-behavior: smooth;
 }
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+@theme{
+  --font-manrope: 'Manrope', sans-serif;
 }
-
 a {
   color: inherit;
   text-decoration: none;
@@ -37,6 +34,7 @@ a {
     display: unset;
   }
 }
+
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -78,13 +76,13 @@ a {
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
+  --background: oklch(0% 0 0);
+  --foreground: oklch(100% 0.00011 271.152);
+  --card: oklch(0% 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
+  --primary: oklch(0.55 0.3 260);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);

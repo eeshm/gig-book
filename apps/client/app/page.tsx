@@ -4,67 +4,106 @@ import { Music, Calendar, Users } from "lucide-react";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="w-full bg-background flex flex-col mt-5">
       {/* Hero Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
-            Connect Artists with <span className="text-primary">Perfect Venues</span>
-          </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            The ultimate platform for booking talented artists and finding the best venues for your events.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/register">
-              <Button size="lg" className="text-lg px-8">
-                Get Started Free
+    <section className="w-full flex justify-center px-4 sm:px-6 lg:px-4">
+      <div className="max-w-7xl w-full">
+        <div className="grid gap-16 lg:grid-cols-2 lg:gap-12">
+          {/* Left Content */}
+          <div className="flex flex-col gap-8 ">
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <div className="flex items-center mb-4">
+                </div>
+                <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-foreground text-balance leading-tight">
+                  Your Vision
+                  <br />
+                  <span className="relative inline-block">
+                    Our Mission
+                  </span>
+                </h1>
+              </div>
+              <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-lg font-medium">
+                We are the trusted partner for artists and venues, offering innovative solutions that turn your ideas
+                into impactful realities.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-4 sm:flex-row sm:gap-5 pt-4">
+              <Button className="rounded-lg bg-primary px-8 py-3.5 text-base font-bold text-primary-foreground hover:bg-primary/90 transition-colors duration-200 shadow-lg hover:shadow-xl">
+                Request a Demo
               </Button>
-            </Link>
-            <Link href="/artists">
-              <Button size="lg" variant="outline" className="text-lg px-8">
-                Browse Artists
+              <Button className="rounded-lg border-2 bg-black border-foreground px-8 py-3.5 text-base font-bold text-foreground hover:bg-foreground/10 transition-colors duration-200">
+                Learn More
               </Button>
-            </Link>
+            </div>
+          </div>
+
+          {/* Right Visual */}
+          <div className="relative h-96 lg:h-full min-h-96">
+            <div className="absolute inset-0 bg-primary rounded-3xl overflow-hidden flex items-center justify-center shadow-2xl">
+              {/* Grid pattern background */}
+              <div className="absolute inset-0 opacity-25">
+                <svg className="w-full h-full" viewBox="0 0 400 400">
+                  <defs>
+                    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="1.5" />
+                    </pattern>
+                  </defs>
+                  <rect width="400" height="400" fill="url(#grid)" />
+                </svg>
+              </div>
+
+              {/* Geometric shapes */}
+              <div className="relative z-10 flex items-center justify-center">
+                <div className="flex gap-8">
+                  <div className="w-28 h-28 bg-white rounded-full shadow-lg"></div>
+                  <div className="w-36 h-36 bg-white rounded-full shadow-lg"></div>
+                  <div className="w-24 h-24 bg-white rounded-full shadow-lg"></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
       {/* Features Section */}
-      <section className="py-16 px-4 bg-card">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-foreground mb-12">
+      <section className="py-32 w-full flex justify-center px-4 sm:px-6 lg:px-4 bg-card">
+        <div className="max-w-7xl w-full">
+          <h2 className="text-4xl md:text-5xl font-bold text-center text-foreground mb-20">
             Why Choose GigBook?
           </h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-12">
             {/* Feature 1 */}
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Music className="w-8 h-8 text-primary" />
+            <div className="text-center flex justify-center flex-col items-center">
+              <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                <Music className="w-10 h-10 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-3">Discover Talent</h3>
-              <p className="text-muted-foreground">
+              <h3 className="text-2xl font-semibold text-foreground mb-4">Discover Talent</h3>
+              <p className="text-muted-foreground text-lg leading-relaxed">
                 Browse through a diverse collection of talented artists, from DJs to live performers.
               </p>
             </div>
 
             {/* Feature 2 */}
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Calendar className="w-8 h-8 text-secondary" />
+            <div className="text-center flex justify-center flex-col items-center">
+              <div className="w-20 h-20 bg-secondary/10 rounded-full flex items-center mb-6">
+                <Calendar className="w-10 h-10 text-secondary bg-black" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-3">Easy Booking</h3>
-              <p className="text-muted-foreground">
+              <h3 className="text-2xl font-semibold text-foreground mb-4">Easy Booking</h3>
+              <p className="text-muted-foreground text-lg leading-relaxed">
                 Send booking requests with just a few clicks and manage everything in one place.
               </p>
             </div>
 
             {/* Feature 3 */}
-            <div className="text-center p-6">
-              <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-accent" />
+            <div className="text-center flex justify-center flex-col items-center ">
+              <div className="w-20 h-20 bg-accent/10 rounded-full flex items-center mb-6">
+                <Users className="w-10 h-10 text-accent bg-black" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-3">Build Connections</h3>
-              <p className="text-muted-foreground">
+              <h3 className="text-2xl font-semibold text-foreground mb-4">Build Connections</h3>
+              <p className="text-muted-foreground text-lg leading-relaxed">
                 Connect venues with artists to create memorable events and lasting partnerships.
               </p>
             </div>
@@ -73,14 +112,14 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold text-foreground mb-6">Ready to Get Started?</h2>
-          <p className="text-lg text-muted-foreground mb-8">
+      <section className="py-32 w-full flex justify-center px-4 sm:px-6 lg:px-4">
+        <div className="max-w-7xl w-full text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-8">Ready to Get Started?</h2>
+          <p className="text-lg md:text-xl text-muted-foreground mb-12 leading-relaxed">
             Join thousands of artists and venues already using GigBook.
           </p>
           <Link href="/register">
-            <Button size="lg" className="text-lg px-8">
+            <Button size="lg" className="text-base px-10 py-6">
               Create Your Account
             </Button>
           </Link>
