@@ -146,7 +146,7 @@ export default function Navbar() {
           isMobileOpen ? 'translate-y-0' : '-translate-y-full'
         } ${isMobileOpen ? 'top-16' : 'top-0'}`}
       >
-        <div className="flex flex-col items-center h-full text-white text-lg font-normal px-8">
+        <div className="flex flex-col items-center h-full text-white text-lg font-normal">
           <Link
             href="/artists"
             className="py-6 transition-colors text-center w-full hover:text-secondary"

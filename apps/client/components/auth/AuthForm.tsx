@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { AlertCircle, Loader2 } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { login, register, clearError } from "@/store/slices/authSlice";
 import { Button } from "@/components/ui/button";
@@ -98,52 +99,127 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
 
   return (
     <div className="w-full max-w-md">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <div className="space-y-1 mb-8">
+        <h1 className="text-3xl font-bold text-foreground">
+          {mode === "login" ? "Welcome Back" : "Get Started"}
+        </h1>
+        <p className="text-muted-foreground text-sm">
+          {mode === "login"
+            ? "Sign in to your account to continue"
+            : "Create your account and start booking"}
+        </p>
+      </div>
+
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {mode === "register" && (
           <>
             {/* Hidden field to register role with React Hook Form */}
             <input type="hidden" {...registerField("role")} />
-            <div>
-              <Label htmlFor="name">Name</Label>
+            
+            <div className="space-y-2">
+              <Label htmlFor="name" className="text-sm font-medium">Full Name</Label>
               <Input
                 id="name"
                 type="text"
                 {...registerField("name")}
-                className="mt-2 rounded-xs h-[42px]"
+                className="rounded-lg h-11 px-4 border-border/60 focus:border-primary transition-colors"
               />
-              {errors.name && <p className="text-sm text-destructive mt-1">{errors.name.message}</p>}
+              {errors.name && (
+                <p className="text-sm text-destructive flex items-center gap-1 ">
+                  <AlertCircle className="w-4 h-4" />
+                  {errors.name.message}
+                </p>
+              )}
             </div>
           </>
         )}
 
         {/* Email Field */}
-        <div>
-          <Label htmlFor="email">Email</Label>
+        <div className="space-y-2">
+          <Label htmlFor="email" className="text-sm font-medium">Email Address</Label>
           <Input
             id="email"
             type="email"
             {...registerField("email")}
-            className="mt-2 rounded-xs h-[42px]"
+            className="rounded-lg h-11 px-4 border-border/60 focus:border-primary transition-colors"
           />
-          {errors.email && <p className="text-sm text-destructive mt-1">{errors.email.message}</p>}
+          {errors.email && (
+            <p className="text-sm text-destructive flex items-center gap-1 ">
+              <AlertCircle className="w-4 h-4" />
+              {errors.email.message}
+            </p>
+          )}
         </div>
 
         {/* Password Field */}
-        <div>
-          <Label htmlFor="password">Password</Label>
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <Label htmlFor="password" className="text-sm font-medium">Password</Label>
+          </div>
           <Input
             id="password"
             type="password"
             {...registerField("password")}
-            className="mt-2 rounded-xs h-[42px]"
+            className="rounded-lg h-11 px-4 border-border/60 focus:border-primary transition-colors"
           />
-          {errors.password && <p className="text-sm text-destructive mt-1">{errors.password.message}</p>}
+          {errors.password && (
+            <p className="text-sm text-destructive flex items-center gap-1 ">
+              <AlertCircle className="w-4 h-4" />
+              {errors.password.message}
+            </p>
+          )}
         </div>
 
         {/* Submit Button */}
-        <Button type="submit" className="w-full h-[42px] text-black" disabled={loading}>
-          {loading ? "Loading..." : mode === "login" ? "Login" : "Create Account"}
+        <Button 
+          type="submit" 
+          className="w-full h-11 text-base text-black rounded-lg transition-all duration-200 hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed" 
+          disabled={loading}
+        >
+          {loading ? (
+            <span className="flex items-center justify-center gap-2">
+              <Loader2 className="w-4 h-4 animate-spin" />
+              {mode === "login" ? "Signing in..." : "Creating account..."}
+            </span>
+          ) : (
+            mode === "login" ? "Sign In" : "Create Account"
+          )}
         </Button>
+
+        {/* Divider */}
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-border/30"></div>
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="px-2 bg-background text-muted-foreground">
+              {mode === "login" ? "Don't have an account?" : "Already have an account?"}
+            </span>
+          </div>
+        </div>
+
+        {/* Auth Link */}
+        <div className="text-center">
+          {mode === "login" ? (
+            <p className="text-sm text-muted-foreground">
+              Sign up as{" "}
+              <a href="/register?role=artist" className="text-primary font-semibold hover:text-primary/80 transition-colors">
+                Artist
+              </a>
+              {" "}or{" "}
+              <a href="/register?role=venue" className="text-primary font-semibold hover:text-primary/80 transition-colors">
+                Venue
+              </a>
+            </p>
+          ) : (
+            <p className="text-sm text-muted-foreground">
+              Already have an account?{" "}
+              <a href="/login" className="text-primary font-semibold hover:text-primary/80 transition-colors">
+                Sign in
+              </a>
+            </p>
+          )}
+        </div>
       </form>
     </div>
   );

@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { ChevronLeft, User, Building2 } from "lucide-react";
 import AuthForm from "@/components/auth/AuthForm";
 import {
   Dialog,
@@ -20,68 +22,89 @@ export default function LoginPage() {
     setIsRoleModalOpen(false);
     router.push(`/register?role=${role}`);
   };
+
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        <div className="text-left  mb-8">
-          <h1 className="text-4xl text-foreground mb-2">Log in</h1>
-        </div>
+    <div className="min-h-screen flex bg-background">
+      {/* Left Side - Form */}
+      <div className="w-full lg:w-3/5 flex items-center justify-center p-4 lg:p-8">
+        <div className="w-full max-w-md">
+          {/* Back to home link */}
+          <Link href="/" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8">
+            <ChevronLeft className="w-4 h-4" />
+            Back to home
+          </Link>
 
-        <div className="bg-card p-4shadow-lg">
-          <AuthForm mode="login" />
-
-          <div className="mt-6 text-center">
-            <p className="text-sm text-muted-foreground">
-              Don't have an account?{" "}
-              <button
-                onClick={() => setIsRoleModalOpen(true)}
-                className="text-primary hover:underline font-medium"
-              >
-                Sign up
-              </button>
-            </p>
+          {/* Card Container */}
+          <div className="bg-card shadow-xl backdrop-blur-sm">
+            {/* Auth Form */}
+            <AuthForm mode="login" />
           </div>
         </div>
+      </div>
 
-        <Dialog open={isRoleModalOpen} onOpenChange={setIsRoleModalOpen}>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle className="text-2xl font-bold text-center">
-                Choose Your Role
-              </DialogTitle>
-              <DialogDescription className="text-center">
-                Select how you want to sign up
-              </DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <button
-                onClick={() => handleRoleSelect("artist")}
-                className="flex flex-col items-center justify-center p-6 border-2 border-border rounded-lg hover:border-primary hover:bg-accent transition-all duration-200 group"
-              >
-                <div className="text-4xl mb-2">🎤</div>
-                <h3 className="text-xl font-semibold mb-1 group-hover:text-primary">
+      {/* Right Side - Image (Hidden on Mobile) */}
+      <div className="hidden lg:flex w-2/5 relative overflow-hidden">
+        <Image
+          src="/images/image12.jpg"
+          alt="Login illustration"
+          fill
+          className="object-cover"
+          priority
+        />
+        {/* Overlay Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-background/50"></div>
+      </div>
+
+      {/* Role Selection Modal */}
+      <Dialog open={isRoleModalOpen} onOpenChange={setIsRoleModalOpen}>
+        <DialogContent className="sm:max-w-md rounded-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-3xl font-bold text-center mb-2">
+              Choose Your Role
+            </DialogTitle>
+            <DialogDescription className="text-center">
+              Select how you want to join GigBook
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="grid gap-4 py-6">
+            {/* Artist Option */}
+            <button
+              onClick={() => handleRoleSelect("artist")}
+              className="relative group p-6 border-2 border-border/60 rounded-xl hover:border-primary transition-all duration-300 bg-card hover:bg-card/50 overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="relative">
+                <div className="w-12 h-12  flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
+                </div>
+                <h3 className="text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
                   I'm an Artist
                 </h3>
-                <p className="text-sm text-muted-foreground text-center">
-                  Showcase your talent and get booked for gigs
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Showcase your talent and get discovered by venues
                 </p>
-              </button>
-              <button
-                onClick={() => handleRoleSelect("venue")}
-                className="flex flex-col items-center justify-center p-6 border-2 border-border rounded-lg hover:border-primary hover:bg-accent transition-all duration-200 group"
-              >
-                <div className="text-4xl mb-2">🏛️</div>
-                <h3 className="text-xl font-semibold mb-1 group-hover:text-primary">
+              </div>
+            </button>
+
+            {/* Venue Option */}
+            <button
+              onClick={() => handleRoleSelect("venue")}
+              className="relative group p-6 border-2 border-border/60 rounded-xl hover:border-blue-500 transition-all duration-300 bg-card hover:bg-card/50 overflow-hidden"
+            >
+              <div className="relative">
+                <div className="w-12 h-12 flex items-center justify-center mb-3 group-hover:bg-blue-500/20 transition-colors">
+                </div>
+                <h3 className="text-lg font-bold text-foreground mb-2 group-hover:text-blue-500 transition-colors">
                   I'm a Venue
                 </h3>
-                <p className="text-sm text-muted-foreground text-center">
-                  Find and book talented artists for your venue
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Find and book amazing artists for your events
                 </p>
-              </button>
-            </div>
-          </DialogContent>
-        </Dialog>
-      </div>
+              </div>
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Providers } from "./providers";
 import { Toaster } from "react-hot-toast";
-import Navbar from "@/components/layout/Navbar";
+import ConditionalNavbar from "@/components/layout/ConditionalNavbar";
 import AuthInitializer from "@/components/shared/AuthInitializer";
 
 
@@ -31,7 +31,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} font-sans `}>
         <Providers>
           <AuthInitializer>
-            <Navbar />
+            <ConditionalNavbar />
             {children}
             <Toaster position="bottom-left" />
           </AuthInitializer>
