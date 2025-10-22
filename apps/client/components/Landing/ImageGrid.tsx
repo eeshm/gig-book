@@ -4,7 +4,7 @@ import Image from "next/image";
 export const Grid = () => {
     return (
         <div className="pt-20 ">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 ">
+            <div className="grid grid-cols-2 md:grid-cols-4 mx-2">
                 <Column>
                     <Card src="/images/image1.jpg" alt="Jazz Band Performing" className="md:rounded-tl-3xl"/>
                     <Card src="/images/image2.jpg" alt="Jazz Band Performing" className=""/>
