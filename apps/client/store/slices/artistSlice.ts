@@ -20,7 +20,7 @@ export const fetchMyArtistProfile = createAsyncThunk(
   "artist/fetchMyProfile",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get<Artist>("/api/artists/me");
+      const response = await api.get<Artist>("/artists/me");
       return response.data;
     } catch (error: any) {
       return rejectWithValue(
@@ -33,11 +33,11 @@ export const createArtistProfile = createAsyncThunk(
   "artist/createProfile",
   async (data: CreateArtistData, { rejectWithValue }) => {
     try {
-      const response = await api.post<Artist>("/api/artists", data);
-      toast.success("Artist profile created successfully");
+      const response = await api.post<Artist>("/artists", data);
+      // Don't show toast here - let the component handle it
       return response.data;
     } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to create profile");
+      // Don't show toast here - let the component handle it
       return rejectWithValue(
         error.response?.data?.message || "Failed to create profile"
       );
@@ -52,11 +52,11 @@ export const updateArtistProfile = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const response = await api.put<Artist>(`/api/artists/${id}`, data);
-      toast.success("Artist profile updated successfully");
+      const response = await api.put<Artist>(`/artists/${id}`, data);
+      // Don't show toast here - let the component handle it
       return response.data;
     } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to update profile");
+      // Don't show toast here - let the component handle it
       return rejectWithValue(
         error.response?.data?.message || "Failed to update profile"
       );
@@ -67,8 +67,8 @@ export const fetchAllArtists = createAsyncThunk(
   "artist/fetchAll",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get<Artist[]>("/api/artists");
-      return response.data;
+      const response = await api.get<{ total: number; page: number; limit: number; artists: Artist[] }>("/artists");
+      return response.data.artists; // Extract the artists array from the response
     } catch (error: any) {
       return rejectWithValue(
         error.response?.data?.message || "Failed to fetch artists"
@@ -80,7 +80,7 @@ export const fetchArtistById = createAsyncThunk(
   "artist/fetchById",
   async (id: string, { rejectWithValue }) => {
     try {
-      const response = await api.get<Artist>(`/api/artists/${id}`);
+      const response = await api.get<Artist>(`/artists/${id}`);
       return response.data;
     } catch (error: any) {
       return rejectWithValue(
@@ -97,6 +97,10 @@ const artistSlice = createSlice({
     clearArtistError: (state) => {
       state.error = null;
     },
+    clearArtistProfile: (state) => {
+      state.profile = null;
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -109,6 +113,7 @@ const artistSlice = createSlice({
       })
       .addCase(fetchMyArtistProfile.rejected, (state, action) => {
         state.loading = false;
+        state.profile = null; // Ensure profile is null when fetch fails
         state.error = action.payload as string;
       });
 
@@ -163,5 +168,5 @@ const artistSlice = createSlice({
   },
 });
 
-export const { clearArtistError } = artistSlice.actions;
+export const { clearArtistError, clearArtistProfile } = artistSlice.actions;
 export default artistSlice.reducer;

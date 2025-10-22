@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import prisma from "../prisma.js";
 import { registerSchema , loginSchema } from "../schemas/auth.js";
+import type { AuthenticatedRequest } from "../middleware/auth.js";
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -93,8 +94,38 @@ export const logout = async (req: Request, res: Response) => {
   }
 };
 
+export const me = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const userId = req.userId;
+    
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
  export const authController = {
   register,
   login,
   logout,
+  me,
 };

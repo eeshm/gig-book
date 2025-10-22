@@ -16,7 +16,7 @@ export const bookingBaseSchema = z.object({
 export const bookingCreateSchema = z.object({
        artistId: z.string().uuid(),
        date: z.coerce.date(),
-       message: z.string().trim().min(10).max(500).optional(),
+       message: z.string().trim().max(500).optional().or(z.literal('')),
 });
 
 export const bookingIdParamSchema = z.object({

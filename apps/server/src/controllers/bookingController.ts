@@ -15,6 +15,7 @@ export const createBooking = async (req: Request, res: Response) => {
 
         const parsed = bookingCreateSchema.safeParse(req.body)
         if (!parsed.success) {
+            console.error("Booking validation error:", parsed.error.format());
             return res.status(400).json({ error: "Invalid request body", details: parsed.error.format() })
         }
 
@@ -38,7 +39,7 @@ export const createBooking = async (req: Request, res: Response) => {
             venue: { connect: { id: venueProfile.id } },
             date,
             status: "PENDING",
-            message: message ?? null,
+            message: message && message.trim() ? message : null,
         }
 
         const booking = await prisma.booking.create({ data: bookingData })

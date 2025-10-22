@@ -26,10 +26,12 @@ export interface RegisterCredentials {
 }
 
 // Artist Types
+export type ArtistType = "DJ" | "LIVE_PERFORMER" | "SINGER" | "INSTRUMENTALIST" | "BAND" | "OTHER";
+
 export interface Artist {
   id: string;
   userId: string;
-  artistType: string;
+  artistType: ArtistType;
   location: string;
   bio: string;
   pricePerGig: number;
@@ -40,7 +42,7 @@ export interface Artist {
 }
 
 export interface CreateArtistData {
-  artistType: string;
+  artistType: ArtistType;
   location: string;
   bio: string;
   pricePerGig: number;
@@ -63,7 +65,7 @@ export interface Venue {
 } 
 
 export interface CreateVenueData {
-  name: string;
+  venueName: string;
   location: string;
   description: string;
   mediaUrls?: string[];

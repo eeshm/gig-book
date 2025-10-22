@@ -4,11 +4,23 @@
 
 @custom-variant dark (&:is(.dark *));
 
+html {
+  overflow-y: scroll;
+}
+
 html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
   scroll-behavior: smooth;
+}
+
+/* Prevent layout shift on desktop when modal opens */
+@media (min-width: 1024px) {
+  html {
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+  }
 }
 @theme{
   --font-manrope: 'Manrope', sans-serif;
@@ -75,14 +87,14 @@ a {
 }
 
 :root {
-  --radius: 0.625rem;
+  --radius: 0.325rem;
   --background: oklch(0% 0 0);
-  --foreground: oklch(100% 0.00011 271.152);
+  --foreground: hsl(47 67% 90%);
   --card: oklch(0% 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.55 0.3 260);
+  --primary:hsl(15 100% 50%);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -91,7 +103,7 @@ a {
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
+  --border:  rgba(255, 255, 255, 0.3);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
@@ -149,5 +161,11 @@ a {
   }
   body {
     @apply bg-background text-foreground;
+    padding-right: 0 !important;
+  }
+  
+  /* Prevent layout shift when dialogs/modals open */
+  body[style*="pointer-events: none"] {
+    padding-right: 0 !important;
   }
 }

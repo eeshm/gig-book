@@ -55,6 +55,25 @@ export const logout = createAsyncThunk("auth/logout", async () => {
   Cookies.remove("token");
 });
 
+export const fetchCurrentUser = createAsyncThunk(
+  "auth/fetchCurrentUser",
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = Cookies.get("token");
+      if (!token) {
+        return rejectWithValue("No token found");
+      }
+      const response = await api.get<User>("/auth/me");
+      return response.data;
+    } catch (err: any) {
+      Cookies.remove("token");
+      return rejectWithValue(
+        err.response?.data?.message || "Failed to fetch user"
+      );
+    }
+  }
+);
+
 const authSlice = createSlice({
     name:"auth",
     initialState,
@@ -101,6 +120,21 @@ const authSlice = createSlice({
 
         builder
         .addCase(logout.fulfilled,(state)=>{
+            state.user=null;
+            state.isAuthenticated=false;
+        })
+
+        builder
+        .addCase(fetchCurrentUser.pending,(state)=>{
+            state.loading=true;
+        })
+        .addCase(fetchCurrentUser.fulfilled,(state,action)=>{
+            state.loading=false;
+            state.user=action.payload;
+            state.isAuthenticated=true;
+        })
+        .addCase(fetchCurrentUser.rejected,(state)=>{
+            state.loading=false;
             state.user=null;
             state.isAuthenticated=false;
         })

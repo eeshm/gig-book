@@ -24,6 +24,9 @@ export default function BrowseVenuesPage() {
     );
   }
 
+  // Ensure venues is always an array
+  const venuesList = Array.isArray(venues) ? venues : [];
+
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -36,7 +39,7 @@ export default function BrowseVenuesPage() {
         </div>
 
         {/* Venues Grid */}
-        {venues.length === 0 ? (
+        {venuesList.length === 0 ? (
           <EmptyState
             icon={Building2}
             title="No Venues Found"
@@ -44,7 +47,7 @@ export default function BrowseVenuesPage() {
           />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {venues.map((venue) => (
+            {venuesList.map((venue) => (
               <BrowseCard key={venue.id} type="venue" data={venue} />
             ))}
           </div>

@@ -38,13 +38,13 @@ type AuthFormValues = {
 
 interface AuthFormProps {
   mode: "login" | "register";
+  initialRole?: UserRole;
 }
 
-export default function AuthForm({ mode }: AuthFormProps) {
+export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps) {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { loading, error, isAuthenticated, user } = useAppSelector((state) => state.auth);
-  const [selectedRole, setSelectedRole] = useState<UserRole>("ARTIST");
 
   const schema = mode === "login" ? loginSchema : registerSchema;
 
@@ -56,14 +56,14 @@ export default function AuthForm({ mode }: AuthFormProps) {
   } = useForm<AuthFormValues>({
     // Cast resolver because schema varies by mode; our form value type is a superset
     resolver: zodResolver(schema) as any,
-    defaultValues: mode === "register" ? { role: "ARTIST" } : undefined,
+    defaultValues: mode === "register" ? { role: initialRole } : undefined,
   });
 
   useEffect(() => {
     if (mode === "register") {
-      setValue("role", selectedRole);
+      setValue("role", initialRole);
     }
-  }, [selectedRole, setValue, mode]);
+  }, [initialRole, setValue, mode]);
 
   useEffect(() => {
     if (isAuthenticated && user) {
@@ -90,7 +90,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
           name: data.name ?? "",
           email: data.email,
           password: data.password,
-          role: (data.role as UserRole) ?? selectedRole,
+          role: (data.role as UserRole) ?? initialRole,
         })
       );
     }
@@ -101,44 +101,15 @@ export default function AuthForm({ mode }: AuthFormProps) {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {mode === "register" && (
           <>
-            {/* Role Selection */}
-            <div>
-              <Label className="mb-3 block">I am a</Label>
-              <div className="grid grid-cols-2 gap-4">
-                <Button
-                  type="button"
-                  variant={selectedRole === "ARTIST" ? "default" : "outline"}
-                  onClick={() => setSelectedRole("ARTIST")}
-                  className="h-20"
-                >
-                  <div className="text-center">
-                    <div className="font-semibold">Artist</div>
-                    <div className="text-xs opacity-80">DJ, Singer, Performer</div>
-                  </div>
-                </Button>
-                <Button
-                  type="button"
-                  variant={selectedRole === "VENUE" ? "default" : "outline"}
-                  onClick={() => setSelectedRole("VENUE")}
-                  className="h-20"
-                >
-                  <div className="text-center">
-                    <div className="font-semibold">Venue</div>
-                    <div className="text-xs opacity-80">Club, Restaurant, Event</div>
-                  </div>
-                </Button>
-              </div>
-              {/* Hidden field to register role with React Hook Form */}
-              <input type="hidden" {...registerField("role")} />
-            </div>
+            {/* Hidden field to register role with React Hook Form */}
+            <input type="hidden" {...registerField("role")} />
             <div>
               <Label htmlFor="name">Name</Label>
               <Input
                 id="name"
                 type="text"
-                placeholder="Enter your name"
                 {...registerField("name")}
-                className="mt-2"
+                className="mt-2 rounded-xs h-[42px]"
               />
               {errors.name && <p className="text-sm text-destructive mt-1">{errors.name.message}</p>}
             </div>
@@ -151,9 +122,8 @@ export default function AuthForm({ mode }: AuthFormProps) {
           <Input
             id="email"
             type="email"
-            placeholder="Enter your email"
             {...registerField("email")}
-            className="mt-2"
+            className="mt-2 rounded-xs h-[42px]"
           />
           {errors.email && <p className="text-sm text-destructive mt-1">{errors.email.message}</p>}
         </div>
@@ -164,9 +134,8 @@ export default function AuthForm({ mode }: AuthFormProps) {
           <Input
             id="password"
             type="password"
-            placeholder="Enter your password"
             {...registerField("password")}
-            className="mt-2"
+            className="mt-2 rounded-xs h-[42px]"
           />
           {errors.password && <p className="text-sm text-destructive mt-1">{errors.password.message}</p>}
         </div>

@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { logout } from "@/store/slices/authSlice";
+import { clearArtistProfile } from "@/store/slices/artistSlice";
+import { clearVenueProfile } from "@/store/slices/venueSlice";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -13,29 +15,96 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Button2 } from "../ui/CustomButton";
 
 export default function Navbar() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { user, isAuthenticated } = useAppSelector((state) => state.auth);
+  const { user, isAuthenticated, loading } = useAppSelector((state) => state.auth);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(clearArtistProfile());
+    dispatch(clearVenueProfile());
     router.push("/");
   };
 
+  // Show skeleton/loading state while checking authentication
+  const renderAuthButtons = () => {
+    if (loading) {
+      return (
+        <div className="hidden lg:flex items-center h-full flex-1 justify-end">
+          <div className="h-10 w-24 bg-muted animate-pulse rounded"></div>
+        </div>
+      );
+    }
+
+    if (isAuthenticated && user) {
+      return (
+        <>
+          <Link
+            href={user.role === "ARTIST" ? "/dashboard/artist" : "/dashboard/venue"}
+            className="h-full "
+          >
+            <button className="flex w-full items-center bg-foreground  text-black justify-center h-full  lg:hover:bg-primary text-lg transition-colors duration-200 hover:bg-pink hover:text-black lg:w-auto lg:border-l-[1px] lg:py-2 lg:px-6 ">
+            Dashboard
+            </button>
+          </Link>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+          <button className="flex w-full bg-black text-white  h-full items-center justify-center h-full lg:hover:bg-primary border-black p-4 text-lg text-white transition-colors duration-200 hover:bg-pink hover:text-black lg:w-auto lg:border-l lg:py-2 lg:px-6">
+                {user.name}
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={handleLogout}>
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </>
+      );
+    }
+
+    return (
+      <>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="flex w-full items-center bg-foreground  text-black justify-center h-full  lg:hover:bg-primary text-lg transition-colors duration-200 hover:bg-pink hover:text-black lg:w-auto lg:border-l-[1px] lg:py-2 lg:px-6 ">
+              Get started
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent >
+            <DropdownMenuItem asChild>
+              <Link href="/register?role=artist">
+                Sign up as Artist
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/register?role=venue">
+                Sign up as Venue
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <Link href="/login" className="h-full ">
+          <button className="flex w-full bg-black text-white  h-full items-center justify-center h-full lg:hover:bg-primary border-black p-4 text-lg text-white transition-colors duration-200 hover:bg-pink hover:text-black lg:w-auto lg:border-l lg:py-2 lg:px-6">
+            Log in 
+          </button>
+        </Link>
+      </>
+    );
+  };
+
   return (
-    <header className="sticky top-0 z-50 w-full bg-background border-b border-border">
-      <div className="w-full flex justify-center px-4 sm:px-6 lg:px-4">
-        <nav className="flex max-w-7xl w-full items-center justify-between py-5">
+    <header className="sticky top-0 z-50 w-full bg-background border-b border-border inset-x-0">
+      <div className="w-full flex justify-center">
+        <div className="flex w-full h-16  lg:h-20 px-4 sm:px-6 lg:pl-9 lg:pr-0">
         {/* Left - Logo */}
         <div className="flex items-center flex-1">
           <Link href="/" className="flex items-center gap-3 flex-shrink-0">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-              <span className="text-lg font-bold text-primary-foreground">♪</span>
-            </div>
-            <span className="text-2xl font-bold text-foreground tracking-tight">GigBook</span>
+            <span className="text-2xl font-bold text-secondary tracking-tight">GigBook</span>
           </Link>
         </div>
 
@@ -43,7 +112,7 @@ export default function Navbar() {
         <div className="hidden items-center gap-12 lg:flex flex-1 justify-center">
           <Link
             href="/artists"
-            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
+            className="text-sm font-medium text-white hover:text-foreground transition-colors duration-200"
           >
             Browse Artists
           </Link>
@@ -56,56 +125,8 @@ export default function Navbar() {
         </div>
 
         {/* Right - Desktop Sign In & CTA */}
-        <div className="hidden lg:flex gap-4 items-center flex-1 justify-end">
-          {isAuthenticated && user ? (
-            <>
-              <Link
-                href={user.role === "ARTIST" ? "/dashboard/artist" : "/dashboard/venue"}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
-              >
-                Dashboard
-              </Link>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline">
-                    {user.name}
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={handleLogout}>
-                    Logout
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </>
-          ) : (
-            <>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline">
-                    Sign In
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem asChild>
-                    <Link href="/login">
-                      Sign in as Artist
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/login">
-                      Sign in as Venue
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-              <Link href="/register">
-                <Button>
-                  Get Started
-                </Button>
-              </Link>
-            </>
-          )}
+        <div className="hidden lg:flex  items-center h-full flex-1 justify-end">
+          {renderAuthButtons()}
         </div>
 
         {/* Mobile Menu Button */}
@@ -116,49 +137,53 @@ export default function Navbar() {
         >
           {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
-      </nav>
+      </div>
       </div>
 
       {/* Mobile Navigation */}
       {isMobileOpen && (
-        <div className="border-t border-border bg-card lg:hidden">
-          <div className="flex flex-col gap-4 px-4 py-5">
+        <div className="border-t border-border text-white bg-card lg:hidden text-lg font-normal">
+          <div className="flex flex-col items-center">
             <Link
               href="/artists"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className="py-4 transition-colors text-center w-full"
             >
               Browse Artists
             </Link>
             <Link
               href="/venues"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className="py-4  transition-colors text-center w-full"
             >
               Browse Venues
             </Link>
-            <div className="flex flex-col gap-3 pt-4 border-t border-border">
+            <div className="flex flex-col w-full items-center">
               {isAuthenticated && user ? (
                 <>
-                  <Link href={user.role === "ARTIST" ? "/dashboard/artist" : "/dashboard/venue"}>
-                    <Button variant="outline" className="w-full">
+                  <Link href={user.role === "ARTIST" ? "/dashboard/artist" : "/dashboard/venue"} className="w-full">
+                    <Button2 className="w-full">
                       Dashboard
-                    </Button>
+                    </Button2>
                   </Link>
-                  <span className="text-sm font-medium text-foreground text-center">{user.name}</span>
-                  <Button onClick={handleLogout} className="w-full">
+                  <Button2 onClick={handleLogout} className="w-full">
                     Logout
-                  </Button>
+                  </Button2>
                 </>
               ) : (
                 <>
                   <Link href="/login" className="w-full">
-                    <Button variant="outline" className="w-full">
+                    <Button2 className="w-full">
                       Sign In
-                    </Button>
+                    </Button2>
                   </Link>
-                  <Link href="/register" className="w-full">
-                    <Button className="w-full">
-                      Get Started
-                    </Button>
+                  <Link href="/register?role=artist" className="w-full">
+                    <Button2 className="w-full">
+                      Sign up as Artist
+                    </Button2>
+                  </Link>
+                  <Link href="/register?role=venue" className="w-full">
+                    <Button2 className="w-full">
+                      Sign up as Venue
+                    </Button2>
                   </Link>
                 </>
               )}

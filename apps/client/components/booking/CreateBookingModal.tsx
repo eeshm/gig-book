@@ -14,7 +14,7 @@ import { toast } from "react-hot-toast";
 
 const bookingSchema = z.object({
   date: z.string().min(1, "Date is required"),
-  message: z.string().optional(),
+  message: z.string().max(500, "Message must be less than 500 characters").optional(),
 });
 
 type BookingFormData = z.infer<typeof bookingSchema>;
@@ -47,7 +47,7 @@ export default function CreateBookingModal({
       createBooking({
         artistId,
         date: data.date,
-        message: data.message,
+        message: data.message || undefined,
       })
     );
 
@@ -56,7 +56,8 @@ export default function CreateBookingModal({
       onSuccess?.();
       onClose();
     } else {
-      toast.error("Failed to create booking request");
+      const errorMessage = result.payload as string || "Failed to create booking request";
+      toast.error(errorMessage);
     }
   };
 

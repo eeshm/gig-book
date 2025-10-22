@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
-import { User, Music, Calendar, Home } from "lucide-react";
+import { User, Music, Calendar, Home, Menu, X } from "lucide-react";
+import { useState } from "react";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -12,6 +13,7 @@ interface DashboardLayoutProps {
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const pathname = usePathname();
   const { user } = useAppSelector((state) => state.auth);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const isArtist = user?.role === "ARTIST";
   const dashboardLink = isArtist ? "/dashboard/artist" : "/dashboard/venue";
@@ -23,9 +25,36 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Mobile Header */}
+      <div className="lg:hidden bg-card p-4 flex items-center justify-between sticky top-0 z-40">
+        <button
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          className="text-foreground"
+          aria-label="Toggle menu"
+        >
+          {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* Mobile Sidebar Overlay */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/60 z-40 lg:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       <div className="flex">
         {/* Sidebar */}
-        <aside className="w-64 bg-card border-r border-border min-h-screen p-6">
+        <aside
+          className={`
+            fixed lg:static inset-y-0 left-0 z-50
+            w-64 bg-card border-r border-border min-h-screen p-6
+            transform transition-transform duration-600 ease-in-out
+            ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+          `}
+        >
+          {/* User Info - Now visible on both mobile and desktop */}
           <div className="mb-8">
             <div className="flex items-center space-x-3 mb-2">
               <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
@@ -46,13 +75,14 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition ${
+                  onClick={() => setIsSidebarOpen(false)}
+                  className={`flex items-center space-x-2 text-xs px-2 py-1 rounded-xs transition ${
                     isActive
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      ? "bg-white/10 text-primary-foreground outline-1 outline-offset-2 outline-border"
+                      : "text-muted-foreground hover:bg-white/10 hover:text-foreground"
                   }`}
                 >
-                  <Icon className="w-5 h-5" />
+                  <Icon className="w-3 h-3 stroke-1" />
                   <span className="font-medium">{item.label}</span>
                 </Link>
               );
@@ -61,7 +91,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-8">{children}</main>
+        <main className="flex-1 p-4 sm:p-6 lg:p-8">{children}</main>
       </div>
     </div>
   );

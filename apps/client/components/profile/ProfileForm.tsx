@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useForm, FieldErrors } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -9,9 +10,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Artist, Venue, CreateArtistData, CreateVenueData } from "@/types";
 
-// Artist Form Schema
+// Artist Form Schema - matching backend enum
 const artistSchema = z.object({
-  artistType: z.string().min(2, "Artist type is required"),
+  artistType: z.enum(["DJ", "LIVE_PERFORMER", "SINGER", "INSTRUMENTALIST", "BAND", "OTHER"], {
+    message: "Please select a valid artist type",
+  }),
   location: z.string().min(2, "Location is required"),
   bio: z.string().min(10, "Bio must be at least 10 characters"),
   pricePerGig: z.number().min(0, "Price must be a positive number"),
@@ -19,7 +22,7 @@ const artistSchema = z.object({
 
 // Venue Form Schema
 const venueSchema = z.object({
-  name: z.string().min(2, "Venue name is required"),
+  venueName: z.string().min(2, "Venue name is required"),
   location: z.string().min(2, "Location is required"),
   description: z.string().min(10, "Description must be at least 10 characters"),
   capacity: z.number().min(0, "Capacity must be a positive number").optional(),
@@ -48,6 +51,7 @@ export default function ProfileForm({
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(schema),
@@ -60,7 +64,7 @@ export default function ProfileForm({
             pricePerGig: (initialData as Artist).pricePerGig,
           }
         : {
-            name: (initialData as Venue).venueName,
+            venueName: (initialData as Venue).venueName,
             location: initialData.location,
             description: (initialData as Venue).description,
             capacity: (initialData as Venue).capacity,
@@ -69,7 +73,37 @@ export default function ProfileForm({
       : undefined,
   });
 
+  // Update form when initialData changes
+  useEffect(() => {
+    if (initialData) {
+      if (isArtist) {
+        reset({
+          artistType: (initialData as Artist).artistType,
+          location: initialData.location,
+          bio: (initialData as Artist).bio,
+          pricePerGig: (initialData as Artist).pricePerGig,
+        });
+      } else {
+        reset({
+          venueName: (initialData as Venue).venueName,
+          location: initialData.location,
+          description: (initialData as Venue).description,
+          capacity: (initialData as Venue).capacity,
+          venueType: (initialData as Venue).venueType,
+        });
+      }
+    }
+  }, [initialData, isArtist, reset]);
+
   const handleFormSubmit = (data: ArtistFormData | VenueFormData) => {
+    // Clean up empty optional fields for venue
+    if (!isArtist) {
+      const venueData = data as VenueFormData;
+      // Remove venueType if it's empty
+      if (!venueData.venueType || venueData.venueType.trim() === '') {
+        delete venueData.venueType;
+      }
+    }
     onSubmit(data as CreateArtistData | CreateVenueData);
   };
 
@@ -80,13 +114,19 @@ export default function ProfileForm({
           {/* Artist Type */}
           <div>
             <Label htmlFor="artistType">Artist Type</Label>
-            <Input
+            <select
               id="artistType"
-              type="text"
-              placeholder="e.g., DJ, Singer, Live Band"
               {...register("artistType")}
-              className="mt-2"
-            />
+              className="mt-2 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <option value="">Select artist type</option>
+              <option value="DJ">DJ</option>
+              <option value="LIVE_PERFORMER">Live Performer</option>
+              <option value="SINGER">Singer</option>
+              <option value="INSTRUMENTALIST">Instrumentalist</option>
+              <option value="BAND">Band</option>
+              <option value="OTHER">Other</option>
+            </select>
             {(errors as FieldErrors<ArtistFormData>).artistType && (
               <p className="text-sm text-destructive mt-1">{(errors as FieldErrors<ArtistFormData>).artistType?.message}</p>
             )}
@@ -139,15 +179,15 @@ export default function ProfileForm({
         <>
           {/* Venue Name */}
           <div>
-            <Label htmlFor="name">Venue Name</Label>
+            <Label htmlFor="venueName">Venue Name</Label>
             <Input
-              id="name"
+              id="venueName"
               type="text"
               placeholder="e.g., Blue Note Jazz Club"
-              {...register("name")}
+              {...register("venueName")}
               className="mt-2"
             />
-            {(errors as FieldErrors<VenueFormData>).name && <p className="text-sm text-destructive mt-1">{(errors as FieldErrors<VenueFormData>).name?.message}</p>}
+            {(errors as FieldErrors<VenueFormData>).venueName && <p className="text-sm text-destructive mt-1">{(errors as FieldErrors<VenueFormData>).venueName?.message}</p>}
           </div>
 
           {/* Location */}
@@ -202,7 +242,9 @@ export default function ProfileForm({
               id="capacity"
               type="number"
               placeholder="e.g., 200"
-              {...register("capacity", { valueAsNumber: true })}
+              {...register("capacity", { 
+                setValueAs: (v) => v === "" || v === null ? undefined : parseInt(v, 10)
+              })}
               className="mt-2"
             />
             {(errors as FieldErrors<VenueFormData>).capacity && (

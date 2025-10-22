@@ -51,6 +51,8 @@ model VenueProfile{
   venueName        String
   location         String
   description      String 
+  capacity         Int?
+  venueType        String?
   mediaUrls        String[] @default([])
   bookings         Booking[] @relation("VenueBookings")
   createdAt        DateTime @default(now())

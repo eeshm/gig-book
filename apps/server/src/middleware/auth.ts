@@ -9,7 +9,16 @@ type JwtPayload = {
     exp?: number;
 };
 
-export default async function auth(req: Request, res: Response, next: NextFunction) {
+export interface AuthenticatedRequest extends Request {
+    userId?: string;
+    user?: {
+        id: string;
+        role: string;
+        email: string;
+    };
+}
+
+export default async function auth(req: AuthenticatedRequest, res: Response, next: NextFunction) {
     const header = req.headers.authorization;
     if (!header || !header.startsWith("Bearer ")) {
         return res.status(401).json({ message: "No token provided" });
@@ -26,6 +35,7 @@ export default async function auth(req: Request, res: Response, next: NextFuncti
         if (!user) {
             return res.status(401).json({ message: "Invalid token" });
         }
+        req.userId = user.id;
         req.user = { id: user.id, role: user.role, email: user.email };
         return next();
     } catch (err) {

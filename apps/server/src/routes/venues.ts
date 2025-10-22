@@ -13,12 +13,12 @@ import { requireRole } from "../middleware/roles.js";
 
 const venueRoutes = express.Router();
 
-venueRoutes.get("/:id", getVenueById);
-
+// IMPORTANT: Specific routes must come before parameterized routes
+venueRoutes.get("/me", auth, requireRole("VENUE"), getMyVenueProfile);
 venueRoutes.get("/", getVenues);
 venueRoutes.post("/", auth, requireRole("VENUE"), createVenue);
+venueRoutes.get("/:id", getVenueById);
 venueRoutes.put("/:id", auth, requireRole("VENUE"), updateVenue);
 venueRoutes.delete("/:id", auth, requireRole("VENUE"), deleteVenue);
-venueRoutes.get("/me", auth, requireRole("VENUE"), getMyVenueProfile);
 
 export default venueRoutes;

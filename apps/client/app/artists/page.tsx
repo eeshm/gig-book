@@ -24,6 +24,9 @@ export default function BrowseArtistsPage() {
     );
   }
 
+  // Ensure artists is always an array
+  const artistsList = Array.isArray(artists) ? artists : [];
+
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -36,7 +39,7 @@ export default function BrowseArtistsPage() {
         </div>
 
         {/* Artists Grid */}
-        {artists.length === 0 ? (
+        {artistsList.length === 0 ? (
           <EmptyState
             icon={Music}
             title="No Artists Found"
@@ -44,7 +47,7 @@ export default function BrowseArtistsPage() {
           />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {artists.map((artist) => (
+            {artistsList.map((artist) => (
               <BrowseCard key={artist.id} type="artist" data={artist} />
             ))}
           </div>

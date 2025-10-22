@@ -15,7 +15,7 @@ import EmptyState from "@/components/shared/EmptyState";
 import { Button } from "@/components/ui/button";
 import { CreateArtistData, CreateVenueData } from "@/types";
 import { toast } from "react-hot-toast";
-import { UserCircle, Edit, DollarSign, MapPin } from "lucide-react";
+import { UserCircle, Edit, DollarSign, MapPin, IndianRupee } from "lucide-react";
 
 export default function ArtistDashboardPage() {
   const dispatch = useAppDispatch();
@@ -40,7 +40,10 @@ export default function ArtistDashboardPage() {
     );
     if (createArtistProfile.fulfilled.match(result)) {
       toast.success("Profile created successfully!");
+      // Profile is already set in state from the create response
       setIsEditing(false);
+    } else if (createArtistProfile.rejected.match(result)) {
+      toast.error("Failed to create profile. Please try again.");
     }
   };
 
@@ -52,7 +55,10 @@ export default function ArtistDashboardPage() {
     );
     if (updateArtistProfile.fulfilled.match(result)) {
       toast.success("Profile updated successfully!");
+      // Profile is already updated in state from the update response
       setIsEditing(false);
+    } else if (updateArtistProfile.rejected.match(result)) {
+      toast.error("Failed to update profile. Please try again.");
     }
   };
 
@@ -75,16 +81,16 @@ export default function ArtistDashboardPage() {
             description="Set up your profile to start receiving booking requests from venues."
             actionLabel=""
           />
-          <div className="bg-card p-8 rounded-xl border border-border shadow-lg mt-6">
-            <h2 className="text-2xl font-bold text-foreground mb-6">Artist Information</h2>
+          <div className="bg-card p-4 sm:p-6 lg:p-8 rounded-xl border border-border shadow-lg mt-6">
+            <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">Artist Information</h2>
             <ProfileForm
               role="ARTIST"
               onSubmit={handleCreateProfile}
               loading={loading}
             />
 
-            <div className="mt-8">
-              <h3 className="text-xl font-semibold text-foreground mb-4">Media Gallery</h3>
+            <div className="mt-6 sm:mt-8">
+              <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Media Gallery</h3>
               <MediaUploader mediaUrls={mediaUrls} onUploadComplete={setMediaUrls} />
             </div>
           </div>
@@ -97,10 +103,10 @@ export default function ArtistDashboardPage() {
   return (
     <DashboardLayout>
       <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-foreground">My Profile</h1>
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 sm:mb-8 gap-4">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">My Profile</h1>
           {!isEditing && (
-            <Button onClick={() => setIsEditing(true)}>
+            <Button onClick={() => setIsEditing(true)} className="w-full sm:w-auto">
               <Edit className="w-4 h-4 mr-2" />
               Edit Profile
             </Button>
@@ -108,8 +114,8 @@ export default function ArtistDashboardPage() {
         </div>
 
         {isEditing ? (
-          <div className="bg-card p-8 rounded-xl border border-border shadow-lg">
-            <h2 className="text-2xl font-bold text-foreground mb-6">Edit Profile</h2>
+          <div className="bg-card p-4 sm:p-6 lg:p-8 rounded-xl border border-border shadow-lg">
+            <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">Edit Profile</h2>
             <ProfileForm
               role="ARTIST"
               initialData={profile}
@@ -117,14 +123,14 @@ export default function ArtistDashboardPage() {
               loading={loading}
             />
 
-            <div className="mt-8">
-              <h3 className="text-xl font-semibold text-foreground mb-4">Media Gallery</h3>
+            <div className="mt-6 sm:mt-8">
+              <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Media Gallery</h3>
               <MediaUploader mediaUrls={mediaUrls} onUploadComplete={setMediaUrls} />
             </div>
 
             <Button
               variant="outline"
-              className="mt-6"
+              className="mt-6 w-full sm:w-auto"
               onClick={() => {
                 setIsEditing(false);
                 setMediaUrls(profile?.mediaUrls || []);
@@ -134,37 +140,37 @@ export default function ArtistDashboardPage() {
             </Button>
           </div>
         ) : (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Profile Info Card */}
-            <div className="bg-card p-8 rounded-xl border border-border shadow-lg">
+            <div className="bg-card p-4 sm:p-6 lg:p-8 rounded-xl border border-border shadow-lg">
               <div className="space-y-4">
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">Artist Type</p>
-                  <p className="text-lg font-semibold text-foreground">{profile?.artistType}</p>
+                  <p className="text-base sm:text-lg font-semibold text-foreground">{profile?.artistType}</p>
                 </div>
 
-                <div className="flex items-center space-x-2 text-muted-foreground">
-                  <MapPin className="w-4 h-4" />
+                <div className="flex items-center space-x-2 text-muted-foreground text-sm sm:text-base">
+                  <MapPin className="w-4 h-4 flex-shrink-0" />
                   <span>{profile?.location}</span>
                 </div>
 
-                <div className="flex items-center space-x-2 text-muted-foreground">
-                  <DollarSign className="w-4 h-4" />
-                  <span>${profile?.pricePerGig} per gig</span>
+                <div className="flex items-center space-x-2 text-muted-foreground text-sm sm:text-base">
+                  <IndianRupee className="w-4 h-4 flex-shrink-0"/>
+                  <span>{profile?.pricePerGig} per gig</span>
                 </div>
 
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">Bio</p>
-                  <p className="text-foreground">{profile?.bio}</p>
+                  <p className="text-sm sm:text-base text-foreground">{profile?.bio}</p>
                 </div>
               </div>
             </div>
 
             {/* Media Gallery Card */}
-            <div className="bg-card p-8 rounded-xl border border-border shadow-lg">
-              <h3 className="text-xl font-semibold text-foreground mb-4">Media Gallery</h3>
+            <div className="bg-card p-4 sm:p-6 lg:p-8 rounded-xl border border-border shadow-lg">
+              <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Media Gallery</h3>
               {profile?.mediaUrls && profile.mediaUrls.length > 0 ? (
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-4">
                   {profile.mediaUrls.map((url, index) => (
                     <div key={index} className="aspect-square bg-muted rounded-lg overflow-hidden">
                       {url.includes("video") ? (
@@ -180,7 +186,7 @@ export default function ArtistDashboardPage() {
                   ))}
                 </div>
               ) : (
-                <p className="text-muted-foreground">No media uploaded yet</p>
+                <p className="text-sm sm:text-base text-muted-foreground">No media uploaded yet</p>
               )}
             </div>
           </div>

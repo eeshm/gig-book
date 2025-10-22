@@ -26,8 +26,13 @@ api.interceptors.response.use(
 (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
+      // Only clear token and redirect if we're not already on auth pages
+      const isAuthPage = typeof window !== "undefined" && 
+        (window.location.pathname === "/login" || window.location.pathname === "/register");
+      
       Cookies.remove("token");
-      if(typeof window !== "undefined") {
+      
+      if(typeof window !== "undefined" && !isAuthPage) {
         window.location.href = "/login";
       }
     }

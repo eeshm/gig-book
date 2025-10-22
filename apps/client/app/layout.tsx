@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { Toaster } from "react-hot-toast";
 import Navbar from "@/components/layout/Navbar";
+import AuthInitializer from "@/components/shared/AuthInitializer";
 
 
 const geistSans = localFont({
@@ -27,11 +28,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} font-sans `}>
         <Providers>
-          <Navbar />
-          {children}
-          <Toaster position="top-right" />
+          <AuthInitializer>
+            <Navbar />
+            {children}
+            <Toaster position="top-right" />
+          </AuthInitializer>
         </Providers>
       </body>
     </html>

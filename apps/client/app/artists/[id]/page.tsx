@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { useAppSelector } from "@/store/hooks";
-import api from "@/lib/axios";
-import { Artist } from "@/types";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { fetchArtistById } from "@/store/slices/artistSlice";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
 import { Button } from "@/components/ui/button";
 import { MapPin, DollarSign, ArrowLeft } from "lucide-react";
@@ -14,28 +13,16 @@ import CreateBookingModal from "@/components/booking/CreateBookingModal";
 export default function SingleArtistPage() {
   const params = useParams();
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const { user, isAuthenticated } = useAppSelector((state) => state.auth);
-  const [artist, setArtist] = useState<Artist | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { profile: artist, loading } = useAppSelector((state) => state.artist);
   const [showBookingModal, setShowBookingModal] = useState(false);
 
   useEffect(() => {
-    const fetchArtist = async () => {
-      try {
-        const response = await api.get<Artist>(`/api/artists/${params.id}`);
-        setArtist(response.data);
-      } catch (error) {
-        toast.error("Failed to load artist");
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     if (params.id) {
-      fetchArtist();
+      dispatch(fetchArtistById(params.id as string));
     }
-  }, [params.id]);
+  }, [dispatch, params.id]);
 
   const handleBookClick = () => {
     if (!isAuthenticated) {
@@ -198,7 +185,6 @@ export default function SingleArtistPage() {
           onClose={() => setShowBookingModal(false)}
         />
       )}
-      <Button onClick={() => setShowBookingModal(false)}>Close</Button>
-      </div>
+    </div>
   );
 }

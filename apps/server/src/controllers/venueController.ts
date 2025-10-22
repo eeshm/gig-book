@@ -5,8 +5,10 @@ import prisma from "../prisma.js";
 
 export const createVenue = async (req: Request, res: Response) => {
     try {
+        console.log("Creating venue with data:", JSON.stringify(req.body, null, 2));
         const parsed = venueCreateSchema.safeParse(req.body);
         if(!parsed.success) {
+            console.log("Validation failed:", JSON.stringify(parsed.error.format(), null, 2));
             return res.status(400).json({ message: "Invalid data", errors: parsed.error.format() });
         }
         const data = parsed.data;
@@ -24,7 +26,7 @@ export const createVenue = async (req: Request, res: Response) => {
         if (existingVenue) {
             return res.status(400).json({ message: "Venue profile already exists for this user" });
         }
-        const {mediaUrls, ...rest}= data;
+        const {mediaUrls, capacity, venueType, ...rest}= data;
 
         const createdData : Prisma.VenueProfileCreateInput = {
             ...rest,
@@ -32,6 +34,12 @@ export const createVenue = async (req: Request, res: Response) => {
         };
         if(mediaUrls !== undefined){
             createdData.mediaUrls = mediaUrls ;
+        }
+        if(capacity !== undefined){
+            createdData.capacity = capacity;
+        }
+        if(venueType !== undefined){
+            createdData.venueType = venueType;
         }
 
         const venue = await prisma.venueProfile.create({
@@ -48,6 +56,7 @@ export const createVenue = async (req: Request, res: Response) => {
 
 export const getMyVenueProfile = async (req: Request, res: Response) => {
     try{
+        console.log("Getting venue profile for user:", req.user?.id);
         if(!req.user){
             return res.status(401).json({ message: "Unauthorized" });
         }
@@ -59,8 +68,10 @@ export const getMyVenueProfile = async (req: Request, res: Response) => {
             include:{user: { select: { id: true, name: true, email: true } } }
         });
         if(!venue){
+            console.log("No venue profile found for user:", req.user.id);
             return res.status(404).json({ message: "Venue profile not found" });
         }
+        console.log("Venue profile found:", venue.id);
         return res.status(200).json(venue);
     }
     catch(error){
@@ -163,7 +174,7 @@ export const updateVenue = async (req: Request, res: Response) => {
         }
         const data = parsed.data;
 
-        const { venueName,location,description,mediaUrls } = data;
+        const { venueName,location,description,mediaUrls, capacity, venueType } = data;
         const updatedData: Prisma.VenueProfileUpdateInput = {};
         if (venueName !== undefined) {
             updatedData.venueName = venueName;
@@ -176,6 +187,12 @@ export const updateVenue = async (req: Request, res: Response) => {
         }
         if (mediaUrls !== undefined) {
             updatedData.mediaUrls = mediaUrls;
+        }
+        if (capacity !== undefined) {
+            updatedData.capacity = capacity;
+        }
+        if (venueType !== undefined) {
+            updatedData.venueType = venueType;
         }
         const venue = await prisma.venueProfile.update({
             where: { id },

@@ -1,37 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import api from "@/lib/axios";
-import { Venue } from "@/types";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { fetchVenueById } from "@/store/slices/venueSlice";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
 import { Button } from "@/components/ui/button";
 import { MapPin, Users, Building2, ArrowLeft } from "lucide-react";
-import { toast } from "react-hot-toast";
 
 export default function SingleVenuePage() {
   const params = useParams();
   const router = useRouter();
-  const [venue, setVenue] = useState<Venue | null>(null);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useAppDispatch();
+  const { profile: venue, loading } = useAppSelector((state) => state.venue);
 
   useEffect(() => {
-    const fetchVenue = async () => {
-      try {
-        const response = await api.get<Venue>(`/api/venues/${params.id}`);
-        setVenue(response.data);
-      } catch (error) {
-        toast.error("Failed to load venue");
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     if (params.id) {
-      fetchVenue();
+      dispatch(fetchVenueById(params.id as string));
     }
-  }, [params.id]);
+  }, [dispatch, params.id]);
 
   if (loading) {
     return (

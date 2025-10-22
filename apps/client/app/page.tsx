@@ -4,7 +4,7 @@ import { Music, Calendar, Users } from "lucide-react";
 
 export default function HomePage() {
   return (
-    <div className="w-full bg-background flex flex-col mt-5">
+    <div className="w-full bg-background flex flex-col mt-15">
       {/* Hero Section */}
     <section className="w-full flex justify-center px-4 sm:px-6 lg:px-4">
       <div className="max-w-7xl w-full">
@@ -15,12 +15,8 @@ export default function HomePage() {
               <div className="space-y-3">
                 <div className="flex items-center mb-4">
                 </div>
-                <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-foreground text-balance leading-tight">
-                  Your Vision
-                  <br />
-                  <span className="relative inline-block">
-                    Our Mission
-                  </span>
+                <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground text-balance leading-tight">
+            Connect Artists with <span className="text-primary">Perfect Venues</span>
                 </h1>
               </div>
               <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-lg font-medium">
@@ -30,17 +26,21 @@ export default function HomePage() {
             </div>
 
             <div className="flex flex-col gap-4 sm:flex-row sm:gap-5 pt-4">
-              <Button className="rounded-lg bg-primary px-8 py-3.5 text-base font-bold text-primary-foreground hover:bg-primary/90 transition-colors duration-200 shadow-lg hover:shadow-xl">
-                Request a Demo
+              <Link href="/register?role=artist">
+              <Button className="items-center justify-center transition-all duration-150 group-hover:-translate-x-2 group-hover:-translate-y-2 w-full lg:w-auto h-14 px-8 text-xl lg:h-16 lg:px-10 lg:text-xl bg-primary text-white">
+              I am an Artist
               </Button>
-              <Button className="rounded-lg border-2 bg-black border-foreground px-8 py-3.5 text-base font-bold text-foreground hover:bg-foreground/10 transition-colors duration-200">
-                Learn More
+              </Link>
+              <Link href="/register?role=venue">
+              <Button className="items-center bg-black justify-center border border-gray-400 transition-all duration-150 group-hover:-translate-x-2 group-hover:-translate-y-2 w-full lg:w-auto h-14 px-8 text-xl lg:h-16 lg:px-10 lg:text-xl">
+              I am a Venue
               </Button>
+              </Link>
             </div>
           </div>
 
           {/* Right Visual */}
-          <div className="relative h-96 lg:h-full min-h-96">
+          <div className="relative h-96 lg:h-full min-h-96 mt-10">
             <div className="absolute inset-0 bg-primary rounded-3xl overflow-hidden flex items-center justify-center shadow-2xl">
               {/* Grid pattern background */}
               <div className="absolute inset-0 opacity-25">
