@@ -57,9 +57,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           {/* User Info - Now visible on both mobile and desktop */}
           <div className="mb-8">
             <div className="flex items-center space-x-3 mb-2">
-              <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-                {isArtist ? <Music className="w-5 h-5" /> : <User className="w-5 h-5" />}
-              </div>
+              {/* <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+              </div> */}
               <div>
                 <p className="font-semibold text-foreground">{user?.name}</p>
                 <p className="text-xs text-muted-foreground capitalize">{user?.role?.toLowerCase()}</p>

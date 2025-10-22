@@ -33,7 +33,7 @@ export default function RootLayout({
           <AuthInitializer>
             <Navbar />
             {children}
-            <Toaster position="top-right" />
+            <Toaster position="bottom-left" />
           </AuthInitializer>
         </Providers>
       </body>

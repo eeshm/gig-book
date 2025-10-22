@@ -71,7 +71,7 @@ export default function Navbar() {
       <>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="flex w-full items-center bg-foreground  text-black justify-center h-full  lg:hover:bg-primary text-lg transition-colors duration-200 hover:bg-pink hover:text-black lg:w-auto lg:border-l-[1px] lg:py-2 lg:px-6 ">
+            <button className="flex w-full items-center bg-foreground text-black justify-center h-full  lg:hover:bg-primary text-lg transition-colors duration-200 hover:text-black lg:w-auto lg:px-6 ">
               Get started
             </button>
           </DropdownMenuTrigger>
@@ -89,7 +89,7 @@ export default function Navbar() {
           </DropdownMenuContent>
         </DropdownMenu>
         <Link href="/login" className="h-full ">
-          <button className="flex w-full bg-black text-white  h-full items-center justify-center h-full lg:hover:bg-primary border-black p-4 text-lg text-white transition-colors duration-200 hover:bg-pink hover:text-black lg:w-auto lg:border-l lg:py-2 lg:px-6">
+          <button className="flex w-full bg-black text-white h-full items-center justify-center h-full lg:hover:bg-primary border-black p-4 text-lg text-white transition-colors duration-200 hover:text-black lg:w-auto lg:px-6">
             Log in 
           </button>
         </Link>
@@ -99,8 +99,8 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background border-b border-border inset-x-0">
-      <div className="w-full flex justify-center">
-        <div className="flex w-full h-16  lg:h-20 px-4 sm:px-6 lg:pl-9 lg:pr-0">
+      <div className="w-full flex justify-center ">
+        <div className="flex w-full h-16 lg:h-20 px-4 sm:px-6 lg:pl-9 lg:pr-0">
         {/* Left - Logo */}
         <div className="flex items-center flex-1">
           <Link href="/" className="flex items-center gap-3 flex-shrink-0">
@@ -140,57 +140,65 @@ export default function Navbar() {
       </div>
       </div>
 
-      {/* Mobile Navigation */}
-      {isMobileOpen && (
-        <div className="border-t border-border text-white bg-card lg:hidden text-lg font-normal">
-          <div className="flex flex-col items-center">
-            <Link
-              href="/artists"
-              className="py-4 transition-colors text-center w-full"
-            >
-              Browse Artists
-            </Link>
-            <Link
-              href="/venues"
-              className="py-4  transition-colors text-center w-full"
-            >
-              Browse Venues
-            </Link>
-            <div className="flex flex-col w-full items-center">
-              {isAuthenticated && user ? (
-                <>
-                  <Link href={user.role === "ARTIST" ? "/dashboard/artist" : "/dashboard/venue"} className="w-full">
-                    <Button2 className="w-full">
-                      Dashboard
-                    </Button2>
-                  </Link>
-                  <Button2 onClick={handleLogout} className="w-full">
-                    Logout
+      {/* Mobile Navigation - Full Screen Slide from Right */}
+      <div 
+        className={`fixed inset-0  bg-card lg:hidden z-40 transform transition-transform duration-300 ease-in-out ${
+          isMobileOpen ? 'translate-y-0' : '-translate-y-full'
+        } ${isMobileOpen ? 'top-16' : 'top-0'}`}
+      >
+        <div className="flex flex-col items-center h-full text-white text-lg font-normal px-8">
+          <Link
+            href="/artists"
+            className="py-6 transition-colors text-center w-full hover:text-secondary"
+            onClick={() => setIsMobileOpen(false)}
+          >
+            Browse Artists
+          </Link>
+          <Link
+            href="/venues"
+            className="py-6 transition-colors text-center w-full hover:text-secondary"
+            onClick={() => setIsMobileOpen(false)}
+          >
+            Browse Venues
+          </Link>
+          <div className="flex flex-col w-full items-center gap-4 ">
+            {isAuthenticated && user ? (
+              <>
+                <Link 
+                  href={user.role === "ARTIST" ? "/dashboard/artist" : "/dashboard/venue"} 
+                  className="w-full"
+                  onClick={() => setIsMobileOpen(false)}
+                >
+                  <Button2 className="w-full">
+                    Dashboard
                   </Button2>
-                </>
-              ) : (
-                <>
-                  <Link href="/login" className="w-full">
-                    <Button2 className="w-full">
-                      Sign In
-                    </Button2>
-                  </Link>
-                  <Link href="/register?role=artist" className="w-full">
-                    <Button2 className="w-full">
-                      Sign up as Artist
-                    </Button2>
-                  </Link>
-                  <Link href="/register?role=venue" className="w-full">
-                    <Button2 className="w-full">
-                      Sign up as Venue
-                    </Button2>
-                  </Link>
-                </>
-              )}
-            </div>
+                </Link>
+                <Button2 onClick={() => { handleLogout(); setIsMobileOpen(false); }} className="w-full">
+                  Logout
+                </Button2>
+              </>
+            ) : (
+              <>
+                <Link href="/login" className="w-full" onClick={() => setIsMobileOpen(false)}>
+                  <Button2 className="w-full">
+                    Sign In
+                  </Button2>
+                </Link>
+                <Link href="/register?role=artist" className="w-full" onClick={() => setIsMobileOpen(false)}>
+                  <Button2 className="w-full">
+                    Sign up as Artist
+                  </Button2>
+                </Link>
+                <Link href="/register?role=venue" className="w-full" onClick={() => setIsMobileOpen(false)}>
+                  <Button2 className="w-full">
+                    Sign up as Venue
+                  </Button2>
+                </Link>
+              </>
+            )}
           </div>
         </div>
-      )}
+      </div>
     </header>
   );
 }

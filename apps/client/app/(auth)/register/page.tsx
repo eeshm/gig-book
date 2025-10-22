@@ -1,16 +1,14 @@
-import Link from "next/link";
+"use client"
 import AuthForm from "@/components/auth/AuthForm";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default async function RegisterPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ role?: string }>;
-}) {
-  // Await searchParams before accessing its properties
-  const params = await searchParams;
-  // Convert URL role to uppercase for the enum, default to ARTIST
-  const role = params.role?.toUpperCase() === "VENUE" ? "VENUE" : "ARTIST";
-
+export default function RegisterPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  
+  // Get role from search params, default to ARTIST
+  const roleParam = searchParams.get("role");
+  const role = roleParam?.toUpperCase() === "VENUE" ? "VENUE" : "ARTIST";
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <div className="w-full max-w-md">
@@ -25,9 +23,9 @@ export default async function RegisterPage({
           <div className="mt-6 text-center">
             <p className="text-sm text-muted-foreground">
               Already have an account?{" "}
-              <Link href="/login" className="text-primary hover:underline font-medium">
+              <button onClick={() => router.push("/login")} className="text-primary hover:underline font-medium">
                 Login
-              </Link>
+              </button>
             </p>
           </div>
         </div>

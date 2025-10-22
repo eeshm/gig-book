@@ -141,7 +141,7 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
         </div>
 
         {/* Submit Button */}
-        <Button type="submit" className="w-full" disabled={loading}>
+        <Button type="submit" className="w-full h-[42px] text-black" disabled={loading}>
           {loading ? "Loading..." : mode === "login" ? "Login" : "Create Account"}
         </Button>
       </form>
