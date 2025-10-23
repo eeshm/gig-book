@@ -98,7 +98,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background border-b border-border inset-x-0">
+    <header className="sticky  font-family-oswald top-0 z-50 w-full bg-background border-b border-border inset-x-0">
       <div className="w-full flex justify-center ">
         <div className="flex w-full h-16 lg:h-20 px-4 sm:px-6 lg:pl-9 lg:pr-0">
         {/* Left - Logo */}
@@ -140,14 +140,22 @@ export default function Navbar() {
       </div>
       </div>
 
+      {/* Mobile Navigation Overlay */}
+      {isMobileOpen && (
+        <div 
+          className="fixed inset-0 bg-black/80 lg:hidden z-40"
+          onClick={() => setIsMobileOpen(false)}
+        />
+      )}
+
       {/* Mobile Navigation - Half Width Slide from Right */}
       <div 
-        className={`fixed right-0 top-0 bottom-0 w-3/4 bg-[#080706] lg:hidden z-60 transform transition-transform duration-300 ease-in-out border border-gray-400/40 ${
+        className={`fixed right-0 top-0 bottom-0 font-family-oswald w-[300px] bg-[#080706] lg:hidden z-50 transform transition-transform duration-300 ease-in-out border-l border-gray-400/20 ${
           isMobileOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="flex flex-col items-center h-full text-white text-mdfont-normal ">
-          <div className="w-full flex justify-between p-4 border border-gray-400/40 ">
+        <div className="flex flex-col items-center h-full text-white text-md font-normal ">
+          <div className="w-full flex justify-between p-4 border-b border-gray-400/20 ">
             <h3 className="text-2xl font-bold text-secondary tracking-tight">
               GigBook
             </h3>
@@ -157,14 +165,14 @@ export default function Navbar() {
           </div>
           <Link
             href="/artists"
-            className="py-6 transition-colors text-center w-full hover:text-secondary"
+            className="py-6 transition-colors text-center w-full "
             onClick={() => setIsMobileOpen(false)}
           >
             Browse Artists
           </Link>
           <Link
             href="/venues"
-            className="py-6 transition-colors text-center w-full hover:text-secondary"
+            className="py-6 transition-colors text-center w-full "
             onClick={() => setIsMobileOpen(false)}
           >
             Browse Venues

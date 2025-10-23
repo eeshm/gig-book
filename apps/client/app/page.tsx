@@ -5,7 +5,8 @@ import Footer from "@/components/layout/Footer";
 import FeaturedSection from "@/components/Landing/FeaturedSection";
 import HowItWorks from "@/components/Landing/HowItWorks";
 import TestimonialSection from "@/components/Landing/TestimonialSection";
-import WhyChooseUs from "@/components/Landing/WhyChooseUs";
+import {WhyChooseGigBook} from "@/components/Landing/WhyChooseGigBook";
+import Image from "next/image";
 
 export default function HomePage() {
   return (
@@ -29,34 +30,39 @@ export default function HomePage() {
             </div>
             <div className="space-y-4 relative z-10">
                 <h1 className="heading">
-                  Connect Artists with <span className="text-primary">Perfect Venues</span>
+                  Where Talent Meets <span className="text-primary">Opportunity</span>
                 </h1>
-              <p className=" max-w-lg subtext ">
+              <p className=" max-w-lg text-[13px] text-foreground/80 font-family-manrope leading-relaxed">
                 We are the trusted partner for artists and venues, offering innovative solutions that turn your ideas
                 into impactful realities.
               </p>
             </div>
 
-            <div className="flex flex-col gap-4 sm:flex-row sm:gap-5 pt-4 relative z-10">
+            <div className="flex flex-col gap-4 sm:flex-row sm:gap-5 pt-4 relative z-10 font-family-oswald ">
               <Link href="/register?role=artist">
-              <Button className="items-center justify-center transition-all duration-150 group-hover:-translate-x-2 group-hover:-translate-y-2 w-full lg:w-auto h-14 px-8 text-xl lg:h-16 lg:px-10 lg:text-xl bg-primary text-white">
+              <Button className="items-center justify-center transition-all duration-150  w-full lg:w-auto h-12 px-8 text-xl lg:h-16 lg:px-10 lg:text-xl bg-primary text-white">
               I am an Artist
               </Button>
               </Link>
               <Link href="/register?role=venue">
-              <Button variant="outline" className="items-center justify-center transition-all duration-150 group-hover:-translate-x-2 group-hover:-translate-y-2 w-full lg:w-auto h-14 px-8 text-xl lg:h-16 lg:px-10 lg:text-xl">
-              I am a Venue
+              <Button variant="outline" className="items-center justify-center transition-all duration-150 hover:bg-primary/90 w-full lg:w-auto h-14 px-8 text-xl lg:h-16 lg:px-10 lg:text-xl relative overflow-hidden">
+              {/* <div className="absolute inset-0 opacity-30" style={{backgroundImage: 'radial-gradient(circle, currentColor 10px, transparent 10px)', backgroundSize: '12px 12px'}}></div> */}
+              <span className="relative z-10">I am a Venue</span>
               </Button>
               </Link>
             </div>
           </div>
 
           {/* Right Visual */}
-          <div className="relative h-96 lg:h-full min-h-96 mt-10">
-            <div className="absolute inset-0  rounded-3xl overflow-hidden flex items-center justify-center shadow-2xl">
-              {/* Grid pattern background */}
-              <div className="absolute inset-0 opacity-25">
-              </div>
+          <div className="relative h-96 lg:h-full min-h-96 mt-0">
+            <div className="absolute inset-0 overflow-hidden flex items-center justify-center shadow-2xl">
+              <Image
+                src="/images/image9.jpg"
+                width={800}
+                height={600}
+                alt="Landing Visual"
+                className="object-cover w-full h-full"
+              />
             </div>
           </div>
         </div>
@@ -64,18 +70,18 @@ export default function HomePage() {
     </section>
 
       <section className="py-24 w-full flex justify-center">
-        <WhyChooseUs />
+        <WhyChooseGigBook/>
       </section>
 
 
-      <section className="">
+      <section className="py-24">
           <Grid />
       </section>
 
       {/* Featured Artists & Venues Section */}
-      {/* <section className="py-24 w-full">
+      <section className="py-24 w-full">
         <FeaturedSection/>
-      </section> */}
+      </section>
 
       {/* Testimonials Section */}
       <section className="py-24 w-full">
@@ -83,9 +89,11 @@ export default function HomePage() {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-2 px-0 w-full dotted-background bg-[rgb(22,22,22)] rounded-2xl mb-10">
+      <section className="py-24">
+      <div className="py-2 px-0 w-full dotted-background bg-[rgb(22,22,22)] rounded-2xl mb-10">
         <HowItWorks />
-      </section>
+      </div>
+    </section>
     </div>
 
         <div style={{ fontSize: "min(27vw, 510px)" }} className="font-semibold text-center text-[rgb(255,108,16)] my-10 md:mb-20 font-family-oswald uppercase text-nowrap text-center leading-[0.7] select-none">
