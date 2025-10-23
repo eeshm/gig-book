@@ -22,21 +22,18 @@ const FeaturedSection = () => {
               <span className="h-8 w-1 bg-primary rounded-full"></span>
               Top Artists
             </h3>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
               <ArtistCard
-                id="1"
                 name="DJ Nexus"
                 genres="Electronic · House · Techno"
                 imageSrc="/images/image1.jpg"
               />
               <ArtistCard
-                id="2"
                 name="The Smooth Notes"
                 genres="Jazz · Blues · Soul"
                 imageSrc="/images/image2.jpg"
               />
               <ArtistCard
-                id="3"
                 name="Sarah Melody"
                 genres="Acoustic · Pop · Indie"
                 imageSrc="/images/image3.jpg"
@@ -50,23 +47,20 @@ const FeaturedSection = () => {
               <span className="h-8 w-1 bg-blue-500 rounded-full"></span>
               Premier Venues
             </h3>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
               <VenueCard
-                id="1"
                 name="The Grand Hall"
                 location="Downtown"
                 capacity={500}
                 imageSrc="/images/image4.jpg"
               />
               <VenueCard
-                id="2"
                 name="Skyline Rooftop"
                 location="Midtown"
                 capacity={200}
                 imageSrc="/images/image5.jpg"
               />
               <VenueCard
-                id="3"
                 name="The Underground Club"
                 location="East Side"
                 capacity={350}
