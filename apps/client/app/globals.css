@@ -1,6 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Oswald:wght@200..700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
-/* @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Oswald:wght@200..700&display=swap'); */
 
 @custom-variant dark (&:is(.dark *));
 
@@ -16,15 +16,18 @@ body {
 }
 
 /* Prevent layout shift on desktop when modal opens */
-@media (min-width: 1024px) {
+@media (min-width >=100%) {
+  max-width: 100%;
   html {
     overflow-y: auto;
     scrollbar-gutter: stable;
   }
 }
 @theme{
-  --font-manrope: 'Manrope', sans-serif;
+  --font-family-manrope: 'Manrope', sans-serif;
+  --font-family-oswald: 'Oswald', sans-serif;
 }
+
 a {
   color: inherit;
   text-decoration: none;
@@ -169,3 +172,22 @@ a {
     padding-right: 0 !important;
   }
 }
+
+.heading{
+  @apply font-family-oswald text-5xl sm:text-6xl font-bold tracking-tight text-foreground text-balance leading-tight;
+}
+
+.subheading{
+  @apply font-family-oswald text-2xl sm:text-3xl font-bold tracking-tight text-foreground text-balance leading-tight;
+}
+.subheadingblack{
+  @apply font-family-oswald text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance leading-tight;
+}
+.subtext{
+  @apply text-[13px] text-muted-foreground font-family-manrope leading-relaxed
+}
+
+.dotted-background {
+      background-image: radial-gradient(#2e2e2e 1px, transparent 1px);
+      background-size: 7px 7px; /* Adjust dot size and spacing */
+    }

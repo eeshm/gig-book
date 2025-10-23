@@ -49,13 +49,7 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
 
   const schema = mode === "login" ? loginSchema : registerSchema;
 
-  const {
-    register: registerField,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm<AuthFormValues>({
-    // Cast resolver because schema varies by mode; our form value type is a superset
+  const {register: registerField, handleSubmit,setValue,formState: { errors },} = useForm<AuthFormValues>({
     resolver: zodResolver(schema) as any,
     defaultValues: mode === "register" ? { role: initialRole } : undefined,
   });
@@ -100,10 +94,10 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
   return (
     <div className="w-full max-w-md">
       <div className="space-y-1 mb-8">
-        <h1 className="text-3xl font-bold text-foreground">
+        <h1 className="subheading text-foreground">
           {mode === "login" ? "Welcome Back" : "Get Started"}
         </h1>
-        <p className="text-muted-foreground text-sm">
+        <p className="subtext">
           {mode === "login"
             ? "Sign in to your account to continue"
             : "Create your account and start booking"}
@@ -117,12 +111,12 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
             <input type="hidden" {...registerField("role")} />
             
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-sm font-medium">Full Name</Label>
+              <Label htmlFor="name" className="subtext">Full Name</Label>
               <Input
                 id="name"
                 type="text"
                 {...registerField("name")}
-                className="rounded-lg h-11 px-4 border-border/60 focus:border-primary transition-colors"
+                className="rounded-lg h-11 text-base px-4 border-border/60 focus:border-primary transition-colors"
               />
               {errors.name && (
                 <p className="text-sm text-destructive flex items-center gap-1 ">
@@ -136,12 +130,12 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
 
         {/* Email Field */}
         <div className="space-y-2">
-          <Label htmlFor="email" className="text-sm font-medium">Email Address</Label>
+          <Label htmlFor="email" className="subtext">Email Address</Label>
           <Input
             id="email"
             type="email"
             {...registerField("email")}
-            className="rounded-lg h-11 px-4 border-border/60 focus:border-primary transition-colors"
+            className="rounded-lg h-11 text-base px-4 border-border/60 focus:border-primary transition-colors"
           />
           {errors.email && (
             <p className="text-sm text-destructive flex items-center gap-1 ">
@@ -154,13 +148,13 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
         {/* Password Field */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <Label htmlFor="password" className="text-sm font-medium">Password</Label>
+            <Label htmlFor="password" className="subtext">Password</Label>
           </div>
           <Input
             id="password"
             type="password"
             {...registerField("password")}
-            className="rounded-lg h-11 px-4 border-border/60 focus:border-primary transition-colors"
+            className="rounded-lg h-11 px-4 text-base border-border/60 focus:border-primary transition-colors"
           />
           {errors.password && (
             <p className="text-sm text-destructive flex items-center gap-1 ">
@@ -177,7 +171,7 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
           disabled={loading}
         >
           {loading ? (
-            <span className="flex items-center justify-center gap-2">
+            <span className="flex items-center justify-center  gap-2">
               <Loader2 className="w-4 h-4 animate-spin" />
               {mode === "login" ? "Signing in..." : "Creating account..."}
             </span>

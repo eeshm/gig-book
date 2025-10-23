@@ -4,7 +4,7 @@ import Image from "next/image";
 export const Grid = () => {
     return (
         <div className="pt-20 ">
-            <div className="grid grid-cols-2 md:grid-cols-4 mx-2">
+            <div className="grid grid-cols-2 md:grid-cols-4">
                 <Column>
                     <Card src="/images/image1.jpg" alt="Jazz Band Performing" className="md:rounded-tl-3xl"/>
                     <Card src="/images/image2.jpg" alt="Jazz Band Performing" className=""/>
@@ -33,7 +33,7 @@ export const Grid = () => {
 
 
 const Card = ({ src, alt, className }: { src: string; alt: string; className: string }) => {
-    return <div className={cn("relative my-2 overflow-hidden shadow-sm group", className)}>
+    return <div className={cn("relative my-2 mx-2 overflow-hidden shadow-sm group", className)}>
             <Image 
             src={src}
             alt={alt}

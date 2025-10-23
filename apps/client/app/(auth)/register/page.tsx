@@ -27,9 +27,9 @@ export default function RegisterPage() {
           {/* Card Container */}
           <div className="shadow-xl backdrop-blur-sm">
             {/* Role Badge */}
-            <div className="inline-flex text-black items-center gap-2 mb-4 px-3 py-1 rounded-md outline outline-offset-3">
-              <span className="w-2 h-2 rounded-full bg-white"></span>
-              <span className="text-xs font-semibold text-white uppercase tracking-wide">
+            <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-md outline outline-offset-3">
+              <span className="w-1 h-1 rounded-full bg-gray-300/80"></span>
+              <span className="text-[10px] font-semibold text-gray-300 uppercase tracking-wide">
                 {role === "VENUE" ? "Venue Account" : "Artist Account"}
               </span>
             </div>

@@ -140,13 +140,21 @@ export default function Navbar() {
       </div>
       </div>
 
-      {/* Mobile Navigation - Full Screen Slide from Right */}
+      {/* Mobile Navigation - Half Width Slide from Right */}
       <div 
-        className={`fixed inset-0  bg-card lg:hidden z-40 transform transition-transform duration-300 ease-in-out ${
-          isMobileOpen ? 'translate-y-0' : '-translate-y-full'
-        } ${isMobileOpen ? 'top-16' : 'top-0'}`}
+        className={`fixed right-0 top-0 bottom-0 w-3/4 bg-[#080706] lg:hidden z-60 transform transition-transform duration-300 ease-in-out border border-gray-400/40 ${
+          isMobileOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
       >
-        <div className="flex flex-col items-center h-full text-white text-lg font-normal">
+        <div className="flex flex-col items-center h-full text-white text-mdfont-normal ">
+          <div className="w-full flex justify-between p-4 border border-gray-400/40 ">
+            <h3 className="text-2xl font-bold text-secondary tracking-tight">
+              GigBook
+            </h3>
+            <button onClick={() => setIsMobileOpen(false)} className="text-white hover:text-gray-300">
+              <X size={24} />
+            </button>
+          </div>
           <Link
             href="/artists"
             className="py-6 transition-colors text-center w-full hover:text-secondary"

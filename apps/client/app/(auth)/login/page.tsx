@@ -29,7 +29,7 @@ export default function LoginPage() {
       <div className="w-full lg:w-3/5 flex items-center justify-center p-4 lg:p-8">
         <div className="w-full max-w-md">
           {/* Back to home link */}
-          <Link href="/" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8">
+          <Link href="/" className="inline-flex items-center subtext mb-6 gap-1">
             <ChevronLeft className="w-4 h-4" />
             Back to home
           </Link>
