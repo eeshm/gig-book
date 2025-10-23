@@ -71,7 +71,7 @@ export default function Navbar() {
       <>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="flex w-full items-center bg-foreground text-black justify-center h-full  lg:hover:bg-primary text-lg transition-colors duration-200 hover:text-black lg:w-auto lg:px-6 ">
+            <button className="flex w-full items-center bg-secondary text-black justify-center h-full  lg:hover:bg-primary text-lg transition-colors duration-200 hover:text-black lg:w-auto lg:px-6 ">
               Get started
             </button>
           </DropdownMenuTrigger>
@@ -98,7 +98,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky  font-family-oswald top-0 z-50 w-full bg-background border-b border-border inset-x-0">
+    <header className="sticky  font-family-oswald top-0 z-50 w-full bg-background  inset-x-0">
       <div className="w-full flex justify-center ">
         <div className="flex w-full h-16 lg:h-20 px-4 sm:px-6 lg:pl-9 lg:pr-0">
         {/* Left - Logo */}
@@ -109,16 +109,16 @@ export default function Navbar() {
         </div>
 
         {/* Center - Desktop Navigation */}
-        <div className="hidden items-center gap-12 lg:flex flex-1 justify-center">
+        <div className="hidden items-center  text-gray-200 gap-12 lg:flex flex-1 justify-center">
           <Link
             href="/artists"
-            className="text-sm font-medium text-white hover:text-foreground transition-colors duration-200"
+            className="text-sm font-medium transition-colors duration-200"
           >
             Browse Artists
           </Link>
           <Link
             href="/venues"
-            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
+            className="text-sm font-medium transition-colors  duration-200"
           >
             Browse Venues
           </Link>
@@ -132,10 +132,10 @@ export default function Navbar() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMobileOpen(!isMobileOpen)}
-          className="lg:hidden text-foreground"
+          className="lg:hidden text-white"
           aria-label="Toggle menu"
         >
-          {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
+          {isMobileOpen ? <X size={24} /> : <Menu size={24}/>}
         </button>
       </div>
       </div>
