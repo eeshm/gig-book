@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Artist, Venue } from "@/types";
-import { MapPin, DollarSign, Users, Music } from "lucide-react";
+import { MapPin, Users, Music } from "lucide-react";
 
 interface BrowseCardProps {
   type: "artist" | "venue";
@@ -17,63 +17,64 @@ export default function BrowseCard({ type, data }: BrowseCardProps) {
   const href = isArtist ? `/artists/${data.id}` : `/venues/${data.id}`;
   const imageUrl = isArtist
     ? artist?.mediaUrls?.[0] || "/placeholder-artist.jpg"
-    : "/placeholder-venue.jpg";
+    : venue?.mediaUrls?.[0] || "/placeholder-venue.jpg";
 
   return (
-    <Link href={href}>
-      <div className="bg-card border border-border rounded-xl overflow-hidden hover:border-primary transition-all hover:shadow-lg group">
+    <Link href={href} className="w-full h-full flex flex-col">
+      <div className="group relative overflow-hidden rounded-2xl border border-border/40 hover:border-primary/30 transition-all duration-300 bg-card cursor-pointer flex-1">
         {/* Image */}
-        <div className="aspect-video bg-muted relative overflow-hidden">
+        <div className="aspect-[4/2] sm:aspect-[4/3] relative overflow-hidden bg-white">
           <img
             src={imageUrl}
             alt={isArtist ? artist?.artistType || "Artist" : venue?.venueName || "Venue"}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="object-cover w-full object-contain h-full group-hover:scale-110 transition-transform duration-300"
             onError={(e) => {
-              e.currentTarget.src = isArtist ? "/placeholder-artist.jpg" : "/placeholder-venue.jpg";
+              e.currentTarget.onerror = null; // Prevent infinite loop
+              e.currentTarget.style.display = 'none'; // Hide broken image
             }}
           />
+          <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-300"></div>
           {isArtist && (
-            <div className="absolute top-3 right-3 bg-primary/90 text-primary-foreground px-3 py-1 rounded-full text-xs font-medium">
+            <div className="absolute top-3 right-3 bg-primary/90 text-primary-foreground px-3 py-1 rounded-md text-xs font-medium">
               {artist?.artistType}
             </div>
           )}
         </div>
 
         {/* Content */}
-        <div className="p-5">
-          <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition">
+        <div className="p-6 flex-1">
+          <h4 className="subheading mb-2">
             {isArtist ? artist?.artistType : venue?.venueName}
-          </h3>
+          </h4>
 
           <div className="space-y-2">
-            <div className="flex items-center text-sm text-muted-foreground">
+            <div className="subtext flex items-center ">
               <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
               <span className="truncate">{data.location}</span>
             </div>
 
             {isArtist && artist?.pricePerGig && (
-              <div className="flex items-center text-sm text-muted-foreground">
-                <DollarSign className="w-4 h-4 mr-2 flex-shrink-0" />
-                <span>${artist.pricePerGig} per gig</span>
+              <div className="flex items-center subtext gap-2">
+                <span>$ {artist.pricePerGig} per gig</span>
               </div>
             )}
 
             {!isArtist && venue?.capacity && (
-              <div className="flex items-center text-sm text-muted-foreground">
+              <div className="flex items-center subtext">
                 <Users className="w-4 h-4 mr-2 flex-shrink-0" />
                 <span>Capacity: {venue.capacity}</span>
               </div>
             )}
 
             {!isArtist && venue?.venueType && (
-              <div className="flex items-center text-sm text-muted-foreground">
+              <div className="flex items-center subtext">
                 <Music className="w-4 h-4 mr-2 flex-shrink-0" />
                 <span>{venue.venueType}</span>
               </div>
             )}
           </div>
 
-          <p className="text-sm text-muted-foreground mt-3 line-clamp-2">
+          <p className="subtext mt-3 line-clamp-2">
             {isArtist ? artist?.bio : venue?.description}
           </p>
         </div>

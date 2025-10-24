@@ -47,7 +47,7 @@ export default function Navbar() {
             href={user.role === "ARTIST" ? "/dashboard/artist" : "/dashboard/venue"}
             className="h-full "
           >
-            <button className="flex w-full items-center bg-foreground  text-black justify-center h-full  lg:hover:bg-primary text-lg transition-colors duration-200 hover:bg-pink hover:text-black lg:w-auto lg:border-l-[1px] lg:py-2 lg:px-6 ">
+            <button className="flex w-full items-center bg-white text-black justify-center h-full  lg:hover:bg-primary text-lg transition-colors duration-200 hover:bg-pink hover:text-black lg:w-auto lg:border-l-[1px] lg:py-2 lg:px-6 ">
             Dashboard
             </button>
           </Link>
@@ -165,19 +165,19 @@ export default function Navbar() {
           </div>
           <Link
             href="/artists"
-            className="py-6 transition-colors text-center w-full "
+            className=" transition-colors text-center py-4 w-full "
             onClick={() => setIsMobileOpen(false)}
           >
             Browse Artists
           </Link>
           <Link
             href="/venues"
-            className="py-6 transition-colors text-center w-full "
+            className="transition-colors py-4 text-center w-full "
             onClick={() => setIsMobileOpen(false)}
           >
             Browse Venues
           </Link>
-          <div className="flex flex-col w-full items-center gap-4 ">
+          <div className="flex flex-col w-full items-center">
             {isAuthenticated && user ? (
               <>
                 <Link 

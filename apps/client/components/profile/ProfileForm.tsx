@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, FieldErrors } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import MediaUploader from "@/components/media/MediaUploader";
 import { Artist, Venue, CreateArtistData, CreateVenueData } from "@/types";
 
 // Artist Form Schema - matching backend enum
@@ -47,6 +48,11 @@ export default function ProfileForm({
 }: ProfileFormProps) {
   const isArtist = role === "ARTIST";
   const schema = isArtist ? artistSchema : venueSchema;
+  
+  // State for media URLs
+  const [mediaUrls, setMediaUrls] = useState<string[]>(
+    initialData?.mediaUrls || []
+  );
 
   const {
     register,
@@ -73,9 +79,12 @@ export default function ProfileForm({
       : undefined,
   });
 
-  // Update form when initialData changes
+  // Update form and mediaUrls when initialData changes
   useEffect(() => {
     if (initialData) {
+      // Update mediaUrls from initialData
+      setMediaUrls(initialData.mediaUrls || []);
+      
       if (isArtist) {
         reset({
           artistType: (initialData as Artist).artistType,
@@ -104,7 +113,9 @@ export default function ProfileForm({
         delete venueData.venueType;
       }
     }
-    onSubmit(data as CreateArtistData | CreateVenueData);
+    // Include mediaUrls in the submission
+    const submitData = { ...data, mediaUrls };
+    onSubmit(submitData as CreateArtistData | CreateVenueData);
   };
 
   return (
@@ -173,6 +184,18 @@ export default function ProfileForm({
             {(errors as FieldErrors<ArtistFormData>).pricePerGig && (
               <p className="text-sm text-destructive mt-1">{(errors as FieldErrors<ArtistFormData>).pricePerGig?.message}</p>
             )}
+          </div>
+
+          {/* Media Upload for Artist */}
+          <div>
+            <Label>Media (Photos/Videos)</Label>
+            <div className="mt-2">
+              <MediaUploader
+                mediaUrls={mediaUrls}
+                onUploadComplete={setMediaUrls}
+                maxFiles={5}
+              />
+            </div>
           </div>
         </>
       ) : (
@@ -250,6 +273,18 @@ export default function ProfileForm({
             {(errors as FieldErrors<VenueFormData>).capacity && (
               <p className="text-sm text-destructive mt-1">{(errors as FieldErrors<VenueFormData>).capacity?.message}</p>
             )}
+          </div>
+
+          {/* Media Upload for Venue */}
+          <div>
+            <Label>Venue Images</Label>
+            <div className="mt-2">
+              <MediaUploader
+                mediaUrls={mediaUrls}
+                onUploadComplete={setMediaUrls}
+                maxFiles={5}
+              />
+            </div>
           </div>
         </>
       )}

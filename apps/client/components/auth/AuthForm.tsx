@@ -116,7 +116,7 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
                 id="name"
                 type="text"
                 {...registerField("name")}
-                className="rounded-lg h-11 text-base px-4 border-border/60 focus:border-primary transition-colors"
+                className="rounded-lg h-11 text-base px-4 border-border/60 text-white focus:border-primary transition-colors"
               />
               {errors.name && (
                 <p className="text-sm text-destructive flex items-center gap-1 ">
@@ -135,7 +135,7 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
             id="email"
             type="email"
             {...registerField("email")}
-            className="rounded-lg h-11 text-base px-4 border-border/60 focus:border-primary transition-colors"
+            className="rounded-lg h-11 text-base px-4 border-border/60 text-white focus:border-primary transition-colors bg-black"
           />
           {errors.email && (
             <p className="text-sm text-destructive flex items-center gap-1 ">
@@ -154,7 +154,7 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
             id="password"
             type="password"
             {...registerField("password")}
-            className="rounded-lg h-11 px-4 text-base border-border/60 focus:border-primary transition-colors"
+            className="rounded-lg h-11 px-4 text-base  text-white border-border/60 focus:border-primary transition-colors"
           />
           {errors.password && (
             <p className="text-sm text-destructive flex items-center gap-1 ">

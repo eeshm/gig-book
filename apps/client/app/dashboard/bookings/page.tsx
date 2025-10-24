@@ -38,11 +38,11 @@ export default function BookingsPage() {
 
   return (
     <DashboardLayout>
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">My Bookings</h1>
-          <p className="text-muted-foreground">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2 heading">My Bookings</h1>
+          <p className="text-sm sm:text-base text-muted-foreground subtext">
             {user?.role === "ARTIST"
               ? "Manage your booking requests from venues"
               : "Track your booking requests to artists"}
@@ -50,17 +50,23 @@ export default function BookingsPage() {
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+        <div className="flex gap-2 mb-6 overflow-x-auto pb-2 -mx-4 sm:mx-0 px-4 sm:px-0">
           {filters.map((status) => (
             <Button
               key={status}
               variant={filter === status ? "default" : "outline"}
               onClick={() => setFilter(status)}
               size="sm"
+              className="whitespace-nowrap"
             >
-              {status}
+              <span className="block sm:hidden text-xs">
+                {status === "ALL" ? "All" : status.slice(0, 3)}
+              </span>
+              <span className="hidden sm:block">
+                {status}
+              </span>
               {status !== "ALL" && (
-                <span className="ml-2 text-xs opacity-75">
+                <span className="ml-2 text-xs opacity-75 hidden sm:inline">
                   ({bookings.filter((b) => b.status === status).length})
                 </span>
               )}

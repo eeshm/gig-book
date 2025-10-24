@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useId } from "react";
 import { Button } from "@/components/ui/button";
 import { Upload, X, Image as ImageIcon } from "lucide-react";
-import { toast } from "react-hot-toast";
 
 interface MediaUploaderProps {
   mediaUrls: string[];
@@ -18,31 +17,62 @@ export default function MediaUploader({
 }: MediaUploaderProps) {
   const [uploading, setUploading] = useState(false);
   const [localUrls, setLocalUrls] = useState<string[]>(mediaUrls);
+  const [error, setError] = useState<string | null>(null);
+  const inputId = useId();
+
+  // Sync localUrls when mediaUrls prop changes
+  useEffect(() => {
+    setLocalUrls(mediaUrls);
+  }, [mediaUrls]);
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
     if (localUrls.length + files.length > maxFiles) {
-      toast.error(`You can only upload up to ${maxFiles} files`);
+      setError(`You can only upload up to ${maxFiles} files`);
+      setTimeout(() => setError(null), 3000);
+      return;
+    }
+
+    // Validate file types
+    const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'video/mp4', 'video/quicktime'];
+    const invalidFiles = Array.from(files).filter(file => !validTypes.includes(file.type));
+    
+    if (invalidFiles.length > 0) {
+      setError('Please upload only images (JPEG, PNG, GIF, WebP) or videos (MP4, MOV)');
+      setTimeout(() => setError(null), 3000);
       return;
     }
 
     setUploading(true);
+    setError(null);
 
     try {
+      const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+      const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET;
+      console.log('Cloudinary Config:', { cloudName, uploadPreset });
+
+      if (!cloudName || !uploadPreset) {
+        throw new Error('Cloudinary configuration is missing. Please set up environment variables.');
+      }
+
       const uploadPromises = Array.from(files).map(async (file) => {
         const formData = new FormData();
         formData.append("file", file);
-        formData.append("upload_preset", process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!);
+        formData.append("upload_preset", uploadPreset);
 
         const res = await fetch(
-          `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`,
+          `https://api.cloudinary.com/v1_1/${cloudName}/upload`,
           {
             method: "POST",
             body: formData,
           }
         );
+
+        if (!res.ok) {
+          throw new Error(`Upload failed: ${res.statusText}`);
+        }
 
         const data = await res.json();
         return data.secure_url;
@@ -52,12 +82,14 @@ export default function MediaUploader({
       const newUrls = [...localUrls, ...uploadedUrls];
       setLocalUrls(newUrls);
       onUploadComplete(newUrls);
-      toast.success("Media uploaded successfully!");
+      setError(null);
     } catch (error) {
-      toast.error("Failed to upload media");
-      console.error(error);
+      console.error('Upload error:', error);
+      setError(error instanceof Error ? error.message : "Failed to upload media. Please try again.");
     } finally {
       setUploading(false);
+      // Reset the file input
+      e.target.value = '';
     }
   };
 
@@ -69,6 +101,13 @@ export default function MediaUploader({
 
   return (
     <div className="space-y-4">
+      {/* Error Message */}
+      {error && (
+        <div className="bg-destructive/10 border border-destructive/30 text-destructive px-4 py-3 rounded-lg text-sm">
+          {error}
+        </div>
+      )}
+
       {/* Upload Button */}
       <div>
         <input
@@ -78,9 +117,9 @@ export default function MediaUploader({
           onChange={handleUpload}
           disabled={uploading || localUrls.length >= maxFiles}
           className="hidden"
-          id="media-upload"
+          id={inputId}
         />
-        <label htmlFor="media-upload">
+        <label htmlFor={inputId}>
           <Button
             type="button"
             variant="outline"

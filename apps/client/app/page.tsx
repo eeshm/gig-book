@@ -40,12 +40,12 @@ export default function HomePage() {
 
             <div className="flex flex-col gap-4 sm:flex-row sm:gap-5 pt-4 relative z-10 font-family-oswald ">
               <Link href="/register?role=artist">
-              <Button className="items-center justify-center transition-all duration-150  w-full lg:w-auto h-12 px-8 text-xl lg:h-16 lg:px-10 lg:text-xl bg-primary text-white">
+              <Button className="items-center justify-center transition-all duration-150 w-full lg:w-auto h-12 px-8 text-xl lg:h-16 lg:px-10 lg:text-xl bg-primary text-foreground">
               I am an Artist
               </Button>
               </Link>
               <Link href="/register?role=venue">
-              <Button variant="outline" className="items-center justify-center transition-all duration-150 hover:bg-primary/90 w-full lg:w-auto h-14 px-8 text-xl lg:h-16 lg:px-10 lg:text-xl relative overflow-hidden">
+              <Button variant="outline" className="items-center justify-center transition-all duration-150 hover:bg-primary/90 w-full lg:w-auto h-12 px-8 text-xl lg:h-16 lg:px-10 lg:text-xl relative overflow-hidden">
               {/* <div className="absolute inset-0 opacity-30" style={{backgroundImage: 'radial-gradient(circle, currentColor 10px, transparent 10px)', backgroundSize: '12px 12px'}}></div> */}
               <span className="relative z-10">I am a Venue</span>
               </Button>
@@ -96,7 +96,7 @@ export default function HomePage() {
     </section>
     </div>
 
-        <div style={{ fontSize: "min(27vw, 510px)" }} className="font-semibold text-center text-[rgb(255,108,16)] my-10 md:mb-20 font-family-oswald uppercase text-nowrap text-center leading-[0.7] select-none">
+        <div style={{ fontSize: "min(27vw, 510px)", backgroundImage: "linear-gradient(to bottom, rgb(255,108,16), transparent)" }} className="font-semibold text-center text-[rgb(255,108,16)] my-10 md:mb-20 font-family-oswald uppercase text-nowrap text-center leading-[0.7] select-none bg-clip-text">
           GigBook
         </div>
     <Footer />

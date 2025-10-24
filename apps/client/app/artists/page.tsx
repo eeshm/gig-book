@@ -32,8 +32,8 @@ export default function BrowseArtistsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-2">Browse Artists</h1>
-          <p className="text-muted-foreground">
+          <h1 className="heading">Browse Artists</h1>
+          <p className="subtext">
             Discover talented artists for your next event
           </p>
         </div>
