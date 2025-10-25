@@ -1,20 +1,20 @@
 // app/not-found.tsx
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { AlertCircle } from "lucide-react";
+import TriangleWarning from "@/public/src/assets/triangle-warning";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 flex items-center justify-center px-4">
+    <div className="max-h-screen flex items-center justify-center px-4">
       <div className="text-center">
-        <AlertCircle className="mx-auto h-16 w-16 text-yellow-500 mb-6" />
-        <h1 className="text-5xl font-bold text-white mb-2">404</h1>
-        <h2 className="text-2xl font-semibold text-slate-200 mb-4">Page Not Found</h2>
-        <p className="text-slate-400 mb-8 max-w-md">
+        <TriangleWarning className="mx-auto h-16 w-8 mb-2" />
+        <h1 className="heading">404</h1>
+        <h2 className="subheading mb-4">Page Not Found</h2>
+        <p className="subtext mb-8 max-w-md">
           Sorry, the page you're looking for doesn't exist or has been moved.
         </p>
         <Link href="/">
-          <Button className="bg-blue-600 hover:bg-blue-700">
+          <Button className="bg-primary/80">
             Go Home
           </Button>
         </Link>

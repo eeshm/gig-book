@@ -24,7 +24,7 @@ const VenueCard = ({ id, name, location, capacity, imageSrc }: VenueCardProps) =
         <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-300"></div>
       </div>
       <div className="p-6">
-        <h4 className="text-xl font-bold text-foreground mb-2">{name}</h4>
+        <h4 className="text-xl font-bold text-white mb-2">{name}</h4>
         <p className="subtext mb-4">{location} · Capacity: {capacity}</p>
       </div>
     </div>

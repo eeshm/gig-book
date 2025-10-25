@@ -16,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button2 } from "../ui/CustomButton";
+import SidebarMenu from "@/public/src/assets/sidebar-menu";
 
 export default function Navbar() {
   const router = useRouter();
@@ -135,7 +136,7 @@ export default function Navbar() {
           className="lg:hidden text-white"
           aria-label="Toggle menu"
         >
-          {isMobileOpen ? <X size={24} /> : <Menu size={24}/>}
+          {isMobileOpen ? <X size={24} /> : <SidebarMenu className="opacity-70 hover:opacity-100 duration-400 transition transition-opacity"/>}
         </button>
       </div>
       </div>
@@ -150,7 +151,7 @@ export default function Navbar() {
 
       {/* Mobile Navigation - Half Width Slide from Right */}
       <div 
-        className={`fixed right-0 top-0 bottom-0 font-family-oswald w-[300px] bg-[#080706] lg:hidden z-50 transform transition-transform duration-300 ease-in-out border-l border-gray-400/20 ${
+        className={`fixed right-0 top-0 bottom-0 font-family-oswald w-[300px] bg-[#080706] lg:hidden z-50 transform transition-transform duration-600 ease-in-out border-l border-gray-400/20 ${
           isMobileOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >

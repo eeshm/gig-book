@@ -8,5 +8,10 @@
   "scss.validate": false,
   "less.validate": false,
   "css.lint.unknownAtRules": "ignore",
-  "tailwindCSS.experimental.configFile": "postcss.config.mjs"
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "editor.quickSuggestions": {
+    "strings": "on"
+  }
 }

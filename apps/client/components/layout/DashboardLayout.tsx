@@ -30,14 +30,14 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="p-2 hover:bg-muted rounded-lg transition-colors text-foreground"
+            className="p-2 hover:bg-muted/10 border rounded-lg transition-colors text-white"
             aria-label="Toggle menu"
           >
-            {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
+            {isSidebarOpen ? <X size={24} /> : <User size={24} />}
           </button>
           <div>
-            <p className="font-semibold text-sm text-foreground">{user?.name}</p>
-            <p className="text-xs text-muted-foreground capitalize">{user?.role?.toLowerCase()}</p>
+            <p className="font-semibold text-sm text-white">{user?.name.toUpperCase()}</p>
+            <p className="text-xs text-white/50 capitalize">{user?.role?.toLowerCase()}</p>
           </div>
         </div>
       </div>
@@ -62,20 +62,24 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         >
           {/* User Info Card */}
           <div className="mb-8 p-4 ">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
                 {isArtist ? (
-                  <Music className="w-3 h-3 text-foreground" />
+                      <div className="rounded-full border border-white/40 p-4">
+                  <Music className="w-4 h-4 text-white " />
+                  </div>
                 ) : (
-                  <User className="w-3 h-3 text-foreground" />
+                  <div className="rounded-full border border-white/40 p-4">
+                  <User className="w-4 h-4 text-white " />
+                  </div>
                 )}
               <div>
-                <p className="font-semibold text-foreground">{user?.name}</p>
+                <p className="font-semibold text-white">{user?.name}</p>
                 <p className="text-xs text-muted-foreground capitalize">{user?.role?.toLowerCase()}</p>
               </div>
             </div>
           </div>
 
-          <nav className="space-y-2">
+          <nav className="space-y-2 text-white">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href;
@@ -87,7 +91,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                   className={`flex items-center space-x-2 text-xs px-2 py-1 rounded-xs transition ${
                     isActive
                       ? "bg-white/10 text-primary-foreground outline-1 outline-offset-2 outline-border"
-                      : "text-muted-foreground hover:bg-white/10 hover:text-foreground"
+                      : "text-whitehover:bg-white/10 hover:text-foreground"
                   }`}
                 >
                   <Icon className="w-3 h-3 stroke-1" />

@@ -69,14 +69,14 @@ const FeaturedSection = () => {
             </div>
           </div>
 
-          <div className="text-center mt-12">
+          <div className="text-center  text-white mt-12">
             <Link href="/artists">
               <Button size="lg" variant="outline" className="mr-4 hover:bg-primary">
                 Browse All Artists
               </Button>
             </Link>
             <Link href="/venues">
-              <Button size="lg" variant="outline" className="hover:bg-primary">
+              <Button size="lg" variant="outline" className="hover:bg-primary ">
                 Explore All Venues
               </Button>
             </Link>

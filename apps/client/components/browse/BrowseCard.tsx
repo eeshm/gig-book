@@ -27,7 +27,7 @@ export default function BrowseCard({ type, data }: BrowseCardProps) {
           <img
             src={imageUrl}
             alt={isArtist ? artist?.artistType || "Artist" : venue?.venueName || "Venue"}
-            className="object-cover w-full object-contain h-full group-hover:scale-110 transition-transform duration-300"
+            className="w-full object-contain h-full group-hover:scale-110 transition-transform duration-300"
             onError={(e) => {
               e.currentTarget.onerror = null; // Prevent infinite loop
               e.currentTarget.style.display = 'none'; // Hide broken image
