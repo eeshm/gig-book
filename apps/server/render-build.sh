@@ -3,7 +3,7 @@
 set -o errexit
 
 # Install dependencies
-pnpm install
+npm install
 
 # Generate Prisma Client
 npx prisma generate
@@ -12,4 +12,4 @@ npx prisma generate
 npx prisma migrate deploy
 
 # Build TypeScript
-pnpm run build
+npm run build

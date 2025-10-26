@@ -190,7 +190,7 @@ export default function SingleArtistPage() {
                   )}
 
                   {isAuthenticated && user?.role === "ARTIST" && (
-                    <div className="rounded-lg border  p-4 text-center">
+                    <div className="rounded-lg border p-4 text-center">
                       <p className="text-muted-foreground text-sm">Only venues can book artists</p>
                     </div>
                   )}

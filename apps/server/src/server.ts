@@ -16,7 +16,7 @@ const app = express();
 // CORS must be configured before other middleware
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "https://gig-book.vercel.app" || "*",
+    origin: process.env.FRONTEND_URL || "*",
     credentials: true,
   })
 );

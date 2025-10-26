@@ -28,7 +28,9 @@ export default function BrowseCard({ type, data }: BrowseCardProps) {
         <div className="relative aspect-[4/2] overflow-hidden bg-white sm:aspect-[4/3]">
           <img
             src={imageUrl}
-            alt={isArtist ? (user?.name || "Artist") : (artist?.artistType || venue?.venueName || "Venue")}
+            alt={
+              isArtist ? user?.name || "Artist" : artist?.artistType || venue?.venueName || "Venue"
+            }
             className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-110"
             onError={(e) => {
               e.currentTarget.onerror = null; // Prevent infinite loop
