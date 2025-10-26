@@ -8,7 +8,7 @@ export default function RegisterPage() {
       {/* Left Side - Form */}
       <div className="flex w-full items-center justify-center p-4 lg:w-3/5 lg:p-8">
         <div className="w-full max-w-md">
-          <Suspense fallback={<div className="h-96 animate-pulse rounded-lg bg-muted" />}>
+          <Suspense fallback={<div className="bg-muted h-96 animate-pulse rounded-lg" />}>
             <RegisterContent />
           </Suspense>
         </div>
