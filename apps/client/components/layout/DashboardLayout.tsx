@@ -53,7 +53,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       <div className="flex">
         {/* Sidebar */}
         <aside
-          className={`bg-card fixed inset-y-0 left-0 z-50 min-h-screen w-64 transform border-t border-r border-dashed p-4 transition-transform duration-600 ease-in-out lg:static ${isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"} `}
+          className={`bg-card fixed left-0 top-16 z-40 h-[calc(100vh-4rem)] w-64 transform border-r border-dashed p-4 transition-transform duration-600 ease-in-out overflow-y-auto lg:top-20 lg:h-[calc(100vh-5rem)] ${isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"} `}
         >
           {/* User Info Card */}
           <div className="mb-8 p-4">
@@ -100,7 +100,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 border-t border-dashed p-4 sm:p-6 lg:p-8">{children}</main>
+        <main className="flex-1 border-t border-dashed p-4 sm:p-6 lg:p-8 lg:ml-64">{children}</main>
       </div>
     </div>
   );

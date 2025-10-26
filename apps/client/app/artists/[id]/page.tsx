@@ -79,8 +79,11 @@ export default function SingleArtistPage() {
                   {artist.mediaUrls[mainMediaIndex]?.includes("video") ? (
                     <video
                       src={artist.mediaUrls[mainMediaIndex]}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="h-full w-full object-cover"
                       controls
+                      autoPlay
+                      loop
+                      playsInline
                     />
                   ) : (
                     <img
@@ -106,6 +109,9 @@ export default function SingleArtistPage() {
                               <video
                                 src={url}
                                 className="h-full w-full object-cover transition-transform group-hover/thumb:scale-110"
+                                autoPlay
+                                loop
+                                playsInline
                               />
                             ) : (
                               <img
@@ -184,7 +190,7 @@ export default function SingleArtistPage() {
                   )}
 
                   {isAuthenticated && user?.role === "ARTIST" && (
-                    <div className="rounded-lg border border-2 p-4 text-center">
+                    <div className="rounded-lg border  p-4 text-center">
                       <p className="text-muted-foreground text-sm">Only venues can book artists</p>
                     </div>
                   )}

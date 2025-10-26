@@ -103,11 +103,12 @@ export default function Navbar() {
   };
 
   return (
-    <header
-      className={`font-family-oswald bg-background fixed inset-x-0 top-0 z-50 w-full ${isScrolled ? "border-b border-gray-400/20" : ""}`}
-    >
-      <div className="flex w-full justify-center">
-        <div className="flex h-16 w-full px-4 sm:px-6 lg:h-20 lg:pr-0 lg:pl-9">
+    <>
+      <header
+        className={`font-family-oswald bg-background fixed inset-x-0 top-0 z-50 w-full ${isScrolled ? "border-b border-gray-400/20" : ""}`}
+      >
+        <div className="flex w-full justify-center">
+          <div className="flex h-16 w-full px-4 sm:px-6 lg:h-20 lg:pr-0 lg:pl-9">
           {/* Left - Logo */}
           <div className="flex flex-1 items-center">
             <Link href="/" className="flex flex-shrink-0 items-center gap-3">
@@ -227,6 +228,9 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-    </header>
+      </header>
+      {/* Spacer to prevent content from being blocked by fixed navbar */}
+      <div className="h-16 lg:h-20" />
+    </>
   );
 }

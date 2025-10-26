@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Artist, Venue } from "@/types";
 import { MapPin, Users, Music } from "lucide-react";
+import { useAppSelector } from "@/store/hooks";
 
 interface BrowseCardProps {
   type: "artist" | "venue";
@@ -10,6 +11,7 @@ interface BrowseCardProps {
 }
 
 export default function BrowseCard({ type, data }: BrowseCardProps) {
+  const user = useAppSelector((state) => state.auth.user);
   const isArtist = type === "artist";
   const artist = isArtist ? (data as Artist) : null;
   const venue = !isArtist ? (data as Venue) : null;
@@ -26,7 +28,7 @@ export default function BrowseCard({ type, data }: BrowseCardProps) {
         <div className="relative aspect-[4/2] overflow-hidden bg-white sm:aspect-[4/3]">
           <img
             src={imageUrl}
-            alt={isArtist ? artist?.artistType || "Artist" : venue?.venueName || "Venue"}
+            alt={isArtist ? (user?.name || "Artist") : (artist?.artistType || venue?.venueName || "Venue")}
             className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-110"
             onError={(e) => {
               e.currentTarget.onerror = null; // Prevent infinite loop
