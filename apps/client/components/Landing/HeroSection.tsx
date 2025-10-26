@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { useScroll, useTransform, motion } from "motion/react";
 import { useRef, useState, useEffect } from "react";
 import { TextAnimate } from "../ui/text-animate";
+// import CursorHeroSection from "./CursorHeroSection";
 
 export default function HeroSection() {
   return (
@@ -17,6 +18,7 @@ export default function HeroSection() {
             {/* Left Content */}
             <div className="flex flex-col gap-8 relative">
               <div className="absolute inset-x-20 inset-y-20 opacity-60">
+                {/* <CursorHeroSection /> */}
                 <svg className="w-full h-full" viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice">
                   <defs>
                     <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">

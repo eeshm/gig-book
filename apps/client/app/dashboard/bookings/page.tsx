@@ -50,14 +50,14 @@ export default function BookingsPage() {
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex gap-2 mb-6 overflow-x-auto pb-2 -mx-4 sm:mx-0 px-4 sm:px-0">
+        <div className="grid grid-cols-4 sm:flex gap-2 mb-6 sm:flex-wrap">
           {filters.map((status) => (
             <Button
               key={status}
               variant={filter === status ? "default" : "outline"}
               onClick={() => setFilter(status)}
               size="sm"
-              className="whitespace-nowrap"
+              className="whitespace-nowrap w-full sm:w-auto"
             >
               <span className="block sm:hidden text-xs">
                 {status === "ALL" ? "All" : status.slice(0, 3)}

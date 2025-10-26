@@ -13,7 +13,10 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
   scroll-behavior: smooth;
+  overscroll-behavior: none;
 }
+
+
 
 /* Prevent layout shift on desktop when modal opens */
 @media (min-width >=100%) {
@@ -176,7 +179,9 @@ a {
 .heading{
   @apply font-family-oswald text-5xl sm:text-6xl font-bold tracking-tight text-foreground text-balance leading-tight;
 }
-
+.headingwhite{
+  @apply font-family-oswald text-5xl sm:text-6xl font-bold tracking-tight text-white text-balance leading-tight;
+}
 .subheading{
   @apply font-family-oswald text-2xl sm:text-3xl font-bold tracking-tight text-foreground text-balance leading-tight;
 }

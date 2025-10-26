@@ -1,15 +1,23 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { format } from "date-fns";
+import { CalendarIcon, X } from "lucide-react";
 import { useAppDispatch } from "@/store/hooks";
 import { createBooking } from "@/store/slices/bookingSlice";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { X } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 import { toast } from "react-hot-toast";
 
 const bookingSchema = z.object({
@@ -33,11 +41,15 @@ export default function CreateBookingModal({
   onSuccess,
 }: CreateBookingModalProps) {
   const dispatch = useAppDispatch();
+  const [date, setDate] = useState<Date>();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    setValue,
+    setError,
+    clearErrors,
   } = useForm<BookingFormData>({
     resolver: zodResolver(bookingSchema),
   });
@@ -82,13 +94,37 @@ export default function CreateBookingModal({
           {/* Date */}
           <div>
             <Label htmlFor="date">Event Date</Label>
-            <Input
-              id="date"
-              type="date"
-              {...register("date")}
-              className="mt-2"
-              min={new Date().toISOString().split("T")[0]}
-            />
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "w-full justify-start text-left font-normal mt-2",
+                    !date && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {date ? format(date, "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  selected={date}
+                  onSelect={(selectedDate) => {
+                    setDate(selectedDate);
+                    if (selectedDate) {
+                      setValue("date", format(selectedDate, "yyyy-MM-dd"));
+                      clearErrors("date");
+                    }
+                  }}
+                  disabled={(date) =>
+                    date < new Date(new Date().setHours(0, 0, 0, 0))
+                  }
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
             {errors.date && (
               <p className="text-sm text-destructive mt-1">{errors.date.message}</p>
             )}

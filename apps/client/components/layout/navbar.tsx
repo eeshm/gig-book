@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
@@ -23,6 +23,16 @@ export default function Navbar() {
   const dispatch = useAppDispatch();
   const { user, isAuthenticated, loading } = useAppSelector((state) => state.auth);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -54,7 +64,7 @@ export default function Navbar() {
           </Link>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-          <button className="flex w-full bg-black text-white  h-full items-center justify-center h-full lg:hover:bg-primary border-black p-4 text-lg text-white transition-colors duration-200 hover:bg-pink hover:text-black lg:w-auto lg:border-l lg:py-2 lg:px-6">
+          <button className="flex w-full bg-black text-white  h-full items-center justify-center lg:hover:bg-primary border-black p-4 text-lg transition-colors duration-200 hover:bg-pink hover:text-black lg:w-auto lg:border-l lg:py-2 lg:px-6">
                 {user.name}
               </button>
             </DropdownMenuTrigger>
@@ -90,7 +100,7 @@ export default function Navbar() {
           </DropdownMenuContent>
         </DropdownMenu>
         <Link href="/login" className="h-full ">
-          <button className="flex w-full bg-black text-white h-full items-center justify-center h-full lg:hover:bg-primary border-black p-4 text-lg text-white transition-colors duration-200 hover:text-black lg:w-auto lg:px-6">
+          <button className="flex w-full bg-black text-white items-center justify-center h-full lg:hover:bg-primary border-black p-4 text-lg transition-colors duration-200 hover:text-black lg:w-auto lg:px-6">
             Log in 
           </button>
         </Link>
@@ -99,7 +109,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky  font-family-oswald top-0 z-50 w-full bg-background  inset-x-0">
+    <header className={`fixed font-family-oswald top-0 z-50 w-full bg-background  inset-x-0 ${isScrolled ? 'border-b border-gray-400/20' : ''}`}>
       <div className="w-full flex justify-center ">
         <div className="flex w-full h-16 lg:h-20 px-4 sm:px-6 lg:pl-9 lg:pr-0">
         {/* Left - Logo */}
@@ -136,7 +146,7 @@ export default function Navbar() {
           className="lg:hidden text-white"
           aria-label="Toggle menu"
         >
-          {isMobileOpen ? <X size={24} /> : <SidebarMenu className="opacity-70 hover:opacity-100 duration-400 transition transition-opacity"/>}
+          {isMobileOpen ? <X size={24} /> : <SidebarMenu className="opacity-70 hover:opacity-100 duration-400 transition-opacity"/>}
         </button>
       </div>
       </div>
