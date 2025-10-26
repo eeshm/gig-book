@@ -36,11 +36,19 @@ export default function MediaUploader({
     }
 
     // Validate file types
-    const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'video/mp4', 'video/quicktime'];
-    const invalidFiles = Array.from(files).filter(file => !validTypes.includes(file.type));
-    
+    const validTypes = [
+      "image/jpeg",
+      "image/jpg",
+      "image/png",
+      "image/gif",
+      "image/webp",
+      "video/mp4",
+      "video/quicktime",
+    ];
+    const invalidFiles = Array.from(files).filter((file) => !validTypes.includes(file.type));
+
     if (invalidFiles.length > 0) {
-      setError('Please upload only images (JPEG, PNG, GIF, WebP) or videos (MP4, MOV)');
+      setError("Please upload only images (JPEG, PNG, GIF, WebP) or videos (MP4, MOV)");
       setTimeout(() => setError(null), 3000);
       return;
     }
@@ -51,10 +59,12 @@ export default function MediaUploader({
     try {
       const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
       const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET;
-      console.log('Cloudinary Config:', { cloudName, uploadPreset });
+      console.log("Cloudinary Config:", { cloudName, uploadPreset });
 
       if (!cloudName || !uploadPreset) {
-        throw new Error('Cloudinary configuration is missing. Please set up environment variables.');
+        throw new Error(
+          "Cloudinary configuration is missing. Please set up environment variables."
+        );
       }
 
       const uploadPromises = Array.from(files).map(async (file) => {
@@ -62,13 +72,10 @@ export default function MediaUploader({
         formData.append("file", file);
         formData.append("upload_preset", uploadPreset);
 
-        const res = await fetch(
-          `https://api.cloudinary.com/v1_1/${cloudName}/upload`,
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, {
+          method: "POST",
+          body: formData,
+        });
 
         if (!res.ok) {
           throw new Error(`Upload failed: ${res.statusText}`);
@@ -84,12 +91,14 @@ export default function MediaUploader({
       onUploadComplete(newUrls);
       setError(null);
     } catch (error) {
-      console.error('Upload error:', error);
-      setError(error instanceof Error ? error.message : "Failed to upload media. Please try again.");
+      console.error("Upload error:", error);
+      setError(
+        error instanceof Error ? error.message : "Failed to upload media. Please try again."
+      );
     } finally {
       setUploading(false);
       // Reset the file input
-      e.target.value = '';
+      e.target.value = "";
     }
   };
 
@@ -103,7 +112,7 @@ export default function MediaUploader({
     <div className="space-y-4">
       {/* Error Message */}
       {error && (
-        <div className="bg-destructive/10 border border-destructive/30 text-destructive px-4 py-3 rounded-lg text-sm">
+        <div className="bg-destructive/10 border-destructive/30 text-destructive rounded-lg border px-4 py-3 text-sm">
           {error}
         </div>
       )}
@@ -127,29 +136,29 @@ export default function MediaUploader({
             asChild
           >
             <span className="cursor-pointer">
-              <Upload className="w-4 h-4 mr-2" />
+              <Upload className="mr-2 h-4 w-4" />
               {uploading ? "Uploading..." : "Upload Media"}
             </span>
           </Button>
         </label>
-        <p className="text-xs text-muted-foreground mt-2">
+        <p className="text-muted-foreground mt-2 text-xs">
           Upload up to {maxFiles} images or videos ({localUrls.length}/{maxFiles})
         </p>
       </div>
 
       {/* Media Grid */}
       {localUrls.length > 0 && (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
           {localUrls.map((url, index) => (
-            <div key={index} className="relative group">
-              <div className="aspect-square bg-muted rounded-lg overflow-hidden">
+            <div key={index} className="group relative">
+              <div className="bg-muted aspect-square overflow-hidden rounded-lg">
                 {url.includes("video") ? (
-                  <video src={url} className="w-full h-full object-cover" />
+                  <video src={url} className="h-full w-full object-cover" />
                 ) : (
                   <img
                     src={url}
                     alt={`Media ${index + 1}`}
-                    className="w-full h-full object-cover"
+                    className="h-full w-full object-cover"
                   />
                 )}
               </div>
@@ -157,10 +166,10 @@ export default function MediaUploader({
                 type="button"
                 variant="destructive"
                 size="sm"
-                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition"
+                className="absolute top-2 right-2 opacity-0 transition group-hover:opacity-100"
                 onClick={() => handleRemove(url)}
               >
-                <X className="w-4 h-4" />
+                <X className="h-4 w-4" />
               </Button>
             </div>
           ))}
@@ -169,9 +178,9 @@ export default function MediaUploader({
 
       {/* Empty State */}
       {localUrls.length === 0 && (
-        <div className="border-2 border-dashed border-border rounded-lg p-8 text-center">
-          <ImageIcon className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-          <p className="text-sm text-muted-foreground">No media uploaded yet</p>
+        <div className="border-border rounded-lg border-2 border-dashed p-8 text-center">
+          <ImageIcon className="text-muted-foreground mx-auto mb-4 h-12 w-12" />
+          <p className="text-muted-foreground text-sm">No media uploaded yet</p>
         </div>
       )}
     </div>

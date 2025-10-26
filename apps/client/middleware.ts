@@ -5,7 +5,7 @@ import type { NextRequest } from "next/server";
 function isValidToken(token: string): boolean {
   try {
     // Basic JWT format validation (header.payload.signature)
-    const parts = token.split('.');
+    const parts = token.split(".");
     if (parts.length !== 3) {
       return false;
     }
@@ -15,9 +15,9 @@ function isValidToken(token: string): boolean {
     if (!payloadPart) {
       return false;
     }
-    
+
     const payload = JSON.parse(atob(payloadPart));
-    
+
     // Check if token has expired
     if (payload.exp && payload.exp * 1000 < Date.now()) {
       return false;
@@ -49,7 +49,7 @@ export function middleware(req: NextRequest) {
   if ((pathname === "/login" || pathname === "/register") && token && isValidToken(token)) {
     // Try to decode the token to get the user's role
     try {
-      const parts = token.split('.');
+      const parts = token.split(".");
       const payloadPart = parts[1];
       if (payloadPart) {
         const payload = JSON.parse(atob(payloadPart));

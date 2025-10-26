@@ -18,7 +18,7 @@ export default function BrowseVenuesPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="bg-background min-h-screen">
         <LoadingSpinner size="lg" text="Loading venues..." />
       </div>
     );
@@ -28,14 +28,12 @@ export default function BrowseVenuesPage() {
   const venuesList = Array.isArray(venues) ? venues : [];
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="bg-background min-h-screen">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
           <h1 className="headingwhite">Browse Venues</h1>
-          <p className="subtext">
-            Explore amazing venues for your performances
-          </p>
+          <p className="subtext">Explore amazing venues for your performances</p>
         </div>
 
         {/* Venues Grid */}
@@ -46,7 +44,7 @@ export default function BrowseVenuesPage() {
             description="There are no venues available at the moment. Check back later!"
           />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {venuesList.map((venue) => (
               <BrowseCard key={venue.id} type="venue" data={venue} />
             ))}

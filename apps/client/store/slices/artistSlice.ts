@@ -23,9 +23,7 @@ export const fetchMyArtistProfile = createAsyncThunk(
       const response = await api.get<Artist>("/artists/me");
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data?.message || "Failed to fetch profile"
-      );
+      return rejectWithValue(error.response?.data?.message || "Failed to fetch profile");
     }
   }
 );
@@ -38,28 +36,21 @@ export const createArtistProfile = createAsyncThunk(
       return response.data;
     } catch (error: any) {
       // Don't show toast here - let the component handle it
-      return rejectWithValue(
-        error.response?.data?.message || "Failed to create profile"
-      );
+      return rejectWithValue(error.response?.data?.message || "Failed to create profile");
     }
   }
 );
 
 export const updateArtistProfile = createAsyncThunk(
   "artist/updateProfile",
-  async (
-    { id, data }: { id: string; data: Partial<CreateArtistData> },
-    { rejectWithValue }
-  ) => {
+  async ({ id, data }: { id: string; data: Partial<CreateArtistData> }, { rejectWithValue }) => {
     try {
       const response = await api.put<Artist>(`/artists/${id}`, data);
       // Don't show toast here - let the component handle it
       return response.data;
     } catch (error: any) {
       // Don't show toast here - let the component handle it
-      return rejectWithValue(
-        error.response?.data?.message || "Failed to update profile"
-      );
+      return rejectWithValue(error.response?.data?.message || "Failed to update profile");
     }
   }
 );
@@ -67,12 +58,15 @@ export const fetchAllArtists = createAsyncThunk(
   "artist/fetchAll",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get<{ total: number; page: number; limit: number; artists: Artist[] }>("/artists");
+      const response = await api.get<{
+        total: number;
+        page: number;
+        limit: number;
+        artists: Artist[];
+      }>("/artists");
       return response.data.artists; // Extract the artists array from the response
     } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data?.message || "Failed to fetch artists"
-      );
+      return rejectWithValue(error.response?.data?.message || "Failed to fetch artists");
     }
   }
 );
@@ -83,9 +77,7 @@ export const fetchArtistById = createAsyncThunk(
       const response = await api.get<Artist>(`/artists/${id}`);
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data?.message || "Failed to fetch artist"
-      );
+      return rejectWithValue(error.response?.data?.message || "Failed to fetch artist");
     }
   }
 );

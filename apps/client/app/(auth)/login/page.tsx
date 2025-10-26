@@ -24,13 +24,13 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex bg-background">
+    <div className="bg-background flex min-h-screen">
       {/* Left Side - Form */}
-      <div className="w-full lg:w-3/5 flex items-center justify-center p-4 lg:p-8">
+      <div className="flex w-full items-center justify-center p-4 lg:w-3/5 lg:p-8">
         <div className="w-full max-w-md">
           {/* Back to home link */}
-          <Link href="/" className="inline-flex items-center subtext mb-6 gap-1">
-            <ChevronLeft className="w-4 h-4" />
+          <Link href="/" className="subtext mb-6 inline-flex items-center gap-1">
+            <ChevronLeft className="h-4 w-4" />
             Back to home
           </Link>
 
@@ -43,7 +43,7 @@ export default function LoginPage() {
       </div>
 
       {/* Right Side - Image (Hidden on Mobile) */}
-      <div className="hidden lg:flex w-2/5 relative overflow-hidden">
+      <div className="relative hidden w-2/5 overflow-hidden lg:flex">
         <Image
           src="/images/image12.jpg"
           alt="Login illustration"
@@ -52,35 +52,34 @@ export default function LoginPage() {
           priority
         />
         {/* Overlay Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-background/50"></div>
+        <div className="to-background/50 absolute inset-0 bg-gradient-to-l from-transparent via-transparent"></div>
       </div>
 
       {/* Role Selection Modal */}
       <Dialog open={isRoleModalOpen} onOpenChange={setIsRoleModalOpen}>
-        <DialogContent className="sm:max-w-md rounded-2xl">
+        <DialogContent className="rounded-2xl sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-3xl font-bold text-center mb-2">
+            <DialogTitle className="mb-2 text-center text-3xl font-bold">
               Choose Your Role
             </DialogTitle>
             <DialogDescription className="text-center">
               Select how you want to join GigBook
             </DialogDescription>
           </DialogHeader>
-          
+
           <div className="grid gap-4 py-6">
             {/* Artist Option */}
             <button
               onClick={() => handleRoleSelect("artist")}
-              className="relative group p-6 border-2 border-border/60 rounded-xl hover:border-primary transition-all duration-300 bg-card hover:bg-card/50 overflow-hidden"
+              className="group border-border/60 hover:border-primary bg-card hover:bg-card/50 relative overflow-hidden rounded-xl border-2 p-6 transition-all duration-300"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="from-primary/10 absolute inset-0 bg-gradient-to-br to-transparent opacity-0 transition-opacity group-hover:opacity-100"></div>
               <div className="relative">
-                <div className="w-12 h-12  flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
-                </div>
-                <h3 className="text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                <div className="group-hover:bg-primary/20 mb-3 flex h-12 w-12 items-center justify-center transition-colors"></div>
+                <h3 className="text-foreground group-hover:text-primary mb-2 text-lg font-bold transition-colors">
                   I'm an Artist
                 </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className="text-muted-foreground text-sm leading-relaxed">
                   Showcase your talent and get discovered by venues
                 </p>
               </div>
@@ -89,15 +88,14 @@ export default function LoginPage() {
             {/* Venue Option */}
             <button
               onClick={() => handleRoleSelect("venue")}
-              className="relative group p-6 border-2 border-border/60 rounded-xl hover:border-blue-500 transition-all duration-300 bg-card hover:bg-card/50 overflow-hidden"
+              className="group border-border/60 bg-card hover:bg-card/50 relative overflow-hidden rounded-xl border-2 p-6 transition-all duration-300 hover:border-blue-500"
             >
               <div className="relative">
-                <div className="w-12 h-12 flex items-center justify-center mb-3 group-hover:bg-blue-500/20 transition-colors">
-                </div>
-                <h3 className="text-lg font-bold text-foreground mb-2 group-hover:text-blue-500 transition-colors">
+                <div className="mb-3 flex h-12 w-12 items-center justify-center transition-colors group-hover:bg-blue-500/20"></div>
+                <h3 className="text-foreground mb-2 text-lg font-bold transition-colors group-hover:text-blue-500">
                   I'm a Venue
                 </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className="text-muted-foreground text-sm leading-relaxed">
                   Find and book amazing artists for your events
                 </p>
               </div>

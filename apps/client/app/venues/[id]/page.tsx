@@ -22,7 +22,7 @@ export default function SingleVenuePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="bg-background min-h-screen">
         <LoadingSpinner size="lg" text="Loading venue..." />
       </div>
     );
@@ -30,43 +30,43 @@ export default function SingleVenuePage() {
 
   if (!venue) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="bg-background flex min-h-screen items-center justify-center">
         <p className="text-muted-foreground">Venue not found</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="bg-background min-h-screen">
+      <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Back Button */}
         <button
           onClick={() => router.back()}
-          className="group flex items-center gap-2 text-foreground/70 hover:text-primary transition-colors mb-8"
+          className="group text-foreground/70 hover:text-primary mb-8 flex items-center gap-2 transition-colors"
         >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
           <span className="text-sm font-medium">Back</span>
         </button>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid gap-8 lg:grid-cols-3">
           {/* Left: Media Gallery */}
           <div className="lg:col-span-2">
             {venue.mediaUrls && venue.mediaUrls.length > 0 ? (
               <div className="space-y-4">
                 {/* Main Media */}
-                <div className="aspect-video bg-muted rounded-2xl overflow-hidden shadow-2xl group relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 group-hover:opacity-0 transition-opacity z-10" />
+                <div className="bg-muted group relative aspect-video overflow-hidden rounded-2xl shadow-2xl">
+                  <div className="from-primary/10 to-primary/5 absolute inset-0 z-10 bg-gradient-to-br via-transparent transition-opacity group-hover:opacity-0" />
                   {venue.mediaUrls[0]?.includes("video") ? (
                     <video
                       src={venue.mediaUrls[0]}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       controls
                     />
                   ) : (
                     <img
                       src={venue.mediaUrls[0]}
                       alt={venue.venueName}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   )}
                 </div>
@@ -77,19 +77,19 @@ export default function SingleVenuePage() {
                     {venue.mediaUrls.slice(1, 5).map((url, index) => (
                       <div
                         key={index}
-                        className="aspect-square bg-muted rounded-lg overflow-hidden shadow-lg cursor-pointer group/thumb hover:shadow-xl transition-all"
+                        className="bg-muted group/thumb aspect-square cursor-pointer overflow-hidden rounded-lg shadow-lg transition-all hover:shadow-xl"
                       >
-                        <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover/thumb:opacity-100 transition-opacity z-10" />
+                        <div className="bg-primary/20 absolute inset-0 z-10 opacity-0 transition-opacity group-hover/thumb:opacity-100" />
                         {url.includes("video") ? (
                           <video
                             src={url}
-                            className="w-full h-full object-cover group-hover/thumb:scale-110 transition-transform"
+                            className="h-full w-full object-cover transition-transform group-hover/thumb:scale-110"
                           />
                         ) : (
                           <img
                             src={url}
                             alt={`Media ${index + 2}`}
-                            className="w-full h-full object-cover group-hover/thumb:scale-110 transition-transform"
+                            className="h-full w-full object-cover transition-transform group-hover/thumb:scale-110"
                           />
                         )}
                       </div>
@@ -98,8 +98,8 @@ export default function SingleVenuePage() {
                 )}
               </div>
             ) : (
-              <div className="aspect-video bg-gradient-to-br from-muted to-muted/50 rounded-2xl flex flex-col items-center justify-center shadow-lg">
-                <Building2 className="w-16 h-16 text-muted-foreground/30 mb-4" />
+              <div className="from-muted to-muted/50 flex aspect-video flex-col items-center justify-center rounded-2xl bg-gradient-to-br shadow-lg">
+                <Building2 className="text-muted-foreground/30 mb-4 h-16 w-16" />
                 <p className="text-muted-foreground">No media available</p>
               </div>
             )}
@@ -110,35 +110,33 @@ export default function SingleVenuePage() {
             <div className="sticky top-8">
               {/* Card with gradient border effect */}
               <div className="relative">
-                <div className="relative bg-card/80  shadow-xl">
+                <div className="bg-card/80 relative shadow-xl">
                   {/* Header */}
                   <div className="mb-6 pr-4">
-                    <h1 className="text-4xl font-bold text-foreground mb-2">
-                      {venue.venueName}
-                    </h1>
+                    <h1 className="text-foreground mb-2 text-4xl font-bold">{venue.venueName}</h1>
                     {venue.venueType && (
-                      <p className="text-sm text-foreground/60 font-medium uppercase tracking-wide mb-3">
+                      <p className="text-foreground/60 mb-3 text-sm font-medium tracking-wide uppercase">
                         {venue.venueType}
                       </p>
                     )}
-                    <div className="h-1 w-20 bg-gradient-to-r from-primary via-primary/40 to-transparent rounded-full" />
+                    <div className="from-primary via-primary/40 h-1 w-20 rounded-full bg-gradient-to-r to-transparent" />
                   </div>
 
                   {/* Details */}
-                  <div className="space-y-4 mb-8">
-                    <div className="flex items-center gap-3  rounded-lg  transition-colors">
-                      <MapPin className="w-5 h-5 text-secondary flex-shrink-0" />
+                  <div className="mb-8 space-y-4">
+                    <div className="flex items-center gap-3 rounded-lg transition-colors">
+                      <MapPin className="text-secondary h-5 w-5 flex-shrink-0" />
                       <span className="text-foreground/90">{venue.location}</span>
                     </div>
 
                     {venue.capacity && (
-                      <div className="flex items-center gap-3 p-3 rounded-lg bg-gradient-to-r from-primary/10 to-primary/5">
-                        <Users className="w-5 h-5 text-primary flex-shrink-0" />
+                      <div className="from-primary/10 to-primary/5 flex items-center gap-3 rounded-lg bg-gradient-to-r p-3">
+                        <Users className="text-primary h-5 w-5 flex-shrink-0" />
                         <div>
-                          <span className="text-lg font-bold text-foreground">
+                          <span className="text-foreground text-lg font-bold">
                             {venue.capacity}
                           </span>
-                          <span className="text-xs text-foreground/60 ml-2">people capacity</span>
+                          <span className="text-foreground/60 ml-2 text-xs">people capacity</span>
                         </div>
                       </div>
                     )}
@@ -146,16 +144,18 @@ export default function SingleVenuePage() {
 
                   {/* Description Section */}
                   <div className="mb-8">
-                    <h3 className="text-lg font-semibold text-foreground mb-3">About This Venue</h3>
-                    <p className="text-foreground/70 leading-relaxed text-sm">{venue.description}</p>
+                    <h3 className="text-foreground mb-3 text-lg font-semibold">About This Venue</h3>
+                    <p className="text-foreground/70 text-sm leading-relaxed">
+                      {venue.description}
+                    </p>
                   </div>
 
                   {/* CTA Button */}
                   <Button
-                    className="w-full h-12 text-base font-semibold bg-gradient-to-r from-primary to-primary/80 hover:shadow-lg hover:shadow-primary/50 transition-all rounded-lg"
+                    className="from-primary to-primary/80 hover:shadow-primary/50 h-12 w-full rounded-lg bg-gradient-to-r text-base font-semibold transition-all hover:shadow-lg"
                     onClick={() => router.push("/artists")}
                   >
-                    <Building2 className="w-4 h-4 mr-2" />
+                    <Building2 className="mr-2 h-4 w-4" />
                     Browse Artists
                   </Button>
                 </div>

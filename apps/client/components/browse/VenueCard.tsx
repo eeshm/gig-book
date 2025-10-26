@@ -11,21 +11,25 @@ interface VenueCardProps {
 
 const VenueCard = ({ id, name, location, capacity, imageSrc }: VenueCardProps) => {
   const cardContent = (
-    <div className={`group relative overflow-hidden rounded-2xl border border-border/40 hover:border-blue-500/30 transition-all duration-300 bg-card ${id ? 'cursor-pointer' : 'cursor-default'}`}>
-      <div className="aspect-[4/3] relative overflow-hidden bg-black">
+    <div
+      className={`group border-border/40 bg-card relative overflow-hidden rounded-2xl border transition-all duration-300 hover:border-blue-500/30 ${id ? "cursor-pointer" : "cursor-default"}`}
+    >
+      <div className="relative aspect-[4/3] overflow-hidden bg-black">
         {imageSrc && (
           <Image
             src={imageSrc}
             alt={name}
             fill
-            className="object-cover group-hover:scale-110 transition-transform duration-300"
+            className="object-cover transition-transform duration-300 group-hover:scale-110"
           />
         )}
-        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-300"></div>
+        <div className="absolute inset-0 bg-black/40 transition-all duration-300 group-hover:bg-black/20"></div>
       </div>
       <div className="p-6">
-        <h4 className="text-xl font-bold text-white mb-2">{name}</h4>
-        <p className="subtext mb-4">{location} · Capacity: {capacity}</p>
+        <h4 className="mb-2 text-xl font-bold text-white">{name}</h4>
+        <p className="subtext mb-4">
+          {location} · Capacity: {capacity}
+        </p>
       </div>
     </div>
   );

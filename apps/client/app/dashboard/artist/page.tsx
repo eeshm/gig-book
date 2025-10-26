@@ -28,9 +28,7 @@ export default function ArtistDashboardPage() {
 
   const handleCreateProfile = async (data: CreateArtistData | CreateVenueData) => {
     const artistData = data as CreateArtistData;
-    const result = await dispatch(
-      createArtistProfile(artistData)
-    );
+    const result = await dispatch(createArtistProfile(artistData));
     if (createArtistProfile.fulfilled.match(result)) {
       toast.success("Profile created successfully!");
       setIsEditing(false);
@@ -42,9 +40,7 @@ export default function ArtistDashboardPage() {
   const handleUpdateProfile = async (data: CreateArtistData | CreateVenueData) => {
     if (!profile) return;
     const artistData = data as CreateArtistData;
-    const result = await dispatch(
-      updateArtistProfile({ id: profile.id, data: artistData })
-    );
+    const result = await dispatch(updateArtistProfile({ id: profile.id, data: artistData }));
     if (updateArtistProfile.fulfilled.match(result)) {
       toast.success("Profile updated successfully!");
       setIsEditing(false);
@@ -65,29 +61,25 @@ export default function ArtistDashboardPage() {
   if (!profile && !loading) {
     return (
       <DashboardLayout>
-        <div className="max-w-3xl mx-auto">
+        <div className="mx-auto max-w-3xl">
           <div className="mb-8">
-            <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-gradient-to-br from-primary to-primary/60 rounded-full flex items-center justify-center shadow-lg mx-auto mb-4">
-                <Music className="w-8 h-8 text-foreground" />
+            <div className="mb-8 text-center">
+              <div className="from-primary to-primary/60 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br shadow-lg">
+                <Music className="text-foreground h-8 w-8" />
               </div>
-              <h1 className="heading">
-                Create Your Artist Profile
-              </h1>
-              <p className="text-foreground/70">Set up your profile to start receiving booking requests from venues.</p>
-              <div className="h-1 w-16 bg-gradient-to-r from-primary to-primary/40 rounded-full mx-auto mt-4" />
+              <h1 className="heading">Create Your Artist Profile</h1>
+              <p className="text-foreground/70">
+                Set up your profile to start receiving booking requests from venues.
+              </p>
+              <div className="from-primary to-primary/40 mx-auto mt-4 h-1 w-16 rounded-full bg-gradient-to-r" />
             </div>
           </div>
 
           <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl blur-xl opacity-50" />
-            <div className="relative bg-card/80 backdrop-blur-sm border border-primary/20 p-6 sm:p-8 rounded-2xl shadow-xl">
-              <h2 className="text-2xl font-bold text-foreground mb-6">Artist Information</h2>
-              <ProfileForm
-                role="ARTIST"
-                onSubmit={handleCreateProfile}
-                loading={loading}
-              />
+            <div className="from-primary/20 to-primary/5 absolute inset-0 rounded-2xl bg-gradient-to-br opacity-50 blur-xl" />
+            <div className="bg-card/80 border-primary/20 relative rounded-2xl border p-6 shadow-xl backdrop-blur-sm sm:p-8">
+              <h2 className="text-foreground mb-6 text-2xl font-bold">Artist Information</h2>
+              <ProfileForm role="ARTIST" onSubmit={handleCreateProfile} loading={loading} />
             </div>
           </div>
         </div>
@@ -98,20 +90,20 @@ export default function ArtistDashboardPage() {
   // Profile exists - Show profile view or edit form
   return (
     <DashboardLayout>
-      <div className="max-w-5xl mx-auto">
+      <div className="mx-auto max-w-5xl">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <h1 className="heading">My Artist Profile</h1>
-                    <div className="h-1 w-20 bg-gradient-to-r from-primary via-primary/40 to-transparent rounded-full" />
+              <div className="from-primary via-primary/40 h-1 w-20 rounded-full bg-gradient-to-r to-transparent" />
             </div>
             {!isEditing && (
-              <Button 
-                onClick={() => setIsEditing(true)} 
-                className="h-12 px-6 bg-gradient-to-r from-primary to-primary/80 hover:shadow-lg hover:shadow-primary/50 transition-all rounded-lg font-semibold"
+              <Button
+                onClick={() => setIsEditing(true)}
+                className="from-primary to-primary/80 hover:shadow-primary/50 h-12 rounded-lg bg-gradient-to-r px-6 font-semibold transition-all hover:shadow-lg"
               >
-                <Edit className="w-4 h-4 mr-2" />
+                <Edit className="mr-2 h-4 w-4" />
                 Edit Profile
               </Button>
             )}
@@ -120,15 +112,15 @@ export default function ArtistDashboardPage() {
 
         {isEditing ? (
           <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl blur-xl opacity-50" />
-            <div className="relative bg-card/80 backdrop-blur-sm border border-primary/20 p-6 sm:p-8 rounded-2xl shadow-xl">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-foreground">Edit Profile</h2>
+            <div className="from-primary/20 to-primary/5 absolute inset-0 rounded-2xl bg-gradient-to-br opacity-50 blur-xl" />
+            <div className="bg-card/80 border-primary/20 relative rounded-2xl border p-6 shadow-xl backdrop-blur-sm sm:p-8">
+              <div className="mb-6 flex items-center justify-between">
+                <h2 className="text-foreground text-2xl font-bold">Edit Profile</h2>
                 <button
                   onClick={() => setIsEditing(false)}
-                  className="p-2 hover:bg-muted rounded-lg transition-colors"
+                  className="hover:bg-muted rounded-lg p-2 transition-colors"
                 >
-                  <X className="w-5 h-5 text-muted-foreground" />
+                  <X className="text-muted-foreground h-5 w-5" />
                 </button>
               </div>
               <ProfileForm
@@ -137,61 +129,69 @@ export default function ArtistDashboardPage() {
                 onSubmit={handleUpdateProfile}
                 loading={loading}
               />
-              <Button
-                variant="outline"
-                className="mt-6"
-                onClick={() => setIsEditing(false)}
-              >
+              <Button variant="outline" className="mt-6" onClick={() => setIsEditing(false)}>
                 Cancel
               </Button>
             </div>
           </div>
         ) : (
-          <div className="grid lg:grid-cols-3 gap-6">
+          <div className="grid gap-6 lg:grid-cols-3">
             {/* Main Profile Card */}
             <div className="lg:col-span-2">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl blur-xl opacity-50" />
-                <div className="relative bg-card/80 backdrop-blur-sm border border-primary/20 p-8 rounded-2xl shadow-xl">
+                <div className="from-primary/20 to-primary/5 absolute inset-0 rounded-2xl bg-gradient-to-br opacity-50 blur-xl" />
+                <div className="bg-card/80 border-primary/20 relative rounded-2xl border p-8 shadow-xl backdrop-blur-sm">
                   <div className="mb-8">
-                    <h3 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
-                      <Music className="w-6 h-6 text-primary" />
+                    <h3 className="text-foreground mb-6 flex items-center gap-2 text-2xl font-bold">
+                      <Music className="text-primary h-6 w-6" />
                       Artist Details
                     </h3>
-                    <div className="h-1 w-20 bg-gradient-to-r from-primary via-primary/40 to-transparent rounded-full" />
+                    <div className="from-primary via-primary/40 h-1 w-20 rounded-full bg-gradient-to-r to-transparent" />
                   </div>
 
                   <div className="space-y-6">
                     {/* Artist Type */}
-                    <div className="p-4 rounded-lg bg-primary/10">
-                      <p className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">Artist Type</p>
-                      <p className="text-xl font-bold text-foreground">{profile?.artistType}</p>
+                    <div className="bg-primary/10 rounded-lg p-4">
+                      <p className="text-muted-foreground mb-2 text-xs font-semibold tracking-wide uppercase">
+                        Artist Type
+                      </p>
+                      <p className="text-foreground text-xl font-bold">{profile?.artistType}</p>
                     </div>
 
                     {/* Location */}
-                    <div className="p-4 rounded-lg bg-primary/10">
+                    <div className="bg-primary/10 rounded-lg p-4">
                       <div className="flex items-center gap-3">
-                        <MapPin className="w-5 h-5 text-primary flex-shrink-0" />
+                        <MapPin className="text-primary h-5 w-5 flex-shrink-0" />
                         <div>
-                          <p className="text-xs uppercase tracking-wide text-foreground/60 font-semibold mb-1">Location</p>
-                          <p className="text-lg font-semibold text-foreground">{profile?.location}</p>
+                          <p className="text-foreground/60 mb-1 text-xs font-semibold tracking-wide uppercase">
+                            Location
+                          </p>
+                          <p className="text-foreground text-lg font-semibold">
+                            {profile?.location}
+                          </p>
                         </div>
                       </div>
                     </div>
 
                     {/* Price Per Gig */}
-                    <div className="p-4 rounded-lg bg-primary/10">
+                    <div className="bg-primary/10 rounded-lg p-4">
                       <div className="flex items-center gap-3">
                         <div>
-                          <p className="text-xs uppercase tracking-wide text-foreground/60 font-semibold mb-1">Price Per Gig</p>
-                          <p className="text-2xl font-bold text-foreground">$ {profile?.pricePerGig}</p>
+                          <p className="text-foreground/60 mb-1 text-xs font-semibold tracking-wide uppercase">
+                            Price Per Gig
+                          </p>
+                          <p className="text-foreground text-2xl font-bold">
+                            $ {profile?.pricePerGig}
+                          </p>
                         </div>
                       </div>
                     </div>
 
                     {/* Bio */}
-                    <div className="p-4 rounded-lg border-secondary/50 border">
-                      <p className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-3">Bio</p>
+                    <div className="border-secondary/50 rounded-lg border p-4">
+                      <p className="text-muted-foreground mb-3 text-xs font-semibold tracking-wide uppercase">
+                        Bio
+                      </p>
                       <p className="text-foreground/80 leading-relaxed">{profile?.bio}</p>
                     </div>
                   </div>
@@ -202,28 +202,30 @@ export default function ArtistDashboardPage() {
             {/* Stats Sidebar */}
             <div className="space-y-6">
               <div className="relative">
-                <div className="relative bg-gradient-to-br from-primary to-primary/80 p-6 rounded-2xl shadow-xl text-foreground">
+                <div className="from-primary to-primary/80 text-foreground relative rounded-2xl bg-gradient-to-br p-6 shadow-xl">
                   <div className="text-center">
-                    <Music className="w-8 h-8 mx-auto mb-3 text-foreground/90" />
-                    <p className="text-sm text-foreground/80 mb-2">Your Artist Profile is</p>
+                    <Music className="text-foreground/90 mx-auto mb-3 h-8 w-8" />
+                    <p className="text-foreground/80 mb-2 text-sm">Your Artist Profile is</p>
                     <p className="text-3xl font-bold">Active</p>
-                    <p className="text-xs text-foreground/70 mt-3">Ready to receive bookings!</p>
+                    <p className="text-foreground/70 mt-3 text-xs">Ready to receive bookings!</p>
                   </div>
                 </div>
               </div>
 
               <div className="relative">
-                <div className="relative bg-card/80 backdrop-blur-sm border border-primary/20 p-6 rounded-2xl shadow-xl">
-                  <h4 className="font-semibold text-foreground mb-4">Quick Info</h4>
+                <div className="bg-card/80 border-primary/20 relative rounded-2xl border p-6 shadow-xl backdrop-blur-sm">
+                  <h4 className="text-foreground mb-4 font-semibold">Quick Info</h4>
                   <div className="space-y-3 text-sm">
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Media Files</span>
-                      <span className="font-semibold text-foreground">{profile?.mediaUrls?.length || 0}</span>
+                      <span className="text-foreground font-semibold">
+                        {profile?.mediaUrls?.length || 0}
+                      </span>
                     </div>
-                    <div className="h-px bg-border" />
+                    <div className="bg-border h-px" />
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Profile Status</span>
-                      <span className="font-semibold text-primary">Complete</span>
+                      <span className="text-primary font-semibold">Complete</span>
                     </div>
                   </div>
                 </div>
@@ -234,38 +236,38 @@ export default function ArtistDashboardPage() {
 
         {/* Media Gallery Card */}
         {!isEditing && (
-          <div className="mt-8 relative">
-            <div className="relative bg-card/80 backdrop-blur-sm border border-primary/20 p-8 rounded-2xl shadow-xl">
-              <h3 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
-                <Music className="w-6 h-6 text-primary" />
+          <div className="relative mt-8">
+            <div className="bg-card/80 border-primary/20 relative rounded-2xl border p-8 shadow-xl backdrop-blur-sm">
+              <h3 className="text-foreground mb-6 flex items-center gap-2 text-2xl font-bold">
+                <Music className="text-primary h-6 w-6" />
                 Media Gallery
               </h3>
               {profile?.mediaUrls && profile.mediaUrls.length > 0 ? (
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
                   {profile.mediaUrls.map((url, index) => (
-                    <div 
-                      key={index} 
-                      className="aspect-square bg-muted rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all group cursor-pointer"
+                    <div
+                      key={index}
+                      className="bg-muted group aspect-square cursor-pointer overflow-hidden rounded-xl shadow-lg transition-all hover:shadow-xl"
                     >
                       {url.includes("video") ? (
-                        <video 
-                          src={url} 
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform" 
-                          controls 
+                        <video
+                          src={url}
+                          className="h-full w-full object-cover transition-transform group-hover:scale-110"
+                          controls
                         />
                       ) : (
                         <img
                           src={url}
                           alt={`Media ${index + 1}`}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform"
+                          className="h-full w-full object-cover transition-transform group-hover:scale-110"
                         />
                       )}
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-12">
-                  <Music className="w-12 h-12 text-muted-foreground/30 mx-auto mb-3" />
+                <div className="py-12 text-center">
+                  <Music className="text-muted-foreground/30 mx-auto mb-3 h-12 w-12" />
                   <p className="text-muted-foreground">No media uploaded yet</p>
                 </div>
               )}

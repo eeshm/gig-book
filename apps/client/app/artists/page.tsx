@@ -18,7 +18,7 @@ export default function BrowseArtistsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="bg-background min-h-screen">
         <LoadingSpinner size="lg" text="Loading artists..." />
       </div>
     );
@@ -28,14 +28,12 @@ export default function BrowseArtistsPage() {
   const artistsList = Array.isArray(artists) ? artists : [];
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="bg-background min-h-screen">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
           <h1 className="headingwhite">Browse Artists</h1>
-          <p className="subtext">
-            Discover talented artists for your next event
-          </p>
+          <p className="subtext">Discover talented artists for your next event</p>
         </div>
 
         {/* Artists Grid */}
@@ -46,7 +44,7 @@ export default function BrowseArtistsPage() {
             description="There are no artists available at the moment. Check back later!"
           />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {artistsList.map((artist) => (
               <BrowseCard key={artist.id} type="artist" data={artist} />
             ))}

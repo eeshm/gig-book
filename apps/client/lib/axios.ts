@@ -21,23 +21,23 @@ api.interceptors.request.use(
   }
 );
 
-
 api.interceptors.response.use(
-(response) => response,
+  (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
       // Only clear token and redirect if we're not already on auth pages
-      const isAuthPage = typeof window !== "undefined" && 
+      const isAuthPage =
+        typeof window !== "undefined" &&
         (window.location.pathname === "/login" || window.location.pathname === "/register");
-      
+
       Cookies.remove("token");
-      
-      if(typeof window !== "undefined" && !isAuthPage) {
+
+      if (typeof window !== "undefined" && !isAuthPage) {
         window.location.href = "/login";
       }
     }
     return Promise.reject(error);
-}
+  }
 );
 
 export default api;

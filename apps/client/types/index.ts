@@ -62,7 +62,7 @@ export interface Venue {
   venueType?: string;
   createdAt?: string;
   updatedAt?: string;
-} 
+}
 
 export interface CreateVenueData {
   venueName: string;

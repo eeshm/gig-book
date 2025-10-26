@@ -1,17 +1,17 @@
 // create routes for artists from artistController
 import express from "express";
 import {
-    createArtist,
-    getArtists,
-    getArtistById,
-    updateArtist,
-    deleteArtist,
-    getMyArtist
+  createArtist,
+  getArtists,
+  getArtistById,
+  updateArtist,
+  deleteArtist,
+  getMyArtist,
 } from "../controllers/artistController.js";
 import auth from "../middleware/auth.js";
 import { requireRole } from "../middleware/roles.js";
 
-const artistRoutes= express.Router();
+const artistRoutes = express.Router();
 artistRoutes.get("/me", auth, requireRole("ARTIST"), getMyArtist);
 artistRoutes.get("/", getArtists);
 artistRoutes.get("/:id", getArtistById);
@@ -20,5 +20,3 @@ artistRoutes.put("/:id", auth, requireRole("ARTIST"), updateArtist);
 artistRoutes.delete("/:id", auth, requireRole("ARTIST"), deleteArtist);
 
 export default artistRoutes;
- 
-

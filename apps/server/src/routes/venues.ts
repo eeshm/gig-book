@@ -5,11 +5,10 @@ import {
   getVenueById,
   updateVenue,
   deleteVenue,
-  getMyVenueProfile
+  getMyVenueProfile,
 } from "../controllers/venueController.js";
 import auth from "../middleware/auth.js";
 import { requireRole } from "../middleware/roles.js";
-
 
 const venueRoutes = express.Router();
 

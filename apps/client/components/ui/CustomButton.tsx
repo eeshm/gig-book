@@ -7,7 +7,10 @@ export function Button2({
 }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
-      className={cn("py-4 font-family-oswald hover:bg-primary transition-color duration-200", className)}
+      className={cn(
+        "font-family-oswald hover:bg-primary transition-color py-4 duration-200",
+        className
+      )}
       {...props}
     >
       {children}

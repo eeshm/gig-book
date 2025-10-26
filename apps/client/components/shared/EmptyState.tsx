@@ -21,15 +21,13 @@ export default function EmptyState({
   return (
     <div className="flex flex-col items-center justify-center p-12 text-center">
       {Icon && (
-        <div className="w-10 h-10 flex items-center justify-center mb-4">
-          <Icon className="w-8 h-8 text-muted-foreground" />
+        <div className="mb-4 flex h-10 w-10 items-center justify-center">
+          <Icon className="text-muted-foreground h-8 w-8" />
         </div>
       )}
-      <h3 className="text-xl font-semibold text-foreground mb-2">{title}</h3>
+      <h3 className="text-foreground mb-2 text-xl font-semibold">{title}</h3>
       <p className="text-muted-foreground mb-6 max-w-md text-xs">{description}</p>
-      {actionLabel && onAction && (
-        <Button onClick={onAction}>{actionLabel}</Button>
-      )}
+      {actionLabel && onAction && <Button onClick={onAction}>{actionLabel}</Button>}
     </div>
   );
 }

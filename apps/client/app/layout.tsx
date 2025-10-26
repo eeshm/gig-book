@@ -6,7 +6,6 @@ import { Toaster } from "react-hot-toast";
 import ConditionalNavbar from "@/components/layout/ConditionalNavbar";
 import AuthInitializer from "@/components/shared/AuthInitializer";
 
-
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -28,7 +27,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} font-sans selection:bg-blue-900 selection:text-primary-foreground`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} selection:text-primary-foreground font-sans selection:bg-blue-900`}
+      >
         <Providers>
           <AuthInitializer>
             <ConditionalNavbar />

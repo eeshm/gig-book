@@ -1,7 +1,7 @@
 //make veneue slice as per we made artist slice
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "@/lib/axios";
-import { Venue,CreateVenueData } from "@/types";
+import { Venue, CreateVenueData } from "@/types";
 import toast from "react-hot-toast";
 
 export interface VenueState {
@@ -21,21 +21,18 @@ export const fetchMyVenueProfile = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       console.log("Fetching venue profile...");
-      const response= await api.get<Venue>("/venues/me");
+      const response = await api.get<Venue>("/venues/me");
       console.log("Venue profile fetched:", response.data);
       return response.data;
     } catch (err: any) {
       console.error("Error fetching venue profile:", err.response?.data || err.message);
-      return rejectWithValue(err.response?.data?.message ||"Failed to fetch venue profile");
+      return rejectWithValue(err.response?.data?.message || "Failed to fetch venue profile");
     }
   }
 );
 export const createVenueProfile = createAsyncThunk(
   "venue/createProfile",
-  async (
-    data: CreateVenueData,
-    { rejectWithValue }
-  ) => {
+  async (data: CreateVenueData, { rejectWithValue }) => {
     try {
       console.log("Creating venue with data:", data);
       const response = await api.post<Venue>("/venues", data);
@@ -52,7 +49,7 @@ export const createVenueProfile = createAsyncThunk(
 );
 export const updateVenueProfile = createAsyncThunk(
   "venue/updateProfile",
-  async ( {id, data}: {id: string; data: Partial<CreateVenueData>}, { rejectWithValue }) => {
+  async ({ id, data }: { id: string; data: Partial<CreateVenueData> }, { rejectWithValue }) => {
     try {
       const response = await api.put<Venue>(`/venues/${id}`, data);
       // Don't show toast here - let the component handle it
@@ -71,8 +68,7 @@ export const fetchAllVenues = createAsyncThunk(
     try {
       const response = await api.get<{ total: number; venues: Venue[] }>("/venues");
       return response.data.venues; // Extract the venues array from the response
-    }
-    catch (err: any) {
+    } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || "Failed to fetch venues");
     }
   }
@@ -94,7 +90,7 @@ export const venueSlice = createSlice({
   name: "venue",
   initialState,
   reducers: {
-    clearVenueError:(state) =>{
+    clearVenueError: (state) => {
       state.error = null;
     },
     clearVenueProfile: (state) => {
@@ -103,63 +99,46 @@ export const venueSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(fetchMyVenueProfile.pending, (state) => {
+      state.loading = true;
+    });
     builder
-      .addCase(fetchMyVenueProfile.pending, (state) => {
-        state.loading = true;
+      .addCase(fetchMyVenueProfile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.profile = action.payload;
       })
-      builder.addCase(
-        fetchMyVenueProfile.fulfilled,
-        (state, action) => {
-          state.loading = false;
-          state.profile = action.payload;
-        })
-      .addCase(
-        fetchMyVenueProfile.rejected,
-        (state, action) => {
-          state.loading = false;
-          state.profile = null; // Clear profile on fetch failure
-          state.error = action.payload as string;
-        }
-      );
+      .addCase(fetchMyVenueProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.profile = null; // Clear profile on fetch failure
+        state.error = action.payload as string;
+      });
 
     builder
       .addCase(createVenueProfile.pending, (state) => {
         state.loading = true;
       })
-      .addCase(
-        createVenueProfile.fulfilled,
-        (state, action) => {
-          state.loading = false;
-          state.profile = action.payload;
-        }
-      )
-      .addCase(
-        createVenueProfile.rejected,
-        (state, action) => {
-          state.loading = false;
-          state.error = action.payload as string;
-        }
-      );
+      .addCase(createVenueProfile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.profile = action.payload;
+      })
+      .addCase(createVenueProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
     builder
       .addCase(updateVenueProfile.pending, (state) => {
         state.loading = true;
       })
-      .addCase(
-        updateVenueProfile.fulfilled,
-        (state, action) => {
-          state.loading = false;
-          state.profile = action.payload;
-        }
-      )
-      .addCase(
-        updateVenueProfile.rejected,
-        (state, action) => {
-          state.loading = false;
-          state.error = action.payload as string;
-        }
-      );
+      .addCase(updateVenueProfile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.profile = action.payload;
+      })
+      .addCase(updateVenueProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
 
-      builder 
+    builder
       .addCase(fetchAllVenues.pending, (state) => {
         state.loading = true;
       })
@@ -171,7 +150,7 @@ export const venueSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       });
-      builder
+    builder
       .addCase(fetchVenueById.pending, (state) => {
         state.loading = true;
       })

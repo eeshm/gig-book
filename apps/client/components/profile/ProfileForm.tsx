@@ -48,11 +48,9 @@ export default function ProfileForm({
 }: ProfileFormProps) {
   const isArtist = role === "ARTIST";
   const schema = isArtist ? artistSchema : venueSchema;
-  
+
   // State for media URLs
-  const [mediaUrls, setMediaUrls] = useState<string[]>(
-    initialData?.mediaUrls || []
-  );
+  const [mediaUrls, setMediaUrls] = useState<string[]>(initialData?.mediaUrls || []);
 
   const {
     register,
@@ -84,7 +82,7 @@ export default function ProfileForm({
     if (initialData) {
       // Update mediaUrls from initialData
       setMediaUrls(initialData.mediaUrls || []);
-      
+
       if (isArtist) {
         reset({
           artistType: (initialData as Artist).artistType,
@@ -109,7 +107,7 @@ export default function ProfileForm({
     if (!isArtist) {
       const venueData = data as VenueFormData;
       // Remove venueType if it's empty
-      if (!venueData.venueType || venueData.venueType.trim() === '') {
+      if (!venueData.venueType || venueData.venueType.trim() === "") {
         delete venueData.venueType;
       }
     }
@@ -128,7 +126,7 @@ export default function ProfileForm({
             <select
               id="artistType"
               {...register("artistType")}
-              className="mt-2 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring mt-2 flex h-10 w-full rounded-md border px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
             >
               <option value="">Select artist type</option>
               <option value="DJ">DJ</option>
@@ -139,7 +137,9 @@ export default function ProfileForm({
               <option value="OTHER">Other</option>
             </select>
             {(errors as FieldErrors<ArtistFormData>).artistType && (
-              <p className="text-sm text-destructive mt-1">{(errors as FieldErrors<ArtistFormData>).artistType?.message}</p>
+              <p className="text-destructive mt-1 text-sm">
+                {(errors as FieldErrors<ArtistFormData>).artistType?.message}
+              </p>
             )}
           </div>
 
@@ -154,7 +154,9 @@ export default function ProfileForm({
               className="mt-2"
             />
             {(errors as FieldErrors<ArtistFormData>).location && (
-              <p className="text-sm text-destructive mt-1">{(errors as FieldErrors<ArtistFormData>).location?.message}</p>
+              <p className="text-destructive mt-1 text-sm">
+                {(errors as FieldErrors<ArtistFormData>).location?.message}
+              </p>
             )}
           </div>
 
@@ -168,7 +170,11 @@ export default function ProfileForm({
               className="mt-2"
               rows={4}
             />
-            {(errors as FieldErrors<ArtistFormData>).bio && <p className="text-sm text-destructive mt-1">{(errors as FieldErrors<ArtistFormData>).bio?.message}</p>}
+            {(errors as FieldErrors<ArtistFormData>).bio && (
+              <p className="text-destructive mt-1 text-sm">
+                {(errors as FieldErrors<ArtistFormData>).bio?.message}
+              </p>
+            )}
           </div>
 
           {/* Price Per Gig */}
@@ -182,7 +188,9 @@ export default function ProfileForm({
               className="mt-2"
             />
             {(errors as FieldErrors<ArtistFormData>).pricePerGig && (
-              <p className="text-sm text-destructive mt-1">{(errors as FieldErrors<ArtistFormData>).pricePerGig?.message}</p>
+              <p className="text-destructive mt-1 text-sm">
+                {(errors as FieldErrors<ArtistFormData>).pricePerGig?.message}
+              </p>
             )}
           </div>
 
@@ -190,11 +198,7 @@ export default function ProfileForm({
           <div>
             <Label>Media (Photos/Videos)</Label>
             <div className="mt-2">
-              <MediaUploader
-                mediaUrls={mediaUrls}
-                onUploadComplete={setMediaUrls}
-                maxFiles={5}
-              />
+              <MediaUploader mediaUrls={mediaUrls} onUploadComplete={setMediaUrls} maxFiles={5} />
             </div>
           </div>
         </>
@@ -210,7 +214,11 @@ export default function ProfileForm({
               {...register("venueName")}
               className="mt-2"
             />
-            {(errors as FieldErrors<VenueFormData>).venueName && <p className="text-sm text-destructive mt-1">{(errors as FieldErrors<VenueFormData>).venueName?.message}</p>}
+            {(errors as FieldErrors<VenueFormData>).venueName && (
+              <p className="text-destructive mt-1 text-sm">
+                {(errors as FieldErrors<VenueFormData>).venueName?.message}
+              </p>
+            )}
           </div>
 
           {/* Location */}
@@ -224,7 +232,9 @@ export default function ProfileForm({
               className="mt-2"
             />
             {(errors as FieldErrors<VenueFormData>).location && (
-              <p className="text-sm text-destructive mt-1">{(errors as FieldErrors<VenueFormData>).location?.message}</p>
+              <p className="text-destructive mt-1 text-sm">
+                {(errors as FieldErrors<VenueFormData>).location?.message}
+              </p>
             )}
           </div>
 
@@ -239,7 +249,9 @@ export default function ProfileForm({
               rows={4}
             />
             {(errors as FieldErrors<VenueFormData>).description && (
-              <p className="text-sm text-destructive mt-1">{(errors as FieldErrors<VenueFormData>).description?.message}</p>
+              <p className="text-destructive mt-1 text-sm">
+                {(errors as FieldErrors<VenueFormData>).description?.message}
+              </p>
             )}
           </div>
 
@@ -254,7 +266,9 @@ export default function ProfileForm({
               className="mt-2"
             />
             {(errors as FieldErrors<VenueFormData>).venueType && (
-              <p className="text-sm text-destructive mt-1">{(errors as FieldErrors<VenueFormData>).venueType?.message}</p>
+              <p className="text-destructive mt-1 text-sm">
+                {(errors as FieldErrors<VenueFormData>).venueType?.message}
+              </p>
             )}
           </div>
 
@@ -265,13 +279,15 @@ export default function ProfileForm({
               id="capacity"
               type="number"
               placeholder="e.g., 200"
-              {...register("capacity", { 
-                setValueAs: (v) => v === "" || v === null ? undefined : parseInt(v, 10)
+              {...register("capacity", {
+                setValueAs: (v) => (v === "" || v === null ? undefined : parseInt(v, 10)),
               })}
               className="mt-2"
             />
             {(errors as FieldErrors<VenueFormData>).capacity && (
-              <p className="text-sm text-destructive mt-1">{(errors as FieldErrors<VenueFormData>).capacity?.message}</p>
+              <p className="text-destructive mt-1 text-sm">
+                {(errors as FieldErrors<VenueFormData>).capacity?.message}
+              </p>
             )}
           </div>
 
@@ -279,11 +295,7 @@ export default function ProfileForm({
           <div>
             <Label>Venue Images</Label>
             <div className="mt-2">
-              <MediaUploader
-                mediaUrls={mediaUrls}
-                onUploadComplete={setMediaUrls}
-                maxFiles={5}
-              />
+              <MediaUploader mediaUrls={mediaUrls} onUploadComplete={setMediaUrls} maxFiles={5} />
             </div>
           </div>
         </>

@@ -12,11 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { toast } from "react-hot-toast";
 
@@ -68,24 +64,22 @@ export default function CreateBookingModal({
       onSuccess?.();
       onClose();
     } else {
-      const errorMessage = result.payload as string || "Failed to create booking request";
+      const errorMessage = (result.payload as string) || "Failed to create booking request";
       toast.error(errorMessage);
     }
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <div className="bg-card p-8 rounded-xl border border-border max-w-md w-full">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+      <div className="bg-card border-border w-full max-w-md rounded-xl border p-8">
         {/* Header */}
-        <div className="flex justify-between items-start mb-6">
+        <div className="mb-6 flex items-start justify-between">
           <div>
-            <h2 className="text-2xl font-bold text-foreground">Book Artist</h2>
-            <p className="text-sm text-muted-foreground mt-1">
-              Sending request to {artistName}
-            </p>
+            <h2 className="text-foreground text-2xl font-bold">Book Artist</h2>
+            <p className="text-muted-foreground mt-1 text-sm">Sending request to {artistName}</p>
           </div>
           <Button variant="ghost" size="sm" onClick={onClose}>
-            <X className="w-5 h-5" />
+            <X className="h-5 w-5" />
           </Button>
         </div>
 
@@ -99,7 +93,7 @@ export default function CreateBookingModal({
                 <Button
                   variant="outline"
                   className={cn(
-                    "w-full justify-start text-left font-normal mt-2",
+                    "mt-2 w-full justify-start text-left font-normal",
                     !date && "text-muted-foreground"
                   )}
                 >
@@ -118,16 +112,12 @@ export default function CreateBookingModal({
                       clearErrors("date");
                     }
                   }}
-                  disabled={(date) =>
-                    date < new Date(new Date().setHours(0, 0, 0, 0))
-                  }
+                  disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
                   initialFocus
                 />
               </PopoverContent>
             </Popover>
-            {errors.date && (
-              <p className="text-sm text-destructive mt-1">{errors.date.message}</p>
-            )}
+            {errors.date && <p className="text-destructive mt-1 text-sm">{errors.date.message}</p>}
           </div>
 
           {/* Message */}
@@ -141,7 +131,7 @@ export default function CreateBookingModal({
               rows={4}
             />
             {errors.message && (
-              <p className="text-sm text-destructive mt-1">{errors.message.message}</p>
+              <p className="text-destructive mt-1 text-sm">{errors.message.message}</p>
             )}
           </div>
 

@@ -8,7 +8,4 @@ authRoutes.post("/register", register);
 authRoutes.post("/login", login);
 authRoutes.get("/me", auth, me);
 
-
 export default authRoutes;
-
-     

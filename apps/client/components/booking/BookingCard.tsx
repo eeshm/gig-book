@@ -19,9 +19,7 @@ export default function BookingCard({ booking }: BookingCardProps) {
   const isVenue = user?.role === "VENUE";
 
   const handleAccept = async () => {
-    const result = await dispatch(
-      updateBookingStatus({ id: booking.id, status: "ACCEPTED" })
-    );
+    const result = await dispatch(updateBookingStatus({ id: booking.id, status: "ACCEPTED" }));
     if (updateBookingStatus.fulfilled.match(result)) {
       toast.success("Booking accepted!");
     } else {
@@ -30,9 +28,7 @@ export default function BookingCard({ booking }: BookingCardProps) {
   };
 
   const handleReject = async () => {
-    const result = await dispatch(
-      updateBookingStatus({ id: booking.id, status: "REJECTED" })
-    );
+    const result = await dispatch(updateBookingStatus({ id: booking.id, status: "REJECTED" }));
     if (updateBookingStatus.fulfilled.match(result)) {
       toast.success("Booking rejected");
     } else {
@@ -60,16 +56,18 @@ export default function BookingCard({ booking }: BookingCardProps) {
   });
 
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-border/40 hover:border-primary/30 transition-all duration-300 bg-card">
+    <div className="group border-border/40 hover:border-primary/30 bg-card relative overflow-hidden rounded-2xl border transition-all duration-300">
       {/* Content */}
       <div className="p-6">
         {/* Header */}
-        <div className="flex justify-between items-start mb-5">
+        <div className="mb-5 flex items-start justify-between">
           <div className="flex-1">
-            <h3 className="text-lg font-semibold text-foreground mb-1">
-              {isArtist ? booking.venue?.venueName || "Venue Booking" : booking.artist?.artistType || "Artist Booking"}
+            <h3 className="text-foreground mb-1 text-lg font-semibold">
+              {isArtist
+                ? booking.venue?.venueName || "Venue Booking"
+                : booking.artist?.artistType || "Artist Booking"}
             </h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               {isArtist
                 ? `${booking.artist?.location || "Location TBA"}`
                 : `${booking.venue?.venueName || "Venue TBA"}`}
@@ -81,22 +79,22 @@ export default function BookingCard({ booking }: BookingCardProps) {
         </div>
 
         {/* Details Grid */}
-        <div className="space-y-3 mb-6 pb-6 border-b border-border/40">
+        <div className="border-border/40 mb-6 space-y-3 border-b pb-6">
           <div className="flex items-center text-sm">
-            <Calendar className="w-4 h-4 mr-3 flex-shrink-0 text-primary/70" />
-            <span className="font-medium text-foreground">{formattedDate}</span>
+            <Calendar className="text-primary/70 mr-3 h-4 w-4 flex-shrink-0" />
+            <span className="text-foreground font-medium">{formattedDate}</span>
           </div>
 
           {booking.artist && (
             <div className="flex items-center text-sm">
-              <MapPin className="w-4 h-4 mr-3 flex-shrink-0 text-primary/70" />
+              <MapPin className="text-primary/70 mr-3 h-4 w-4 flex-shrink-0" />
               <span className="text-muted-foreground">{booking.artist.location}</span>
             </div>
           )}
 
           {booking.message && (
             <div className="flex items-start text-sm">
-              <MessageSquare className="w-4 h-4 mr-3 mt-0.5 flex-shrink-0 text-primary/70" />
+              <MessageSquare className="text-primary/70 mt-0.5 mr-3 h-4 w-4 flex-shrink-0" />
               <span className="text-muted-foreground line-clamp-3">{booking.message}</span>
             </div>
           )}
@@ -111,40 +109,28 @@ export default function BookingCard({ booking }: BookingCardProps) {
                 className="flex-1 bg-green-600 hover:bg-green-700"
                 size="sm"
               >
-                <Check className="w-4 h-4 mr-2" />
+                <Check className="mr-2 h-4 w-4" />
                 Accept
               </Button>
-              <Button
-                onClick={handleReject}
-                variant="outline"
-                className="flex-1"
-                size="sm"
-              >
-                <X className="w-4 h-4 mr-2" />
+              <Button onClick={handleReject} variant="outline" className="flex-1" size="sm">
+                <X className="mr-2 h-4 w-4" />
                 Reject
               </Button>
             </>
           )}
 
           {canDelete && (
-            <Button
-              onClick={handleDelete}
-              variant="destructive"
-              className="w-full"
-              size="sm"
-            >
-              <Trash2 className="w-4 h-4 mr-2" />
+            <Button onClick={handleDelete} variant="destructive" className="w-full" size="sm">
+              <Trash2 className="mr-2 h-4 w-4" />
               Delete Request
             </Button>
           )}
 
           {!canAcceptReject && !canDelete && booking.status !== "PENDING" && (
-            <div className="flex items-center justify-center w-full py-2">
-              <Clock className="w-4 h-4 mr-2 text-muted-foreground" />
-              <p className="text-sm text-muted-foreground">
-                {booking.status === "ACCEPTED"
-                  ? "Booking confirmed"
-                  : "Booking declined"}
+            <div className="flex w-full items-center justify-center py-2">
+              <Clock className="text-muted-foreground mr-2 h-4 w-4" />
+              <p className="text-muted-foreground text-sm">
+                {booking.status === "ACCEPTED" ? "Booking confirmed" : "Booking declined"}
               </p>
             </div>
           )}

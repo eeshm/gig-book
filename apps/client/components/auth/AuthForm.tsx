@@ -49,7 +49,12 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
 
   const schema = mode === "login" ? loginSchema : registerSchema;
 
-  const {register: registerField, handleSubmit,setValue,formState: { errors },} = useForm<AuthFormValues>({
+  const {
+    register: registerField,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<AuthFormValues>({
     resolver: zodResolver(schema) as any,
     defaultValues: mode === "register" ? { role: initialRole } : undefined,
   });
@@ -76,9 +81,7 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
 
   const onSubmit = async (data: AuthFormValues) => {
     if (mode === "login") {
-      await dispatch(
-        login({ email: data.email, password: data.password })
-      );
+      await dispatch(login({ email: data.email, password: data.password }));
     } else {
       await dispatch(
         register({
@@ -93,7 +96,7 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
 
   return (
     <div className="w-full max-w-md">
-      <div className="space-y-1 mb-8">
+      <div className="mb-8 space-y-1">
         <h1 className="subheading text-foreground">
           {mode === "login" ? "Welcome Back" : "Get Started"}
         </h1>
@@ -109,18 +112,20 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
           <>
             {/* Hidden field to register role with React Hook Form */}
             <input type="hidden" {...registerField("role")} />
-            
+
             <div className="space-y-2">
-              <Label htmlFor="name" className="subtext">Full Name</Label>
+              <Label htmlFor="name" className="subtext">
+                Full Name
+              </Label>
               <Input
                 id="name"
                 type="text"
                 {...registerField("name")}
-                className="rounded-lg h-11 text-base px-4 border-border/60 text-white focus:border-primary transition-colors"
+                className="border-border/60 focus:border-primary h-11 rounded-lg px-4 text-base text-white transition-colors"
               />
               {errors.name && (
-                <p className="text-sm text-destructive flex items-center gap-1 ">
-                  <AlertCircle className="w-4 h-4" />
+                <p className="text-destructive flex items-center gap-1 text-sm">
+                  <AlertCircle className="h-4 w-4" />
                   {errors.name.message}
                 </p>
               )}
@@ -130,16 +135,18 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
 
         {/* Email Field */}
         <div className="space-y-2">
-          <Label htmlFor="email" className="subtext">Email Address</Label>
+          <Label htmlFor="email" className="subtext">
+            Email Address
+          </Label>
           <Input
             id="email"
             type="email"
             {...registerField("email")}
-            className="rounded-lg h-11 text-base px-4 border-border/60 text-white focus:border-primary transition-colors bg-black"
+            className="border-border/60 focus:border-primary h-11 rounded-lg bg-black px-4 text-base text-white transition-colors"
           />
           {errors.email && (
-            <p className="text-sm text-destructive flex items-center gap-1 ">
-              <AlertCircle className="w-4 h-4" />
+            <p className="text-destructive flex items-center gap-1 text-sm">
+              <AlertCircle className="h-4 w-4" />
               {errors.email.message}
             </p>
           )}
@@ -148,45 +155,49 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
         {/* Password Field */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <Label htmlFor="password" className="subtext">Password</Label>
+            <Label htmlFor="password" className="subtext">
+              Password
+            </Label>
           </div>
           <Input
             id="password"
             type="password"
             {...registerField("password")}
-            className="rounded-lg h-11 px-4 text-base  text-white border-border/60 focus:border-primary transition-colors"
+            className="border-border/60 focus:border-primary h-11 rounded-lg px-4 text-base text-white transition-colors"
           />
           {errors.password && (
-            <p className="text-sm text-destructive flex items-center gap-1 ">
-              <AlertCircle className="w-4 h-4" />
+            <p className="text-destructive flex items-center gap-1 text-sm">
+              <AlertCircle className="h-4 w-4" />
               {errors.password.message}
             </p>
           )}
         </div>
 
         {/* Submit Button */}
-        <Button 
-          type="submit" 
-          className="w-full h-11 text-base text-black rounded-lg transition-all duration-200 hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed" 
+        <Button
+          type="submit"
+          className="h-11 w-full rounded-lg text-base text-black transition-all duration-200 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70"
           disabled={loading}
         >
           {loading ? (
-            <span className="flex items-center justify-center  gap-2">
-              <Loader2 className="w-4 h-4 animate-spin" />
+            <span className="flex items-center justify-center gap-2">
+              <Loader2 className="h-4 w-4 animate-spin" />
               {mode === "login" ? "Signing in..." : "Creating account..."}
             </span>
+          ) : mode === "login" ? (
+            "Sign In"
           ) : (
-            mode === "login" ? "Sign In" : "Create Account"
+            "Create Account"
           )}
         </Button>
 
         {/* Divider */}
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-border/30"></div>
+            <div className="border-border/30 w-full border-t"></div>
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="px-2 bg-background text-muted-foreground">
+            <span className="bg-background text-muted-foreground px-2">
               {mode === "login" ? "Don't have an account?" : "Already have an account?"}
             </span>
           </div>
@@ -195,20 +206,29 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
         {/* Auth Link */}
         <div className="text-center">
           {mode === "login" ? (
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               Sign up as{" "}
-              <a href="/register?role=artist" className="text-primary font-semibold hover:text-primary/80 transition-colors">
+              <a
+                href="/register?role=artist"
+                className="text-primary hover:text-primary/80 font-semibold transition-colors"
+              >
                 Artist
-              </a>
-              {" "}or{" "}
-              <a href="/register?role=venue" className="text-primary font-semibold hover:text-primary/80 transition-colors">
+              </a>{" "}
+              or{" "}
+              <a
+                href="/register?role=venue"
+                className="text-primary hover:text-primary/80 font-semibold transition-colors"
+              >
                 Venue
               </a>
             </p>
           ) : (
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               Already have an account?{" "}
-              <a href="/login" className="text-primary font-semibold hover:text-primary/80 transition-colors">
+              <a
+                href="/login"
+                className="text-primary hover:text-primary/80 font-semibold transition-colors"
+              >
                 Sign in
               </a>
             </p>

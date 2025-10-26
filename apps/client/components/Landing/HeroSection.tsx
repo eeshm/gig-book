@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -12,52 +12,72 @@ import { TextAnimate } from "../ui/text-animate";
 export default function HeroSection() {
   return (
     <>
-      <section className="w-full flex justify-center">
+      <section className="flex w-full justify-center">
         <div className="">
           <div className="grid gap-16 lg:grid-cols-2 lg:gap-12">
             {/* Left Content */}
-            <div className="flex flex-col gap-8 relative">
+            <div className="relative flex flex-col gap-8">
               <div className="absolute inset-x-20 inset-y-20 opacity-60">
                 {/* <CursorHeroSection /> */}
-                <svg className="w-full h-full" viewBox="0 0 500 500" preserveAspectRatio="xMidYMid slice">
+                <svg
+                  className="h-full w-full"
+                  viewBox="0 0 500 500"
+                  preserveAspectRatio="xMidYMid slice"
+                >
                   <defs>
                     <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-                      <path d="M 40 10 L 10 10 10 40" fill="none" stroke="currentColor" strokeWidth="2px" />
+                      <path
+                        d="M 40 10 L 10 10 10 40"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2px"
+                      />
                     </pattern>
                   </defs>
                   <rect width="400" height="400" fill="url(#grid)" />
                 </svg>
               </div>
-              <div className="space-y-4 relative z-10">
-                <h1 className={cn("font-family-oswald text-5xl sm:text-6xl font-bold",
-                  "tracking-tight  text-balance leading-tight",
-                  "")}>
-                      Where Talent Meets <span className="text-primary">Opportunity</span>
+              <div className="relative z-10 space-y-4">
+                <h1
+                  className={cn(
+                    "font-family-oswald text-5xl font-bold sm:text-6xl",
+                    "leading-tight tracking-tight text-balance",
+                    ""
+                  )}
+                >
+                  Where Talent Meets <span className="text-primary">Opportunity</span>
                 </h1>
-                <p className=" max-w-lg text-[13px] text-foreground/80 font-family-manrope leading-relaxed">
-                  We are the trusted partner for artists and venues, offering innovative solutions that turn your ideas
-                  into impactful realities.
+                <p className="text-foreground/80 font-family-manrope max-w-lg text-[13px] leading-relaxed">
+                  We are the trusted partner for artists and venues, offering innovative solutions
+                  that turn your ideas into impactful realities.
                 </p>
               </div>
 
-              <div className="flex flex-col gap-4 sm:flex-row sm:gap-5 pt-4 relative z-10 font-family-oswald ">
+              <div className="font-family-oswald relative z-10 flex flex-col gap-4 pt-4 sm:flex-row sm:gap-5">
                 <Link href="/register?role=artist">
-                  <Button className="items-center justify-center transition-all duration-150 w-full lg:w-auto h-12 px-8 text-xl lg:h-16 lg:px-10 lg:text-xl bg-primary">
+                  <Button className="bg-primary h-12 w-full items-center justify-center px-8 text-xl transition-all duration-150 lg:h-16 lg:w-auto lg:px-10 lg:text-xl">
                     I am an Artist
                   </Button>
                 </Link>
                 <Link href="/register?role=venue">
-                  <button className="items-center bg-black justify-center hover:opacity-80 transition-all duration-150 w-full lg:w-auto h-12 px-8 text-xl lg:h-16 lg:px-10 lg:text-xl relative overflow-hidden">
-                    <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(circle, currentColor 10px, transparent 10px)', backgroundSize: '12px 12px' }}></div>
-                    <span className="relative  text-white z-10">I am a Venue</span>
+                  <button className="relative h-12 w-full items-center justify-center overflow-hidden bg-black px-8 text-xl transition-all duration-150 hover:opacity-80 lg:h-16 lg:w-auto lg:px-10 lg:text-xl">
+                    <div
+                      className="absolute inset-0 opacity-30"
+                      style={{
+                        backgroundImage:
+                          "radial-gradient(circle, currentColor 10px, transparent 10px)",
+                        backgroundSize: "12px 12px",
+                      }}
+                    ></div>
+                    <span className="relative z-10 text-white">I am a Venue</span>
                   </button>
                 </Link>
               </div>
             </div>
 
             {/* Right Visual */}
-            <div className="relative h-96 lg:h-full min-h-96 mt-0">
-              <div className="absolute inset-0 overflow-hidden flex items-center justify-center shadow-2xl">
+            <div className="relative mt-0 h-96 min-h-96 lg:h-full">
+              <div className="absolute inset-0 flex items-center justify-center overflow-hidden shadow-2xl">
                 <ImageBentoBox />
               </div>
             </div>
@@ -65,90 +85,91 @@ export default function HeroSection() {
         </div>
       </section>
     </>
-  )
+  );
 }
 
-
 export const ImageBentoBox = () => {
-    const images = [
-        { src: "/images/image12.jpg", alt: "Image 1" },
-        { src: "/images/image2.jpg", alt: "Image 2" },
-        { src: "/images/image3.jpg", alt: "Image 3" },
-        { src: "/images/image7.jpg", alt: "Image 4" },
-        { src: "/images/image5.jpg", alt: "Image 5" },
-        { src: "/images/image3.jpg", alt: "Image 6" },
-        { src: "/images/image14.jpg", alt: "Image 7" },
-        { src: "/images/image17.jpg", alt: "Image 8" },
-    ];
+  const images = [
+    { src: "/images/image12.jpg", alt: "Image 1" },
+    { src: "/images/image2.jpg", alt: "Image 2" },
+    { src: "/images/image3.jpg", alt: "Image 3" },
+    { src: "/images/image7.jpg", alt: "Image 4" },
+    { src: "/images/image5.jpg", alt: "Image 5" },
+    { src: "/images/image3.jpg", alt: "Image 6" },
+    { src: "/images/image14.jpg", alt: "Image 7" },
+    { src: "/images/image17.jpg", alt: "Image 8" },
+  ];
 
-    const containerRef = useRef(null);
-    
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start end", "end start"]
-    });
+  const containerRef = useRef(null);
 
-    return (
-        <div ref={containerRef} className="grid md:grid-cols-8 gap-2 md:gap-4 h-full w-full">
-            {images.map((image, index) => (
-                <ImageCard
-                    key={index}
-                    image={image}
-                    index={index}
-                    totalImages={images.length}
-                    scrollProgress={scrollYProgress}
-                />
-            ))}
-        </div>
-    );
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  return (
+    <div ref={containerRef} className="grid h-full w-full gap-2 md:grid-cols-8 md:gap-4">
+      {images.map((image, index) => (
+        <ImageCard
+          key={index}
+          image={image}
+          index={index}
+          totalImages={images.length}
+          scrollProgress={scrollYProgress}
+        />
+      ))}
+    </div>
+  );
 };
 
-const ImageCard = ({ image, index, totalImages, scrollProgress }: { image: { src: string; alt: string }; index: number; totalImages: number; scrollProgress: any }) => {
-    const [isDesktop, setIsDesktop] = useState(false);
+const ImageCard = ({
+  image,
+  index,
+  totalImages,
+  scrollProgress,
+}: {
+  image: { src: string; alt: string };
+  index: number;
+  totalImages: number;
+  scrollProgress: any;
+}) => {
+  const [isDesktop, setIsDesktop] = useState(false);
 
-    useEffect(() => {
-        setIsDesktop(window.innerWidth >= 1024);
-        const handleResize = () => setIsDesktop(window.innerWidth >= 1024);
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
+  useEffect(() => {
+    setIsDesktop(window.innerWidth >= 1024);
+    const handleResize = () => setIsDesktop(window.innerWidth >= 1024);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-    // Desktop: animation starts at 70% scroll, Mobile: starts at 30%
-    const animationStart = isDesktop ? 0.6 : 0.3;
-    const animationRange = isDesktop ? 0.28 : 0.68; // remaining range for animations
-    
-    const startDisappear = animationStart + (index / totalImages) * animationRange;
-    const endDisappear = animationStart + ((index + 1) / totalImages) * animationRange;
+  // Desktop: animation starts at 70% scroll, Mobile: starts at 30%
+  const animationStart = isDesktop ? 0.6 : 0.3;
+  const animationRange = isDesktop ? 0.28 : 0.68; // remaining range for animations
 
-    const opacity = useTransform(
-        scrollProgress,
-        [0, startDisappear, endDisappear, 1],
-        [1, 1, 0, 0]
-    );
+  const startDisappear = animationStart + (index / totalImages) * animationRange;
+  const endDisappear = animationStart + ((index + 1) / totalImages) * animationRange;
 
-    const x = useTransform(
-        scrollProgress,
-        [0, startDisappear, endDisappear, 1],
-        [0, 0, 500, 500]
-    );
+  const opacity = useTransform(scrollProgress, [0, startDisappear, endDisappear, 1], [1, 1, 0, 0]);
 
-    return (
-        <motion.div
-            className="row-span-1 col-span-4 md:col-span-1 md:row-span-4 group relative overflow-hidden rounded-xl transition-all duration-500 hover:shadow-2xl"
-            style={{
-                opacity,
-                x,
-            }}
-        >
-            <Image
-                src={image.src}
-                width={200}
-                height={200}
-                alt={image.alt}
-                className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
-            />
-            {/* Overlay on hover */}
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
-        </motion.div>
-    );
+  const x = useTransform(scrollProgress, [0, startDisappear, endDisappear, 1], [0, 0, 500, 500]);
+
+  return (
+    <motion.div
+      className="group relative col-span-4 row-span-1 overflow-hidden rounded-xl transition-all duration-500 hover:shadow-2xl md:col-span-1 md:row-span-4"
+      style={{
+        opacity,
+        x,
+      }}
+    >
+      <Image
+        src={image.src}
+        width={200}
+        height={200}
+        alt={image.alt}
+        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+      />
+      {/* Overlay on hover */}
+      <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/20" />
+    </motion.div>
+  );
 };

@@ -22,9 +22,7 @@ export default function BookingsPage() {
   }, [dispatch]);
 
   const filteredBookings =
-    filter === "ALL"
-      ? bookings
-      : bookings.filter((booking) => booking.status === filter);
+    filter === "ALL" ? bookings : bookings.filter((booking) => booking.status === filter);
 
   const filters: Array<BookingStatus | "ALL"> = ["ALL", "PENDING", "ACCEPTED", "REJECTED"];
 
@@ -38,11 +36,13 @@ export default function BookingsPage() {
 
   return (
     <DashboardLayout>
-      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
         {/* Header */}
         <div className="mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2 heading">My Bookings</h1>
-          <p className="text-sm sm:text-base text-muted-foreground subtext">
+          <h1 className="text-foreground heading mb-2 text-2xl font-bold sm:text-3xl">
+            My Bookings
+          </h1>
+          <p className="text-muted-foreground subtext text-sm sm:text-base">
             {user?.role === "ARTIST"
               ? "Manage your booking requests from venues"
               : "Track your booking requests to artists"}
@@ -50,23 +50,21 @@ export default function BookingsPage() {
         </div>
 
         {/* Filter Tabs */}
-        <div className="grid grid-cols-4 sm:flex gap-2 mb-6 sm:flex-wrap">
+        <div className="mb-6 grid grid-cols-4 gap-2 sm:flex sm:flex-wrap">
           {filters.map((status) => (
             <Button
               key={status}
               variant={filter === status ? "default" : "outline"}
               onClick={() => setFilter(status)}
               size="sm"
-              className="whitespace-nowrap w-full sm:w-auto"
+              className="w-full whitespace-nowrap sm:w-auto"
             >
-              <span className="block sm:hidden text-xs">
+              <span className="block text-xs sm:hidden">
                 {status === "ALL" ? "All" : status.slice(0, 3)}
               </span>
-              <span className="hidden sm:block">
-                {status}
-              </span>
+              <span className="hidden sm:block">{status}</span>
               {status !== "ALL" && (
-                <span className="ml-2 text-xs opacity-75 hidden sm:inline">
+                <span className="ml-2 hidden text-xs opacity-75 sm:inline">
                   ({bookings.filter((b) => b.status === status).length})
                 </span>
               )}
@@ -78,11 +76,7 @@ export default function BookingsPage() {
         {filteredBookings.length === 0 ? (
           <EmptyState
             icon={Calendar}
-            title={
-              filter === "ALL"
-                ? "No Bookings Yet"
-                : `No ${filter.toLowerCase()} bookings`
-            }
+            title={filter === "ALL" ? "No Bookings Yet" : `No ${filter.toLowerCase()} bookings`}
             description={
               user?.role === "ARTIST"
                 ? "When venues send you booking requests, they will appear here."

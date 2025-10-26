@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Oswald:wght@200..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Oswald:wght@200..700&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -16,8 +16,6 @@ body {
   overscroll-behavior: none;
 }
 
-
-
 /* Prevent layout shift on desktop when modal opens */
 @media (min-width >=100%) {
   max-width: 100%;
@@ -26,9 +24,9 @@ body {
     scrollbar-gutter: stable;
   }
 }
-@theme{
-  --font-family-manrope: 'Manrope', sans-serif;
-  --font-family-oswald: 'Oswald', sans-serif;
+@theme {
+  --font-family-manrope: "Manrope", sans-serif;
+  --font-family-oswald: "Oswald", sans-serif;
 }
 
 a {
@@ -52,7 +50,6 @@ a {
     display: unset;
   }
 }
-
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -100,7 +97,7 @@ a {
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary:hsl(15 100% 50%);
+  --primary: hsl(15 100% 50%);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -109,7 +106,7 @@ a {
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border:  rgba(255, 255, 255, 0.3);
+  --border: rgba(255, 255, 255, 0.3);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
@@ -169,30 +166,30 @@ a {
     @apply bg-background text-foreground;
     padding-right: 0 !important;
   }
-  
+
   /* Prevent layout shift when dialogs/modals open */
   body[style*="pointer-events: none"] {
     padding-right: 0 !important;
   }
 }
 
-.heading{
-  @apply font-family-oswald text-5xl sm:text-6xl font-bold tracking-tight text-foreground text-balance leading-tight;
+.heading {
+  @apply font-family-oswald text-foreground text-5xl leading-tight font-bold tracking-tight text-balance sm:text-6xl;
 }
-.headingwhite{
-  @apply font-family-oswald text-5xl sm:text-6xl font-bold tracking-tight text-white text-balance leading-tight;
+.headingwhite {
+  @apply font-family-oswald text-5xl leading-tight font-bold tracking-tight text-balance text-white sm:text-6xl;
 }
-.subheading{
-  @apply font-family-oswald text-2xl sm:text-3xl font-bold tracking-tight text-foreground text-balance leading-tight;
+.subheading {
+  @apply font-family-oswald text-foreground text-2xl leading-tight font-bold tracking-tight text-balance sm:text-3xl;
 }
-.subheadingblack{
-  @apply font-family-oswald text-2xl sm:text-3xl font-bold tracking-tight text-black text-balance leading-tight;
+.subheadingblack {
+  @apply font-family-oswald text-2xl leading-tight font-bold tracking-tight text-balance text-black sm:text-3xl;
 }
-.subtext{
-  @apply text-[13px] text-muted-foreground font-family-manrope leading-relaxed
+.subtext {
+  @apply text-muted-foreground font-family-manrope text-[13px] leading-relaxed;
 }
 
 .dotted-background {
-      background-image: radial-gradient(#2e2e2e 1px, transparent 1px);
-      background-size: 7px 7px; /* Adjust dot size and spacing */
-    }
+  background-image: radial-gradient(#2e2e2e 1px, transparent 1px);
+  background-size: 7px 7px; /* Adjust dot size and spacing */
+}
