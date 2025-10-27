@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Twitter, Instagram, Facebook, Linkedin, Github } from "lucide-react";
+import { Twitter, Github } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -33,13 +33,13 @@ export default function Footer() {
           <div className="font-family-oswald flex justify-center md:justify-end">
             <ul className="space-y-3">
               <li>
-                <Link href="/#hero">About us</Link>
+                <Link href="/?section=hero">About us</Link>
               </li>
               <li>
-                <Link href="/#why-choose">Why Choose Us</Link>
+                <Link href="/?section=why-choose">Why Choose Us</Link>
               </li>
               <li>
-                <Link href="/#how-it-works">How It Works</Link>
+                <Link href="/?section=how-it-works">How It Works</Link>
               </li>
               <li>
                 <Link href="/artists">Browse Artists</Link>

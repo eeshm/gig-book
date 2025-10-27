@@ -5,8 +5,7 @@ export const registerSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   email: z.string().email({ message: "Please enter a valid email." }),
   password: z.string().min(6, { message: "Password must be at least 6 characters." }),
-  //@ts-ignore
-  role: z.enum(["ARTIST", "VENUE"], { required_error: "You must select a role." }),
+  role: z.enum(["ARTIST", "VENUE"]).refine((val) => !!val, { message: "You must select a role." }),
 });
 
 export const loginSchema = z.object({

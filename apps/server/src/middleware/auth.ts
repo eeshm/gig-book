@@ -8,7 +8,7 @@ type JwtPayload = {
   exp?: number;
 };
 
-export interface AuthenticatedRequest extends Omit<Request, 'user'> {
+export interface AuthenticatedRequest extends Omit<Request, "user"> {
   userId?: string;
   user?: {
     id: string;

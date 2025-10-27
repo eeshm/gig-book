@@ -1,3 +1,5 @@
+"use client";
+
 import Grid from "@/components/Landing/ImageGrid";
 import Footer from "@/components/layout/Footer";
 import FeaturedSection from "@/components/Landing/FeaturedSection";

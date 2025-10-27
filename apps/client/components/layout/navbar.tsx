@@ -3,12 +3,11 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { X } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { logout } from "@/store/slices/authSlice";
 import { clearArtistProfile } from "@/store/slices/artistSlice";
 import { clearVenueProfile } from "@/store/slices/venueSlice";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -140,7 +139,9 @@ export default function Navbar() {
               {isMobileOpen ? (
                 <X size={24} />
               ) : (
-                <SidebarMenu className="opacity-70 transition-opacity duration-400 hover:opacity-100" />
+                <span className="relative inline-block opacity-70 transition hover:opacity-100  duration-300">
+                  <SidebarMenu />
+                </span>
               )}
             </button>
           </div>

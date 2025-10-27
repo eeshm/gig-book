@@ -12,9 +12,9 @@ const TestimonialSection = () => {
         <div className="group relative">
           <div className="border-border/40 relative rounded-md border p-8">
             <p className="subtext mb-6 flex-grow italic">
-              "GigBook transformed my career! I've booked more gigs in the past 3 months than I did
+              &rdquo;GigBook transformed my career! I&apos;ve booked more gigs in the past 3 months than I did
               all last year. The platform is incredibly easy to use and the venues are
-              professional."
+              professional.&rdquo;
             </p>
             <div className="flex items-center gap-4">
               <Image
@@ -36,8 +36,8 @@ const TestimonialSection = () => {
         <div className="group relative">
           <div className="border-border/40 relative rounded-md border p-8">
             <p className="subtext mb-6 flex-grow italic">
-              "Finding quality artists used to take weeks. Now we discover and book amazing talent
-              in days. Our events have never been better, and our guests love the entertainment."
+              &rdquo;Finding quality artists used to take weeks. Now we discover and book amazing talent
+              in days. Our events have never been better, and our guests love the entertainment.&rdquo;
             </p>
             <div className="flex items-center gap-4">
               <Image
@@ -59,9 +59,9 @@ const TestimonialSection = () => {
         <div className="group relative">
           <div className="border-border/40 relative rounded-md border p-8">
             <p className="subtext mb-6 flex-grow italic">
-              "As a band, coordinating with venues was always chaotic. GigBook streamlined
-              everything - from initial contact to payment. It's a game changer for working
-              musicians."
+              &rdquo;As a band, coordinating with venues was always chaotic. GigBook streamlined
+              everything - from initial contact to payment. It&apos;s a game changer for working
+              musicians.&rdquo;
             </p>
             <div className="flex items-center gap-4">
               <Image

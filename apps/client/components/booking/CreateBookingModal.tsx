@@ -44,7 +44,6 @@ export default function CreateBookingModal({
     handleSubmit,
     formState: { errors, isSubmitting },
     setValue,
-    setError,
     clearErrors,
   } = useForm<BookingFormData>({
     resolver: zodResolver(bookingSchema),

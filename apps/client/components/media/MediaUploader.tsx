@@ -3,7 +3,7 @@
 import { useState, useEffect, useId } from "react";
 import { Button } from "@/components/ui/button";
 import { Upload, X, Image as ImageIcon } from "lucide-react";
-
+import Image from "next/image";
 interface MediaUploaderProps {
   mediaUrls: string[];
   onUploadComplete: (urls: string[]) => void;
@@ -155,7 +155,7 @@ export default function MediaUploader({
                 {url.includes("video") ? (
                   <video src={url} className="h-full w-full object-cover" />
                 ) : (
-                  <img
+                  <Image
                     src={url}
                     alt={`Media ${index + 1}`}
                     className="h-full w-full object-cover"

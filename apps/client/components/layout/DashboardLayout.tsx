@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
-import { User, Music, Calendar, Home, Menu, X } from "lucide-react";
+import { User, Music, Calendar, Home, X } from "lucide-react";
 import { useState } from "react";
 
 interface DashboardLayoutProps {

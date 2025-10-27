@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Artist, Venue } from "@/types";
 import { MapPin, Users, Music } from "lucide-react";
+import Image from "next/image";
 import { useAppSelector } from "@/store/hooks";
 
 interface BrowseCardProps {
@@ -26,12 +27,12 @@ export default function BrowseCard({ type, data }: BrowseCardProps) {
       <div className="group border-border/40 hover:border-primary/30 bg-card relative flex-1 cursor-pointer overflow-hidden rounded-2xl border transition-all duration-300">
         {/* Image */}
         <div className="relative aspect-[4/2] overflow-hidden bg-white sm:aspect-[4/3]">
-          <img
+          <Image
             src={imageUrl}
             alt={
               isArtist ? user?.name || "Artist" : artist?.artistType || venue?.venueName || "Venue"
             }
-            className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-110"
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
             onError={(e) => {
               e.currentTarget.onerror = null; // Prevent infinite loop
               e.currentTarget.style.display = "none"; // Hide broken image

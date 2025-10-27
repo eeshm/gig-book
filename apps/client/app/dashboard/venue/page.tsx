@@ -11,11 +11,11 @@ import {
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import ProfileForm from "@/components/profile/ProfileForm";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
-import EmptyState from "@/components/shared/EmptyState";
 import { Button } from "@/components/ui/button";
 import { CreateVenueData, CreateArtistData } from "@/types";
 import { toast } from "react-hot-toast";
-import { Building2, Edit, MapPin, Users, X, Sparkles } from "lucide-react";
+import { Building2, Edit, MapPin, Users, X } from "lucide-react";
+import Image from "next/image";
 
 export default function VenueDashboardPage() {
   const dispatch = useAppDispatch();
@@ -297,7 +297,7 @@ export default function VenueDashboardPage() {
                           controls
                         />
                       ) : (
-                        <img
+                        <Image
                           src={url}
                           alt={`Media ${index + 1}`}
                           className="h-full w-full object-cover transition-transform group-hover:scale-110"

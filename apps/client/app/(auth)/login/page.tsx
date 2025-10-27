@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { ChevronLeft, User, Building2 } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import AuthForm from "@/components/auth/AuthForm";
 import {
   Dialog,
@@ -77,7 +77,7 @@ export default function LoginPage() {
               <div className="relative">
                 <div className="group-hover:bg-primary/20 mb-3 flex h-12 w-12 items-center justify-center transition-colors"></div>
                 <h3 className="text-foreground group-hover:text-primary mb-2 text-lg font-bold transition-colors">
-                  I'm an Artist
+                  I&apos;m an Artist
                 </h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
                   Showcase your talent and get discovered by venues
@@ -93,7 +93,7 @@ export default function LoginPage() {
               <div className="relative">
                 <div className="mb-3 flex h-12 w-12 items-center justify-center transition-colors group-hover:bg-blue-500/20"></div>
                 <h3 className="text-foreground mb-2 text-lg font-bold transition-colors group-hover:text-blue-500">
-                  I'm a Venue
+                  I&apos;m a Venue
                 </h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
                   Find and book amazing artists for your events

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import ArtistCard from "@/components/browse/ArtistCard";
 import VenueCard from "@/components/browse/VenueCard";
 const FeaturedSection = () => {
@@ -20,7 +19,7 @@ const FeaturedSection = () => {
           <span className="bg-primary h-8 w-1 rounded-full"></span>
           Top Artists
         </h3>
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           <ArtistCard
             name="DJ Nexus"
             genres="Electronic · House · Techno"
@@ -45,7 +44,7 @@ const FeaturedSection = () => {
           <span className="h-8 w-1 rounded-full bg-blue-500"></span>
           Premier Venues
         </h3>
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-3">
+        <div className="grid grid-cols-1  gap-6 md:grid-cols-3">
           <VenueCard
             name="The Grand Hall"
             location="Downtown"

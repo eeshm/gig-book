@@ -6,8 +6,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useScroll, useTransform, motion } from "motion/react";
 import { useRef, useState, useEffect } from "react";
-import { TextAnimate } from "../ui/text-animate";
-// import CursorHeroSection from "./CursorHeroSection";
+import { CursorHeroSection } from "./CursorHeroSection";
 
 export default function HeroSection() {
   return (
@@ -17,25 +16,15 @@ export default function HeroSection() {
           <div className="grid gap-16 lg:grid-cols-2 lg:gap-12">
             {/* Left Content */}
             <div className="relative flex flex-col gap-8">
-              <div className="absolute inset-x-20 inset-y-20 opacity-60">
-                {/* <CursorHeroSection /> */}
-                <svg
-                  className="h-full w-full"
-                  viewBox="0 0 500 500"
-                  preserveAspectRatio="xMidYMid slice"
-                >
-                  <defs>
-                    <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-                      <path
-                        d="M 40 10 L 10 10 10 40"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2px"
-                      />
-                    </pattern>
-                  </defs>
-                  <rect width="400" height="400" fill="url(#grid)" />
-                </svg>
+              {/* White Dots Background */}
+              <div className="absolute right-5 left-5 top-0 bottom-40  sm:right-20 sm:left-10 sm:top-0 sm:bottom-40 opacity-30">
+                <div 
+                  className="h-full w-ful"
+                  style={{
+                    backgroundImage: 'radial-gradient(circle, var(--color-gray-300) 1px, transparent 1px)',
+                    backgroundSize: '14px 14px',
+                  }}
+                />
               </div>
               <div className="relative z-10 space-y-4">
                 <h1
@@ -47,7 +36,7 @@ export default function HeroSection() {
                 >
                   Where Talent Meets <span className="text-primary">Opportunity</span>
                 </h1>
-                <p className="text-foreground/80 font-family-manrope max-w-lg text-[13px] leading-relaxed">
+                <p className=" text-white/70 font-family-manrope max-w-lg text-[14px] leading-relaxed">
                   We are the trusted partner for artists and venues, offering innovative solutions
                   that turn your ideas into impactful realities.
                 </p>
@@ -65,7 +54,7 @@ export default function HeroSection() {
                       className="absolute inset-0 opacity-30"
                       style={{
                         backgroundImage:
-                          "radial-gradient(circle, currentColor 10px, transparent 10px)",
+                        "radial-gradient(circle, currentColor 10px, transparent 10px)",
                         backgroundSize: "12px 12px",
                       }}
                     ></div>
@@ -73,6 +62,7 @@ export default function HeroSection() {
                   </button>
                 </Link>
               </div>
+                      <CursorHeroSection />
             </div>
 
             {/* Right Visual */}
@@ -100,6 +90,15 @@ export const ImageBentoBox = () => {
     { src: "/images/image17.jpg", alt: "Image 8" },
   ];
 
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    setIsDesktop(window.innerWidth >= 768);
+    const handleResize = () => setIsDesktop(window.innerWidth >= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const containerRef = useRef(null);
 
   const { scrollYProgress } = useScroll({
@@ -108,7 +107,46 @@ export const ImageBentoBox = () => {
   });
 
   return (
-    <div ref={containerRef} className="grid h-full w-full gap-2 md:grid-cols-8 md:gap-4">
+    <div ref={containerRef} className="relative grid h-full w-full gap-2 md:grid-cols-8 md:gap-4">
+      {/* Large background text */}
+      <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none overflow-hidden">
+        <div className="flex gap-0 md:gap-4">
+          {!isDesktop ? (
+            <div className="flex flex-col gap-1">
+              {Array.from('GIGBOOK').map((char, idx) => (
+                <h1
+                  key={idx}
+                  className="font-family-oswald text-5xl font-black text-center leading-none drop-shadow-lg"
+                  style={{
+                    background: 'linear-gradient(135deg, #ffffff 0%, #9ca3af 50%, #000000 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    filter: 'drop-shadow(0 0 20px rgba(0, 0, 0, 0.5))',
+                  } as React.CSSProperties}
+                >
+                  {char}
+                </h1>
+              ))}
+            </div>
+          ) : (
+            <h1
+              className="font-family-oswald text-9xl font-black text-center leading-none drop-shadow-2xl"
+              style={{
+                background: 'linear-gradient(135deg, #ffffff 0%, #9ca3af 50%, #1f2937 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                filter: 'drop-shadow(0 0 30px rgba(0, 0, 0, 0.6))',
+                letterSpacing: '-0.05em',
+              } as React.CSSProperties}
+            >
+              GIGBOOK
+            </h1>
+          )}
+        </div>
+      </div>
+
       {images.map((image, index) => (
         <ImageCard
           key={index}

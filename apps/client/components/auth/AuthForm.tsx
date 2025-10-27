@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { AlertCircle, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { login, register, clearError } from "@/store/slices/authSlice";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "react-hot-toast";
 import { UserRole } from "@/types";
+import TriangleWarning from "@/public/src/assets/triangle-warning";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -25,9 +26,6 @@ const registerSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
   role: z.enum(["ARTIST", "VENUE"]),
 });
-
-type LoginFormData = z.infer<typeof loginSchema>;
-type RegisterFormData = z.infer<typeof registerSchema>;
 
 // Superset type covering both login and register forms for React Hook Form generics
 type AuthFormValues = {
@@ -55,7 +53,7 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
     setValue,
     formState: { errors },
   } = useForm<AuthFormValues>({
-    resolver: zodResolver(schema) as any,
+    resolver: zodResolver(schema),
     defaultValues: mode === "register" ? { role: initialRole } : undefined,
   });
 
@@ -125,7 +123,7 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
               />
               {errors.name && (
                 <p className="text-destructive flex items-center gap-1 text-sm">
-                  <AlertCircle className="h-4 w-4" />
+                  <TriangleWarning className="h-4 w-4" />
                   {errors.name.message}
                 </p>
               )}
@@ -146,7 +144,7 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
           />
           {errors.email && (
             <p className="text-destructive flex items-center gap-1 text-sm">
-              <AlertCircle className="h-4 w-4" />
+              <TriangleWarning className="h-4 w-4" />
               {errors.email.message}
             </p>
           )}
@@ -167,7 +165,7 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
           />
           {errors.password && (
             <p className="text-destructive flex items-center gap-1 text-sm">
-              <AlertCircle className="h-4 w-4" />
+              <TriangleWarning className="h-4 w-4" />
               {errors.password.message}
             </p>
           )}
@@ -176,7 +174,7 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
         {/* Submit Button */}
         <Button
           type="submit"
-          className="h-11 w-full rounded-lg text-base text-black transition-all duration-200 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70"
+          className="h-11 w-full rounded-lg text-base text-foreground transition-all duration-200 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70"
           disabled={loading}
         >
           {loading ? (

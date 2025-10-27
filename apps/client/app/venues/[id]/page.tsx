@@ -1,12 +1,12 @@
 "use client";
-
 import { useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { fetchVenueById } from "@/store/slices/venueSlice";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
 import { Button } from "@/components/ui/button";
-import { MapPin, Users, Building2, ArrowLeft, Sparkles } from "lucide-react";
+import { MapPin, Users, Building2, ArrowLeft} from "lucide-react";
+import Image from "next/image";
 
 export default function SingleVenuePage() {
   const params = useParams();
@@ -63,8 +63,8 @@ export default function SingleVenuePage() {
                       controls
                     />
                   ) : (
-                    <img
-                      src={venue.mediaUrls[0]}
+                    <Image
+                      src={venue.mediaUrls[0] as string}
                       alt={venue.venueName}
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
@@ -86,7 +86,7 @@ export default function SingleVenuePage() {
                             className="h-full w-full object-cover transition-transform group-hover/thumb:scale-110"
                           />
                         ) : (
-                          <img
+                          <Image
                             src={url}
                             alt={`Media ${index + 2}`}
                             className="h-full w-full object-cover transition-transform group-hover/thumb:scale-110"

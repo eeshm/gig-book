@@ -10,7 +10,7 @@ export const Grid = () => {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "end start"],
+    offset: ["start center", "end center"],
   });
 
   return (
@@ -143,33 +143,33 @@ const Card = ({
   // Create staggered animation based on column and card position
   const cardDelay = columnIndex * 0.05 + index * 0.08;
 
-  // Vertical movement - different directions for alternating columns (more dramatic)
-  const yRange = columnIndex % 2 === 0 ? 100 : -100;
+  // Vertical movement - different directions for alternating columns (less dramatic)
+  const yRange = columnIndex % 2 === 0 ? 70 : -70;
   const y = useTransform(
     scrollProgress,
-    [0, 0.2 + cardDelay, 0.8 + cardDelay, 1],
+    [0, 0.1 + cardDelay, 0.5 + cardDelay, 1],
     [0, 0, yRange, yRange]
   );
 
-  // Rotation effect - alternating directions
-  const rotateValue = (columnIndex + index) % 2 === 0 ? 8 : -8;
+  // Rotation effect - alternating directions (reduced)
+  const rotateValue = (columnIndex + index) % 2 === 0 ? 5 : -5;
   const rotate = useTransform(
     scrollProgress,
-    [0, 0.2 + cardDelay, 0.5 + cardDelay, 0.8 + cardDelay, 1],
+    [0, 0.1 + cardDelay, 0.3 + cardDelay, 0.5 + cardDelay, 1],
     [0, 0, rotateValue, rotateValue, 0]
   );
 
-  // Scale effect for emphasis
+  // Scale effect for emphasis (reduced)
   const scale = useTransform(
     scrollProgress,
-    [0, 0.2 + cardDelay, 0.4 + cardDelay, 0.6 + cardDelay, 0.8 + cardDelay, 1],
-    [1, 1, 1.1, 1.15, 1.1, 1]
+    [0, 0.1 + cardDelay, 0.2 + cardDelay, 0.35 + cardDelay, 0.5 + cardDelay, 1],
+    [1, 1, 1.05, 1.08, 1.05, 1]
   );
 
   // Opacity for fade effect
   const opacity = useTransform(
     scrollProgress,
-    [0, 0.1 + cardDelay, 0.5 + cardDelay, 0.9 + cardDelay, 1],
+    [0, 0.05 + cardDelay, 0.3 + cardDelay, 0.5 + cardDelay, 1],
     [0.5, 1, 1, 1, 0.5]
   );
 

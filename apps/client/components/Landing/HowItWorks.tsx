@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Dot, DotIcon, MoveRight } from "lucide-react";
+import {MoveRight } from "lucide-react";
 const HowItWorks = () => {
   return (
     <div className="w-full p-4">

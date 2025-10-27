@@ -1,10 +1,9 @@
 import axios from "axios";
 
 import Cookies from "js-cookie";
-import { cookies } from "next/dist/server/request/cookies";
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api",
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "https://gig-book.onrender.com/api",
   withCredentials: true,
 });
 

@@ -6,7 +6,8 @@ import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { fetchArtistById } from "@/store/slices/artistSlice";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
 import { Button } from "@/components/ui/button";
-import { MapPin, ArrowLeft, Music, Sparkles } from "lucide-react";
+import { MapPin, ArrowLeft, Music } from "lucide-react";
+import Image from "next/image";
 import { toast } from "react-hot-toast";
 import CreateBookingModal from "@/components/booking/CreateBookingModal";
 
@@ -86,8 +87,8 @@ export default function SingleArtistPage() {
                       playsInline
                     />
                   ) : (
-                    <img
-                      src={artist.mediaUrls[mainMediaIndex]}
+                    <Image
+                      src={artist.mediaUrls[mainMediaIndex] as string}
                       alt={artist.artistType}
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
@@ -114,7 +115,7 @@ export default function SingleArtistPage() {
                                 playsInline
                               />
                             ) : (
-                              <img
+                              <Image
                                 src={url}
                                 alt={`Media ${index + 1}`}
                                 className="h-full w-full object-cover transition-transform group-hover/thumb:scale-110"

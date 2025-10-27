@@ -9,13 +9,12 @@ import {
 } from "@/store/slices/artistSlice";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import ProfileForm from "@/components/profile/ProfileForm";
-import MediaUploader from "@/components/media/MediaUploader";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
-import EmptyState from "@/components/shared/EmptyState";
 import { Button } from "@/components/ui/button";
 import { CreateArtistData, CreateVenueData } from "@/types";
 import { toast } from "react-hot-toast";
-import { UserCircle, Edit, MapPin, IndianRupee, Music, X } from "lucide-react";
+import { Edit, MapPin, Music, X } from "lucide-react";
+import Image from "next/image";
 
 export default function ArtistDashboardPage() {
   const dispatch = useAppDispatch();
@@ -256,7 +255,7 @@ export default function ArtistDashboardPage() {
                           controls
                         />
                       ) : (
-                        <img
+                        <Image
                           src={url}
                           alt={`Media ${index + 1}`}
                           className="h-full w-full object-cover transition-transform group-hover:scale-110"

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Manrope, Oswald } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { Toaster } from "react-hot-toast";
@@ -13,6 +14,14 @@ const geistSans = localFont({
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
+});
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-family-manrope",
+});
+const oswald = Oswald({
+  subsets: ["latin"],
+  variable: "--font-family-oswald",
 });
 
 export const metadata: Metadata = {
@@ -28,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} selection:text-primary-foreground font-sans selection:bg-blue-900`}
+        className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable} ${oswald.variable} selection:text-primary-foreground font-sans selection:bg-blue-900`}
       >
         <Providers>
           <AuthInitializer>
