@@ -6,12 +6,14 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  @apply bg-background;
 }
 
 body {
   width: 100%;
   overscroll-behavior: none;
   overflow-x: hidden;
+  @apply bg-background;
 }
 
 /* Prevent layout shift on desktop when modal opens */

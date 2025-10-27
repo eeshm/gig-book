@@ -69,7 +69,7 @@ export default function SingleArtistPage() {
           <span className="text-sm font-medium">Back</span>
         </button>
 
-        <div className="grid gap-8 lg:grid-cols-3">
+        <div className="grid gap-8 lg:grid-cols-3 bg-background">
           {/* Left: Media Gallery */}
           <div className="lg:col-span-2">
             {artist.mediaUrls && artist.mediaUrls.length > 0 ? (
@@ -140,10 +140,10 @@ export default function SingleArtistPage() {
           </div>
 
           {/* Right: Artist Info */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-8">
+          <div className="lg:col-span-1 bg-background">
+            <div className="sticky top-8 bg-background">
               {/* Card with gradient border effect */}
-              <div className="relative">
+              <div className="relative bg-background">
                 {/* Header */}
                 <div className="mb-6 pr-4">
                   <h1 className="text-foreground mb-2 text-4xl font-bold">{artist.artistType}</h1>

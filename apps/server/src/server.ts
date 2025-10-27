@@ -19,7 +19,7 @@ app.use(
     origin: function (origin, callback) {
       // Allow requests with no origin (like mobile apps or curl requests)
       if (!origin) return callback(null, true);
-      
+
       const allowedOrigins = [
         "http://localhost:3000",
         "http://localhost:3001",
@@ -27,9 +27,9 @@ app.use(
         "https://gig-book.vercel.app/",
         "https://gig-book.vercel.app",
         "gig-book.vercel.app",
-        "gig-book.vercel.app/"
+        "gig-book.vercel.app/",
       ];
-      
+
       if (allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
