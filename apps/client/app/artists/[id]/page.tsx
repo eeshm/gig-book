@@ -88,8 +88,8 @@ export default function SingleArtistPage() {
                     />
                   ) : (
                     <Image
-                    width={400}
-                    height={400}
+                      width={400}
+                      height={400}
                       src={artist.mediaUrls[mainMediaIndex] as string}
                       alt={artist.artistType}
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -117,7 +117,7 @@ export default function SingleArtistPage() {
                                 playsInline
                               />
                             ) : (
-                              <Image 
+                              <Image
                                 src={url}
                                 width={400}
                                 height={400}

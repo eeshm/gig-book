@@ -4,10 +4,9 @@ import Cookies from "js-cookie";
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || "https://gig-book.onrender.com/api",
-  withCredentials: true,
 });
 
-api.interceptors.request.use( 
+api.interceptors.request.use(
   (config) => {
     const token = Cookies.get("token");
     if (token) {

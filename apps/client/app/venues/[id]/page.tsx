@@ -80,32 +80,33 @@ export default function SingleVenuePage() {
                 {/* Thumbnail Gallery */}
                 {venue.mediaUrls.length > 1 && (
                   <div className="grid grid-cols-4 gap-3">
-                    {venue.mediaUrls.map((url, index) =>
-                      mainMediaIndex !== index && (
-                        <div
-                          key={index}
-                          onClick={() => setMainMediaIndex(index)}
-                          className="bg-muted group/thumb aspect-square cursor-pointer overflow-hidden rounded-lg shadow-lg transition-all hover:shadow-xl"
-                        >
-                          {url.includes("video") ? (
-                            <video
-                              src={url}
-                              className="h-full w-full object-cover transition-transform group-hover/thumb:scale-110"
-                              autoPlay
-                              loop
-                              playsInline
-                            />
-                          ) : (
-                            <Image
-                              src={url}
-                              width={400}
-                              height={400}
-                              alt={`Media ${index + 1}`}
-                              className="h-full w-full object-cover transition-transform group-hover/thumb:scale-110"
-                            />
-                          )}
-                        </div>
-                      )
+                    {venue.mediaUrls.map(
+                      (url, index) =>
+                        mainMediaIndex !== index && (
+                          <div
+                            key={index}
+                            onClick={() => setMainMediaIndex(index)}
+                            className="bg-muted group/thumb aspect-square cursor-pointer overflow-hidden rounded-lg shadow-lg transition-all hover:shadow-xl"
+                          >
+                            {url.includes("video") ? (
+                              <video
+                                src={url}
+                                className="h-full w-full object-cover transition-transform group-hover/thumb:scale-110"
+                                autoPlay
+                                loop
+                                playsInline
+                              />
+                            ) : (
+                              <Image
+                                src={url}
+                                width={400}
+                                height={400}
+                                alt={`Media ${index + 1}`}
+                                className="h-full w-full object-cover transition-transform group-hover/thumb:scale-110"
+                              />
+                            )}
+                          </div>
+                        )
                     )}
                   </div>
                 )}

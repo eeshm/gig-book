@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function RegisterPage() {
   return (
-    <div className="bg-background flex min-h-screen">
+    <div className="bg-background flex h-screen">
       {/* Left Side - Form */}
       <div className="flex w-full items-center justify-center p-4 lg:w-3/5 lg:p-8">
         <div className="w-full max-w-md">
@@ -19,7 +19,7 @@ export default function RegisterPage() {
         <Image
           src="/images/image10.jpg"
           alt="Register illustration"
-          width={400}
+          width={800}
           height={400}
           className="object-cover"
           priority

@@ -24,7 +24,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="bg-background flex min-h-screen">
+    <div className="bg-background flex h-screen">
       {/* Left Side - Form */}
       <div className="flex w-full items-center justify-center p-4 lg:w-3/5 lg:p-8">
         <div className="w-full max-w-md">
@@ -47,7 +47,7 @@ export default function LoginPage() {
         <Image
           src="/images/image12.jpg"
           alt="Login illustration"
-          width={400}
+          width={600}
           height={400}
           className="object-cover"
           priority
