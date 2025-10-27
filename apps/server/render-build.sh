@@ -2,8 +2,8 @@
 # exit on error
 set -o errexit
 
-# Install dependencies
-npm install
+# Install dependencies including devDependencies for building
+npm install --include=dev
 
 # Generate Prisma Client
 npx prisma generate
