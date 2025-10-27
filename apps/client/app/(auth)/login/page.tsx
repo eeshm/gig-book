@@ -47,7 +47,8 @@ export default function LoginPage() {
         <Image
           src="/images/image12.jpg"
           alt="Login illustration"
-          fill
+          width={400}
+          height={400}
           className="object-cover"
           priority
         />

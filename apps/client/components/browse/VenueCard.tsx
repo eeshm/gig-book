@@ -18,8 +18,9 @@ const VenueCard = ({ id, name, location, capacity, imageSrc }: VenueCardProps) =
         {imageSrc && (
           <Image
             src={imageSrc}
+            width={400}
+            height={400}
             alt={name}
-            fill
             className="object-cover transition-transform duration-300 group-hover:scale-110"
           />
         )}

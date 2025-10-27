@@ -256,6 +256,8 @@ export default function ArtistDashboardPage() {
                         />
                       ) : (
                         <Image
+                          width={400}
+                          height={400}
                           src={url}
                           alt={`Media ${index + 1}`}
                           className="h-full w-full object-cover transition-transform group-hover:scale-110"

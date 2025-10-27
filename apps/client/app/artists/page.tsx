@@ -22,7 +22,7 @@ export default function BrowseArtistsPage() {
         <LoadingSpinner size="lg" text="Loading artists..." />
       </div>
     );
-  }
+  } 
 
   // Ensure artists is always an array
   const artistsList = Array.isArray(artists) ? artists : [];

@@ -299,6 +299,8 @@ export default function VenueDashboardPage() {
                       ) : (
                         <Image
                           src={url}
+                          width={400}
+                          height={400}
                           alt={`Media ${index + 1}`}
                           className="h-full w-full object-cover transition-transform group-hover:scale-110"
                         />

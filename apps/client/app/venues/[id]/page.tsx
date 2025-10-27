@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { fetchVenueById } from "@/store/slices/venueSlice";
@@ -13,6 +13,7 @@ export default function SingleVenuePage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { profile: venue, loading } = useAppSelector((state) => state.venue);
+  const [mainMediaIndex, setMainMediaIndex] = useState(0);
 
   useEffect(() => {
     if (params.id) {
@@ -56,16 +57,21 @@ export default function SingleVenuePage() {
                 {/* Main Media */}
                 <div className="bg-muted group relative aspect-video overflow-hidden rounded-2xl shadow-2xl">
                   <div className="from-primary/10 to-primary/5 absolute inset-0 z-10 bg-gradient-to-br via-transparent transition-opacity group-hover:opacity-0" />
-                  {venue.mediaUrls[0]?.includes("video") ? (
+                  {venue.mediaUrls[mainMediaIndex]?.includes("video") ? (
                     <video
-                      src={venue.mediaUrls[0]}
+                      src={venue.mediaUrls[mainMediaIndex]}
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       controls
+                      autoPlay
+                      loop
+                      playsInline
                     />
                   ) : (
                     <Image
-                      src={venue.mediaUrls[0] as string}
+                      src={venue.mediaUrls[mainMediaIndex] as string}
                       alt={venue.venueName}
+                      width={400}
+                      height={400}
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   )}
@@ -74,26 +80,33 @@ export default function SingleVenuePage() {
                 {/* Thumbnail Gallery */}
                 {venue.mediaUrls.length > 1 && (
                   <div className="grid grid-cols-4 gap-3">
-                    {venue.mediaUrls.slice(1, 5).map((url, index) => (
-                      <div
-                        key={index}
-                        className="bg-muted group/thumb aspect-square cursor-pointer overflow-hidden rounded-lg shadow-lg transition-all hover:shadow-xl"
-                      >
-                        <div className="bg-primary/20 absolute inset-0 z-10 opacity-0 transition-opacity group-hover/thumb:opacity-100" />
-                        {url.includes("video") ? (
-                          <video
-                            src={url}
-                            className="h-full w-full object-cover transition-transform group-hover/thumb:scale-110"
-                          />
-                        ) : (
-                          <Image
-                            src={url}
-                            alt={`Media ${index + 2}`}
-                            className="h-full w-full object-cover transition-transform group-hover/thumb:scale-110"
-                          />
-                        )}
-                      </div>
-                    ))}
+                    {venue.mediaUrls.map((url, index) =>
+                      mainMediaIndex !== index && (
+                        <div
+                          key={index}
+                          onClick={() => setMainMediaIndex(index)}
+                          className="bg-muted group/thumb aspect-square cursor-pointer overflow-hidden rounded-lg shadow-lg transition-all hover:shadow-xl"
+                        >
+                          {url.includes("video") ? (
+                            <video
+                              src={url}
+                              className="h-full w-full object-cover transition-transform group-hover/thumb:scale-110"
+                              autoPlay
+                              loop
+                              playsInline
+                            />
+                          ) : (
+                            <Image
+                              src={url}
+                              width={400}
+                              height={400}
+                              alt={`Media ${index + 1}`}
+                              className="h-full w-full object-cover transition-transform group-hover/thumb:scale-110"
+                            />
+                          )}
+                        </div>
+                      )
+                    )}
                   </div>
                 )}
               </div>

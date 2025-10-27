@@ -19,7 +19,8 @@ export default function RegisterPage() {
         <Image
           src="/images/image10.jpg"
           alt="Register illustration"
-          fill
+          width={400}
+          height={400}
           className="object-cover"
           priority
         />
