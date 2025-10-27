@@ -174,7 +174,7 @@ export default function AuthForm({ mode, initialRole = "ARTIST" }: AuthFormProps
         {/* Submit Button */}
         <Button
           type="submit"
-          className="h-11 w-full rounded-lg text-base text-foreground transition-all duration-200 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70"
+          className="text-foreground h-11 w-full rounded-lg text-base transition-all duration-200 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70"
           disabled={loading}
         >
           {loading ? (

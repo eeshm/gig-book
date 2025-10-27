@@ -139,7 +139,7 @@ export default function Navbar() {
               {isMobileOpen ? (
                 <X size={24} />
               ) : (
-                <span className="relative inline-block opacity-70 transition hover:opacity-100  duration-300">
+                <span className="relative inline-block opacity-70 transition duration-300 hover:opacity-100">
                   <SidebarMenu />
                 </span>
               )}

@@ -17,12 +17,13 @@ export default function HeroSection() {
             {/* Left Content */}
             <div className="relative flex flex-col gap-8">
               {/* White Dots Background */}
-              <div className="absolute right-5 left-5 top-0 bottom-40  sm:right-20 sm:left-10 sm:top-0 sm:bottom-40 opacity-30">
-                <div 
-                  className="h-full w-ful"
+              <div className="absolute top-0 right-5 bottom-40 left-5 opacity-30 sm:top-0 sm:right-20 sm:bottom-40 sm:left-10">
+                <div
+                  className="w-ful h-full"
                   style={{
-                    backgroundImage: 'radial-gradient(circle, var(--color-gray-300) 1px, transparent 1px)',
-                    backgroundSize: '14px 14px',
+                    backgroundImage:
+                      "radial-gradient(circle, var(--color-gray-300) 1px, transparent 1px)",
+                    backgroundSize: "14px 14px",
                   }}
                 />
               </div>
@@ -36,7 +37,7 @@ export default function HeroSection() {
                 >
                   Where Talent Meets <span className="text-primary">Opportunity</span>
                 </h1>
-                <p className=" text-white/70 font-family-manrope max-w-lg text-[14px] leading-relaxed">
+                <p className="font-family-manrope max-w-lg text-[14px] leading-relaxed text-white/70">
                   We are the trusted partner for artists and venues, offering innovative solutions
                   that turn your ideas into impactful realities.
                 </p>
@@ -54,7 +55,7 @@ export default function HeroSection() {
                       className="absolute inset-0 opacity-30"
                       style={{
                         backgroundImage:
-                        "radial-gradient(circle, currentColor 10px, transparent 10px)",
+                          "radial-gradient(circle, currentColor 10px, transparent 10px)",
                         backgroundSize: "12px 12px",
                       }}
                     ></div>
@@ -62,7 +63,7 @@ export default function HeroSection() {
                   </button>
                 </Link>
               </div>
-                      <CursorHeroSection />
+              <CursorHeroSection />
             </div>
 
             {/* Right Visual */}
@@ -109,21 +110,23 @@ export const ImageBentoBox = () => {
   return (
     <div ref={containerRef} className="relative grid h-full w-full gap-2 md:grid-cols-8 md:gap-4">
       {/* Large background text */}
-      <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center overflow-hidden">
         <div className="flex gap-0 md:gap-4">
           {!isDesktop ? (
             <div className="flex flex-col gap-1">
-              {Array.from('GIGBOOK').map((char, idx) => (
+              {Array.from("GIGBOOK").map((char, idx) => (
                 <h1
                   key={idx}
-                  className="font-family-oswald text-5xl font-black text-center leading-none drop-shadow-lg"
-                  style={{
-                    background: 'linear-gradient(135deg, #ffffff 0%, #9ca3af 50%, #000000 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                    filter: 'drop-shadow(0 0 20px rgba(0, 0, 0, 0.5))',
-                  } as React.CSSProperties}
+                  className="font-family-oswald text-center text-5xl leading-none font-black drop-shadow-lg"
+                  style={
+                    {
+                      background: "linear-gradient(135deg, #ffffff 0%, #9ca3af 50%, #000000 100%)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      backgroundClip: "text",
+                      filter: "drop-shadow(0 0 20px rgba(0, 0, 0, 0.5))",
+                    } as React.CSSProperties
+                  }
                 >
                   {char}
                 </h1>
@@ -131,15 +134,17 @@ export const ImageBentoBox = () => {
             </div>
           ) : (
             <h1
-              className="font-family-oswald text-9xl font-black text-center leading-none drop-shadow-2xl"
-              style={{
-                background: 'linear-gradient(135deg, #ffffff 0%, #9ca3af 50%, #1f2937 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                filter: 'drop-shadow(0 0 30px rgba(0, 0, 0, 0.6))',
-                letterSpacing: '-0.05em',
-              } as React.CSSProperties}
+              className="font-family-oswald text-center text-9xl leading-none font-black drop-shadow-2xl"
+              style={
+                {
+                  background: "linear-gradient(135deg, #ffffff 0%, #9ca3af 50%, #1f2937 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  filter: "drop-shadow(0 0 30px rgba(0, 0, 0, 0.6))",
+                  letterSpacing: "-0.05em",
+                } as React.CSSProperties
+              }
             >
               GIGBOOK
             </h1>

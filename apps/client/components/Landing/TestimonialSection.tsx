@@ -12,8 +12,8 @@ const TestimonialSection = () => {
         <div className="group relative">
           <div className="border-border/40 relative rounded-md border p-8">
             <p className="subtext mb-6 flex-grow italic">
-              &rdquo;GigBook transformed my career! I&apos;ve booked more gigs in the past 3 months than I did
-              all last year. The platform is incredibly easy to use and the venues are
+              &rdquo;GigBook transformed my career! I&apos;ve booked more gigs in the past 3 months
+              than I did all last year. The platform is incredibly easy to use and the venues are
               professional.&rdquo;
             </p>
             <div className="flex items-center gap-4">
@@ -36,8 +36,9 @@ const TestimonialSection = () => {
         <div className="group relative">
           <div className="border-border/40 relative rounded-md border p-8">
             <p className="subtext mb-6 flex-grow italic">
-              &rdquo;Finding quality artists used to take weeks. Now we discover and book amazing talent
-              in days. Our events have never been better, and our guests love the entertainment.&rdquo;
+              &rdquo;Finding quality artists used to take weeks. Now we discover and book amazing
+              talent in days. Our events have never been better, and our guests love the
+              entertainment.&rdquo;
             </p>
             <div className="flex items-center gap-4">
               <Image

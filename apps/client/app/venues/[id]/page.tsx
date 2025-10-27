@@ -5,7 +5,7 @@ import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { fetchVenueById } from "@/store/slices/venueSlice";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
 import { Button } from "@/components/ui/button";
-import { MapPin, Users, Building2, ArrowLeft} from "lucide-react";
+import { MapPin, Users, Building2, ArrowLeft } from "lucide-react";
 import Image from "next/image";
 
 export default function SingleVenuePage() {
