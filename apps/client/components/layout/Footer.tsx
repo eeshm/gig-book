@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Twitter, Github } from "lucide-react";
+import TwitterIcon from "../ui/TwitterIcon";
 
 export default function Footer() {
   return (
@@ -19,7 +20,7 @@ export default function Footer() {
                 href="https://x.com/eeshmidha1"
                 className="flex h-10 w-10 items-center justify-center rounded-full transition-colors"
               >
-                <Twitter className="h-5 w-5 stroke-2" />
+                <TwitterIcon />
               </a>
               <a
                 href="https://github.com/eeshm"

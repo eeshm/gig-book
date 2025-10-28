@@ -12,10 +12,10 @@ export default function HomePage() {
   return (
     <>
       {/* Add two lines add borders one at extreme right and one at left */}
-      <div className="bg-background relative mx-auto flex max-w-7xl flex-col px-2 sm:px-6 lg:px-4">
+      <div className="bg-background relative mx-auto flex max-w-[85rem] flex-col px-2 sm:px-6 lg:px-4">
         {/* <div className="border-r border-l border-b px-2"> */}
         {/* Hero Section */}
-        <section id="hero" className="w-full pt-14 pb-8">
+        <section id="hero" className="w-full pt-10 pb-8">
           <HeroSection />
         </section>
 
@@ -60,7 +60,7 @@ export default function HomePage() {
       >
         GigBook
       </div>
-      <Footer />
+        <Footer />
     </>
   );
 }

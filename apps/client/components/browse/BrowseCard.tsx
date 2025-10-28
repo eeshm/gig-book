@@ -29,7 +29,7 @@ export default function BrowseCard({ type, data }: BrowseCardProps) {
         <div className="relative aspect-[4/2] overflow-hidden bg-white sm:aspect-[4/3]">
           <Image
             src={imageUrl}
-            width={400}
+            width={800}
             height={300}
             alt={
               isArtist ? user?.name || "Artist" : artist?.artistType || venue?.venueName || "Venue"

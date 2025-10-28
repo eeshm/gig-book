@@ -69,7 +69,7 @@ export default function SingleArtistPage() {
           <span className="text-sm font-medium">Back</span>
         </button>
 
-        <div className="grid gap-8 lg:grid-cols-3 bg-background">
+        <div className="bg-background grid gap-8 lg:grid-cols-3">
           {/* Left: Media Gallery */}
           <div className="lg:col-span-2">
             {artist.mediaUrls && artist.mediaUrls.length > 0 ? (
@@ -88,7 +88,7 @@ export default function SingleArtistPage() {
                     />
                   ) : (
                     <Image
-                      width={400}
+                      width={800}
                       height={400}
                       src={artist.mediaUrls[mainMediaIndex] as string}
                       alt={artist.artistType}
@@ -119,7 +119,7 @@ export default function SingleArtistPage() {
                             ) : (
                               <Image
                                 src={url}
-                                width={400}
+                                width={800}
                                 height={400}
                                 alt={`Media ${index + 1}`}
                                 className="h-full w-full object-cover transition-transform group-hover/thumb:scale-110"
@@ -140,10 +140,10 @@ export default function SingleArtistPage() {
           </div>
 
           {/* Right: Artist Info */}
-          <div className="lg:col-span-1 bg-background">
-            <div className="sticky top-8 bg-background">
+          <div className="bg-background lg:col-span-1">
+            <div className="bg-background sticky top-8">
               {/* Card with gradient border effect */}
-              <div className="relative bg-background">
+              <div className="bg-background relative">
                 {/* Header */}
                 <div className="mb-6 pr-4">
                   <h1 className="text-foreground mb-2 text-4xl font-bold">{artist.artistType}</h1>

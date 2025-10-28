@@ -156,7 +156,7 @@ export default function MediaUploader({
                   <video src={url} className="h-full w-full object-cover" />
                 ) : (
                   <Image
-                    width={400}
+                    width={800}
                     height={400}
                     src={url}
                     alt={`Media ${index + 1}`}

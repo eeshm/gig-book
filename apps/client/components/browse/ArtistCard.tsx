@@ -29,7 +29,7 @@ const ArtistCard = ({
         {imageSrc && (
           <Image
             src={imageSrc}
-            width={400}
+            width={800}
             height={400}
             alt={name}
             className="object-cover transition-transform duration-300 group-hover:scale-110"

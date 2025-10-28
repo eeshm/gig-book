@@ -30,14 +30,14 @@ export default function HeroSection() {
               <div className="relative z-10 space-y-4">
                 <h1
                   className={cn(
-                    "font-family-oswald text-5xl font-bold sm:text-6xl",
+                    "font-family-oswald text-5xl font-bold sm:text-7xl",
                     "leading-tight tracking-tight text-balance",
-                    ""
+                    "text-white"
                   )}
                 >
                   Where Talent Meets <span className="text-primary">Opportunity</span>
                 </h1>
-                <p className="font-family-manrope max-w-lg text-[14px] leading-relaxed text-white/70">
+                <p className="font-family-manrope max-w-lg pt-5 md:pt-0 text-[14px] leading-relaxed text-white/70">
                   We are the trusted partner for artists and venues, offering innovative solutions
                   that turn your ideas into impactful realities.
                 </p>
@@ -45,9 +45,9 @@ export default function HeroSection() {
 
               <div className="font-family-oswald relative z-10 flex flex-col gap-4 pt-4 sm:flex-row sm:gap-5">
                 <Link href="/register?role=artist">
-                  <Button className="bg-primary h-12 w-full items-center justify-center px-8 text-xl transition-all duration-150 lg:h-16 lg:w-auto lg:px-10 lg:text-xl">
+                  <button className="bg-primary h-12 w-full text-white items-center justify-center px-8 text-xl transition-all duration-150 lg:h-16 lg:w-auto lg:px-10 lg:text-xl">
                     I am an Artist
-                  </Button>
+                  </button>
                 </Link>
                 <Link href="/register?role=venue">
                   <button className="relative h-12 w-full items-center justify-center overflow-hidden bg-black px-8 text-xl transition-all duration-150 hover:opacity-80 lg:h-16 lg:w-auto lg:px-10 lg:text-xl">

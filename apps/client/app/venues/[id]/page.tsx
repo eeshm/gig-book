@@ -70,7 +70,7 @@ export default function SingleVenuePage() {
                     <Image
                       src={venue.mediaUrls[mainMediaIndex] as string}
                       alt={venue.venueName}
-                      width={400}
+                      width={800}
                       height={400}
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
@@ -99,7 +99,7 @@ export default function SingleVenuePage() {
                             ) : (
                               <Image
                                 src={url}
-                                width={400}
+                                width={800}
                                 height={400}
                                 alt={`Media ${index + 1}`}
                                 className="h-full w-full object-cover transition-transform group-hover/thumb:scale-110"

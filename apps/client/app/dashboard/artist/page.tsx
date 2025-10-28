@@ -256,7 +256,7 @@ export default function ArtistDashboardPage() {
                         />
                       ) : (
                         <Image
-                          width={400}
+                          width={800}
                           height={400}
                           src={url}
                           alt={`Media ${index + 1}`}

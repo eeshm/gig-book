@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 
 export function CursorHeroSection() {
   return (
-    <div className="absolute top-34 right-25 z-10 -translate-x-1/2 -translate-y-1/2 sm:top-40 sm:right-60 md:top-22 md:right-22 lg:top-40 lg:right-40">
+    <div className="absolute top-30 right-30 z-10 -translate-x-1/2 -translate-y-1/2 sm:top-40 sm:right-60 md:top-22 md:right-22 lg:top-40 lg:right-40">
       <motion.div
         className="relative inline-block"
         animate={{
