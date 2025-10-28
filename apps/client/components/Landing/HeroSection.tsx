@@ -37,7 +37,7 @@ export default function HeroSection() {
                 >
                   Where Talent Meets <span className="text-primary">Opportunity</span>
                 </h1>
-                <p className="font-family-manrope max-w-lg pt-5 md:pt-0 text-[14px] leading-relaxed text-white/70">
+                <p className="font-family-manrope max-w-lg pt-5 text-[14px] leading-relaxed text-white/70 md:pt-0">
                   We are the trusted partner for artists and venues, offering innovative solutions
                   that turn your ideas into impactful realities.
                 </p>
@@ -45,7 +45,7 @@ export default function HeroSection() {
 
               <div className="font-family-oswald relative z-10 flex flex-col gap-4 pt-4 sm:flex-row sm:gap-5">
                 <Link href="/register?role=artist">
-                  <button className="bg-primary h-12 w-full text-white items-center justify-center px-8 text-xl transition-all duration-150 lg:h-16 lg:w-auto lg:px-10 lg:text-xl">
+                  <button className="bg-primary h-12 w-full items-center justify-center px-8 text-xl text-white transition-all duration-150 lg:h-16 lg:w-auto lg:px-10 lg:text-xl">
                     I am an Artist
                   </button>
                 </Link>

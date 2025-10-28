@@ -60,7 +60,7 @@ export default function HomePage() {
       >
         GigBook
       </div>
-        <Footer />
+      <Footer />
     </>
   );
 }

@@ -26,14 +26,14 @@ const oswald = Oswald({
 });
 
 export const metadata: Metadata = {
-  title: "GigBook | Find Artists & Venues Easily",
+  title: "GigBook | Fiverr for Gigs",
   description: "A modern platform connecting artists and venues for seamless gig bookings.",
   keywords: ["gigs", "artists", "venues", "booking platform", "DJ", "live music", "entertainment"],
   authors: [{ name: "Eesh Midha", url: "https://gig-book.vercel.app" }],
   creator: "Eesh Midha",
   openGraph: {
-    title: "GigBook | Book Artists Easily",
-    description: "Discover talented artists and connect with them effortlessly.",
+    title: "GigBook | Fiverr for Gigs",
+    description: "The easiest way to connect performers and venues.",
     url: "https://gig-book.vercel.app",
     siteName: "GigBook",
     images: [
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
         url: "/landing2.png",
         width: 1200,
         height: 630,
-        alt: "GigBook – Connect Artists & Venues",
+        alt: "GigBook – Fiverr for Gigs",
       },
     ],
     locale: "en_US",
@@ -49,8 +49,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "GigBook | Book Artists & Venues",
-    description: "Discover artists. Book gigs. Grow your career.",
+    title: "GigBook | Fiverr for Gigs",
+    description: "The easiest way to connect performers and venues.",
     images: ["/landing2.png"],
     creator: "@eeshmidha1",
   },

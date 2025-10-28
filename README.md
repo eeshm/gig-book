@@ -1,135 +1,82 @@
-# Turborepo starter
 
-This Turborepo starter is maintained by the Turborepo core team.
+<h1 align="center"> GigBook </h1>
 
-## Using this example
+<p align="center">
+[![TypeScript](https://img.shields.io/badge/TypeScript-000000?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-000000?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-000000?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io/)
+</p>
 
-Run the following command:
+![GigBook Preview](/public/landing2.png)
+**<p align="center">Fivver for Gigs - https://gig-book.vercel.app</p>**
 
-```sh
-npx create-turbo@latest
+
+
+GigBook is a modern full-stack web application designed to bridge the gap between **artists** and **venues** for live event bookings.
+
+Think **Fiverr**, but for gigs — where performers can showcase their talent, and venues can discover and book them easily.
+
+---
+
+## 🛠️ Tech Stack
+|  Category | Technology  |
+|-----------|---------|
+| **Frontend** | Next.js 14 (App Router) + TailwindCSS + shadcn/ui |
+| **Backend** | Express + Prisma + PostgreSQL|
+| **State Management** | Redux Toolkit + React Hook Form + Zod |
+| **Media Uploads** | Cloudinary |
+| **Authentication** | JWT + Role-based routing (Artist / Venue) |
+| **Monorepo Setup** | Turborepo (apps/frontend + apps/backend) |
+
+---
+
+## Features
+-  Secure Login & Role-based Dashboards  
+-  Artist Profiles with Media Uploads  
+-  Venue Profiles and Booking Management  
+-  Create, Accept, and Reject Bookings  
+-  Cloudinary Uploads with Progress Tracking  
+-  Optimistic Updates & Toast Notifications
+
+---
+
+## Environment Variables
+
+### Required Backend Variables
+
+```env
+DATABASE_URL       # PostgreSQL connection string
+JWT_SECRET        # Secret key for JWT signing
+PORT              # Server port (default: 4000)
+NODE_ENV          # Environment (development/production)
+FRONTEND_URL      # Frontend URL for CORS
 ```
 
-## What's inside?
+### Required Frontend Variables
 
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+```env
+NEXT_PUBLIC_API_URL                    # Backend API URL
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME      # Cloudinary cloud name
+NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET   # Cloudinary upload preset
 ```
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+---
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+## 🤝 Contributing
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+1. Fork the repository
+2. Create feature branch (`git checkout -b feat/amazing-feature`)
+3. Commit changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to branch (`git push origin feat/amazing-feature`)
+5. Open Pull Request
 
-### Develop
+---
 
-To develop all apps and packages, run the following command:
+## Connect with me 
 
-```
-cd my-turborepo
+* Email: [eeshmidha@80@gmail.com](mailto:eeshmidha80@gmail.com)
+* X : [eeshmidha1](https://x.com/eeshmidha1)
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
-
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+**Star this repo if you find it helpful!**
