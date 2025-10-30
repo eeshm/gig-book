@@ -91,7 +91,10 @@ export const me = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const userId = req.userId;
 
+    console.log("/me endpoint called - UserID:", userId);
+
     if (!userId) {
+      console.error(" No userId in request");
       return res.status(401).json({ message: "Unauthorized" });
     }
 
@@ -106,13 +109,91 @@ export const me = async (req: AuthenticatedRequest, res: Response) => {
     });
 
     if (!user) {
+      console.error("User not found:", userId);
       return res.status(404).json({ message: "User not found" });
     }
 
+    console.log("User found:", user.id, "Role:", user.role);
     return res.status(200).json(user);
   } catch (error) {
-    console.error(error);
+    console.error("/me endpoint error:", error);
     res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const googleAuth = async (req: Request, res: Response) => {
+  try {
+    const { email, name, googleId, image, role } = req.body;
+
+    console.log(" Google Auth Controller - Request received");
+    console.log(" Email:", email);
+    console.log(" Name:", name);
+    console.log(" GoogleID:", googleId);
+    console.log(" Role from frontend:", role);
+
+    // Validate required fields
+    if (!email || !googleId) {
+      console.error(" Missing email or googleId");
+      return res.status(400).json({ error: "Email and googleId required" });
+    }
+
+    // Check if user already exists
+    let user = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (!user) {
+      // New user (Signup) - Create with role from frontend
+      console.log(" Creating new user with role:", role || "ARTIST");
+      user = await prisma.user.create({
+        data: {
+          email,
+          name: name || email.split("@")[0],
+          googleId,
+          image,
+          role: role || "ARTIST",
+          emailVerified: new Date(),
+        },
+      });
+      console.log(" New user created:", user.id);
+    } else if (!user.googleId) {
+      // Existing user linking Google - Update googleId
+      console.log(" Linking Google to existing user");
+      user = await prisma.user.update({
+        where: { email },
+        data: { googleId },
+      });
+      console.log(" Google linked to user:", user.id);
+    } else {
+      console.log(" User already exists with Google:", user.id);
+    }
+
+    // Generate JWT token
+    const token = jwt.sign(
+      {
+        userId: user.id,
+        email: user.email,
+        role: user.role,
+      },
+      process.env.JWT_SECRET!,
+      { expiresIn: "7d" }
+    );
+
+    console.log("✅ JWT token generated for user:", user.id, "Role:", user.role);
+
+    return res.status(200).json({
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        image: user.image,
+      },
+    });
+  } catch (error) {
+    console.error("❌ Google auth error:", error);
+    res.status(500).json({ error: "Authentication failed" });
   }
 };
 
@@ -121,4 +202,5 @@ export const authController = {
   login,
   logout,
   me,
+  googleAuth,
 };

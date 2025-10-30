@@ -1,18 +1,15 @@
-
 <h1 align="center"> GigBook </h1>
 
 <p align="center">
-[![TypeScript](https://img.shields.io/badge/TypeScript-000000?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
-[![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-000000?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-[![Prisma](https://img.shields.io/badge/Prisma-000000?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io/)
+<img src="https://img.shields.io/badge/TypeScript-000000?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/">
+<img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/">
+<img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/">
+<img src="https://img.shields.io/badge/PostgreSQL-000000?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org">
+<img src="https://img.shields.io/badge/Prisma-000000?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io">
 </p>
 
 ![GigBook Preview](/public/landing2.png)
 **<p align="center">Fivver for Gigs - https://gig-book.vercel.app</p>**
-
-
 
 GigBook is a modern full-stack web application designed to bridge the gap between **artists** and **venues** for live event bookings.
 
@@ -21,24 +18,26 @@ Think **Fiverr**, but for gigs — where performers can showcase their talent, a
 ---
 
 ## 🛠️ Tech Stack
-|  Category | Technology  |
-|-----------|---------|
-| **Frontend** | Next.js 14 (App Router) + TailwindCSS + shadcn/ui |
-| **Backend** | Express + Prisma + PostgreSQL|
-| **State Management** | Redux Toolkit + React Hook Form + Zod |
-| **Media Uploads** | Cloudinary |
-| **Authentication** | JWT + Role-based routing (Artist / Venue) |
-| **Monorepo Setup** | Turborepo (apps/frontend + apps/backend) |
+
+| Category             | Technology                                        |
+| -------------------- | ------------------------------------------------- |
+| **Frontend**         | Next.js 14 (App Router) + TailwindCSS + shadcn/ui |
+| **Backend**          | Express + Prisma + PostgreSQL                     |
+| **State Management** | Redux Toolkit + React Hook Form + Zod             |
+| **Media Uploads**    | Cloudinary                                        |
+| **Authentication**   | JWT + Role-based routing (Artist / Venue)         |
+| **Monorepo Setup**   | Turborepo (apps/frontend + apps/backend)          |
 
 ---
 
 ## Features
--  Secure Login & Role-based Dashboards  
--  Artist Profiles with Media Uploads  
--  Venue Profiles and Booking Management  
--  Create, Accept, and Reject Bookings  
--  Cloudinary Uploads with Progress Tracking  
--  Optimistic Updates & Toast Notifications
+
+- Secure Login & Role-based Dashboards
+- Artist Profiles with Media Uploads
+- Venue Profiles and Booking Management
+- Create, Accept, and Reject Bookings
+- Cloudinary Uploads with Progress Tracking
+- Optimistic Updates & Toast Notifications
 
 ---
 
@@ -74,9 +73,9 @@ NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET   # Cloudinary upload preset
 
 ---
 
-## Connect with me 
+## Connect with me
 
-* Email: [eeshmidha@80@gmail.com](mailto:eeshmidha80@gmail.com)
-* X : [eeshmidha1](https://x.com/eeshmidha1)
+- Email: [eeshmidha@80@gmail.com](mailto:eeshmidha80@gmail.com)
+- X : [eeshmidha1](https://x.com/eeshmidha1)
 
 **Star this repo if you find it helpful!**

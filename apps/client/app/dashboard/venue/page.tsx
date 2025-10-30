@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
@@ -19,12 +19,23 @@ import Image from "next/image";
 
 export default function VenueDashboardPage() {
   const dispatch = useAppDispatch();
-  const { profile, loading } = useAppSelector((state) => state.venue);
+  // Check auth state first
+  const authUser = useAppSelector((state) => state.auth.user);
+  const authLoading = useAppSelector((state) => state.auth.loading);
+  // Venue state
+  const profile = useAppSelector((state) => state.venue.profile);
+  const loading = useAppSelector((state) => state.venue.loading);
   const [isEditing, setIsEditing] = useState(false);
+  const hasFetchedRef = useRef(false);
 
   useEffect(() => {
-    dispatch(fetchMyVenueProfile());
-  }, [dispatch]);
+    // Only fetch profile once when auth is ready AND user is VENUE role
+    if (!profile && !loading && !hasFetchedRef.current && authUser && !authLoading && authUser.role === "VENUE") {
+      console.log("📡 Fetching venue profile for user:", authUser.id);
+      hasFetchedRef.current = true;
+      dispatch(fetchMyVenueProfile());
+    }
+  }, [authUser, authLoading, profile, loading, dispatch]); // Add proper dependencies
 
   const handleCreateProfile = async (data: CreateVenueData | CreateArtistData) => {
     const venueData = data as CreateVenueData;

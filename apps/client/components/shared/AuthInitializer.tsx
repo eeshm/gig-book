@@ -1,19 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useAppSelector } from "@/store/hooks";
 
 export default function AuthInitializer({ children }: { children: React.ReactNode }) {
   const { loading } = useAppSelector((state) => state.auth);
   const [isInitializing, setIsInitializing] = useState(true);
+  const hasInitialized = useRef(false);
 
   useEffect(() => {
-    // Give a short time for auth to initialize
-    const timer = setTimeout(() => {
-      setIsInitializing(false);
-    }, 500);
+    // Only run initialization once
+    if (!hasInitialized.current) {
+      const timer = setTimeout(() => {
+        setIsInitializing(false);
+        hasInitialized.current = true;
+      }, 500);
 
-    return () => clearTimeout(timer);
+      return () => clearTimeout(timer);
+    } else {
+      setIsInitializing(false);
+    }
   }, []);
 
   // Show minimal loading during initial auth check

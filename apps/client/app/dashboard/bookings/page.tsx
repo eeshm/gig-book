@@ -14,12 +14,16 @@ import { BookingStatus } from "@/types";
 export default function BookingsPage() {
   const dispatch = useAppDispatch();
   const { bookings, loading } = useAppSelector((state) => state.booking);
-  const { user } = useAppSelector((state) => state.auth);
+  const { user: authUser, loading: authLoading } = useAppSelector((state) => state.auth);
   const [filter, setFilter] = useState<BookingStatus | "ALL">("ALL");
 
   useEffect(() => {
-    dispatch(fetchMyBookings());
-  }, [dispatch]);
+    // Only fetch bookings when auth is ready
+    if (authUser && !authLoading) {
+      console.log("📡 Fetching bookings for user:", authUser.id);
+      dispatch(fetchMyBookings());
+    }
+  }, [authUser, authLoading, dispatch]);
 
   const filteredBookings =
     filter === "ALL" ? bookings : bookings.filter((booking) => booking.status === filter);
@@ -43,7 +47,7 @@ export default function BookingsPage() {
             My Bookings
           </h1>
           <p className="text-muted-foreground subtext text-sm sm:text-base">
-            {user?.role === "ARTIST"
+            {authUser?.role === "ARTIST"
               ? "Manage your booking requests from venues"
               : "Track your booking requests to artists"}
           </p>
@@ -78,7 +82,7 @@ export default function BookingsPage() {
             icon={Calendar}
             title={filter === "ALL" ? "No Bookings Yet" : `No ${filter.toLowerCase()} bookings`}
             description={
-              user?.role === "ARTIST"
+              authUser?.role === "ARTIST"
                 ? "When venues send you booking requests, they will appear here."
                 : "Start booking artists to see your requests here."
             }

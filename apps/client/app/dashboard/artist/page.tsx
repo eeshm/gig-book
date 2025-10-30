@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   fetchMyArtistProfile,
@@ -18,14 +18,31 @@ import Image from "next/image";
 
 export default function ArtistDashboardPage() {
   const dispatch = useAppDispatch();
-  const { profile, loading } = useAppSelector((state) => state.artist);
+  // Select auth state to check if properly authenticated
+  const authUser = useAppSelector((state) => state.auth.user);
+  const authLoading = useAppSelector((state) => state.auth.loading);
+  // Only select what we need to minimize rerenders
+  const profile = useAppSelector((state) => state.artist.profile);
+  const loading = useAppSelector((state) => state.artist.loading);
   const [isEditing, setIsEditing] = useState(false);
+  const hasFetchedRef = useRef(false);
+  const renderCount = useRef(0);
+
+  // Track render count (remove this after debugging)
+  useEffect(() => {
+    renderCount.current += 1;
+    console.log(`🔄 Dashboard render count: ${renderCount.current}`);
+  });
 
   useEffect(() => {
-    dispatch(fetchMyArtistProfile());
-  }, [dispatch]);
-
-  const handleCreateProfile = async (data: CreateArtistData | CreateVenueData) => {
+    // Only fetch profile once when auth is ready AND user is ARTIST role
+    if (!profile && !loading && !hasFetchedRef.current && authUser && !authLoading && authUser.role === "ARTIST") {
+      console.log("📡 Fetching artist profile for user:", authUser.id);
+      hasFetchedRef.current = true;
+      dispatch(fetchMyArtistProfile());
+    }
+  }, [authUser, authLoading, profile, loading, dispatch]);
+  const handleCreateProfile = useCallback(async (data: CreateArtistData | CreateVenueData) => {
     const artistData = data as CreateArtistData;
     const result = await dispatch(createArtistProfile(artistData));
     if (createArtistProfile.fulfilled.match(result)) {
@@ -34,9 +51,9 @@ export default function ArtistDashboardPage() {
     } else if (createArtistProfile.rejected.match(result)) {
       toast.error("Failed to create profile. Please try again.");
     }
-  };
+  }, [dispatch]);
 
-  const handleUpdateProfile = async (data: CreateArtistData | CreateVenueData) => {
+  const handleUpdateProfile = useCallback(async (data: CreateArtistData | CreateVenueData) => {
     if (!profile) return;
     const artistData = data as CreateArtistData;
     const result = await dispatch(updateArtistProfile({ id: profile.id, data: artistData }));
@@ -46,7 +63,7 @@ export default function ArtistDashboardPage() {
     } else if (updateArtistProfile.rejected.match(result)) {
       toast.error("Failed to update profile. Please try again.");
     }
-  };
+  }, [dispatch, profile]);
 
   if (loading && !profile) {
     return (

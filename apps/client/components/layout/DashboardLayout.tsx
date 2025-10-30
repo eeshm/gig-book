@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
 import { User, Music, Calendar, Home, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -12,16 +12,24 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const pathname = usePathname();
-  const { user } = useAppSelector((state) => state.auth);
+  // Only select what we need to prevent unnecessary rerenders
+  const user = useAppSelector((state) => state.auth.user);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const isArtist = user?.role === "ARTIST";
-  const dashboardLink = isArtist ? "/dashboard/artist" : "/dashboard/venue";
+  // Memoize computed values
+  const isArtist = useMemo(() => user?.role === "ARTIST", [user?.role]);
+  const dashboardLink = useMemo(
+    () => (isArtist ? "/dashboard/artist" : "/dashboard/venue"),
+    [isArtist]
+  );
 
-  const navItems = [
-    { href: dashboardLink, label: "Dashboard", icon: Home },
-    { href: "/dashboard/bookings", label: "Bookings", icon: Calendar },
-  ];
+  const navItems = useMemo(
+    () => [
+      { href: dashboardLink, label: "Dashboard", icon: Home },
+      { href: "/dashboard/bookings", label: "Bookings", icon: Calendar },
+    ],
+    [dashboardLink]
+  );
 
   return (
     <div className="bg-background min-h-screen">
