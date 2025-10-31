@@ -26,46 +26,57 @@ export default function ArtistDashboardPage() {
   const loading = useAppSelector((state) => state.artist.loading);
   const [isEditing, setIsEditing] = useState(false);
   const hasFetchedRef = useRef(false);
-  const renderCount = useRef(0);
-
-  // Track render count (remove this after debugging)
-  useEffect(() => {
-    renderCount.current += 1;
-    console.log(`🔄 Dashboard render count: ${renderCount.current}`);
-  });
 
   useEffect(() => {
     // Only fetch profile once when auth is ready AND user is ARTIST role
-    if (!profile && !loading && !hasFetchedRef.current && authUser && !authLoading && authUser.role === "ARTIST") {
-      console.log("📡 Fetching artist profile for user:", authUser.id);
+    if (
+      !profile &&
+      !loading &&
+      !hasFetchedRef.current &&
+      authUser &&
+      !authLoading &&
+      authUser.role === "ARTIST"
+    ) {
       hasFetchedRef.current = true;
       dispatch(fetchMyArtistProfile());
     }
   }, [authUser, authLoading, profile, loading, dispatch]);
-  const handleCreateProfile = useCallback(async (data: CreateArtistData | CreateVenueData) => {
-    const artistData = data as CreateArtistData;
-    const result = await dispatch(createArtistProfile(artistData));
-    if (createArtistProfile.fulfilled.match(result)) {
-      toast.success("Profile created successfully!");
-      setIsEditing(false);
-    } else if (createArtistProfile.rejected.match(result)) {
-      toast.error("Failed to create profile. Please try again.");
-    }
-  }, [dispatch]);
+  const handleCreateProfile = useCallback(
+    async (data: CreateArtistData | CreateVenueData) => {
+      const artistData = data as CreateArtistData;
+      const result = await dispatch(createArtistProfile(artistData));
+      if (createArtistProfile.fulfilled.match(result)) {
+        toast.success("Profile created successfully!");
+        setIsEditing(false);
+      } else if (createArtistProfile.rejected.match(result)) {
+        toast.error("Failed to create profile. Please try again.");
+      }
+    },
+    [dispatch]
+  );
 
-  const handleUpdateProfile = useCallback(async (data: CreateArtistData | CreateVenueData) => {
-    if (!profile) return;
-    const artistData = data as CreateArtistData;
-    const result = await dispatch(updateArtistProfile({ id: profile.id, data: artistData }));
-    if (updateArtistProfile.fulfilled.match(result)) {
-      toast.success("Profile updated successfully!");
-      setIsEditing(false);
-    } else if (updateArtistProfile.rejected.match(result)) {
-      toast.error("Failed to update profile. Please try again.");
-    }
-  }, [dispatch, profile]);
+  const handleUpdateProfile = useCallback(
+    async (data: CreateArtistData | CreateVenueData) => {
+      if (!profile) return;
+      const artistData = data as CreateArtistData;
+      const result = await dispatch(updateArtistProfile({ id: profile.id, data: artistData }));
+      if (updateArtistProfile.fulfilled.match(result)) {
+        toast.success("Profile updated successfully!");
+        setIsEditing(false);
+      } else if (updateArtistProfile.rejected.match(result)) {
+        toast.error("Failed to update profile. Please try again.");
+      }
+    },
+    [dispatch, profile]
+  );
 
-  if (loading && !profile) {
+  // Determine whether auth and fetch state are ready. While auth is resolving
+  // or we haven't yet attempted to fetch the profile, show a loading state
+  // to avoid briefly rendering the "create profile" form on refresh.
+  const authReady = !!authUser && !authLoading;
+  const fetchAttempted = hasFetchedRef.current;
+
+  if (authLoading || (authReady && !fetchAttempted) || (loading && !profile)) {
     return (
       <DashboardLayout>
         <LoadingSpinner size="lg" text="Loading your profile..." />
@@ -73,8 +84,8 @@ export default function ArtistDashboardPage() {
     );
   }
 
-  // No profile exists - Show create form
-  if (!profile && !loading) {
+  // No profile exists - Show create form (only after we've attempted fetching)
+  if (!profile && !loading && fetchAttempted) {
     return (
       <DashboardLayout>
         <div className="mx-auto max-w-3xl">

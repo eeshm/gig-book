@@ -59,7 +59,6 @@ export default function MediaUploader({
     try {
       const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
       const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET;
-      console.log("Cloudinary Config:", { cloudName, uploadPreset });
 
       if (!cloudName || !uploadPreset) {
         throw new Error(

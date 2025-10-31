@@ -9,6 +9,7 @@ This means the `signIn` callback in `lib/auth.ts` is returning `false`.
 ## Debugging Steps:
 
 ### Step 1: Check Browser Console
+
 Open DevTools (F12) and go to **Console** tab to see the new debug logs:
 
 ```
@@ -43,6 +44,7 @@ npm run dev
 ```
 
 Look for errors like:
+
 - Database connection issue
 - Prisma model errors
 - Missing fields
@@ -77,6 +79,7 @@ curl -X POST http://localhost:5000/api/auth/google \
 ```
 
 **Expected response:**
+
 ```json
 {
   "token": "eyJh...",
@@ -95,6 +98,7 @@ curl -X POST http://localhost:5000/api/auth/google \
 ### Step 5: Check API URL
 
 In `lib/axios.ts`:
+
 ```typescript
 baseURL: process.env.NEXT_PUBLIC_API_URL || "https://gig-book.onrender.com/api",
 ```
@@ -102,11 +106,13 @@ baseURL: process.env.NEXT_PUBLIC_API_URL || "https://gig-book.onrender.com/api",
 For **local development**, the backend should be running on `http://localhost:5000/api`
 
 Create `.env.local.development`:
+
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:5000/api
 ```
 
 Or update `.env.local`:
+
 ```env
 # For local dev:
 NEXT_PUBLIC_API_URL=http://localhost:5000/api
@@ -119,13 +125,13 @@ NEXT_PUBLIC_API_URL=https://gig-book.onrender.com/api
 
 ## Common Issues & Solutions:
 
-| Issue | Solution |
-|-------|----------|
-| 404 - endpoint not found | Verify `/google` route added to `auth.ts` and exported |
-| 500 - Internal error | Check server logs for database/Prisma errors |
-| CORS error | Add CORS headers in backend server config |
-| "googleId does not exist" | Prisma schema not migrated - run `prisma migrate dev` |
-| Empty response | Backend returning `null` or incomplete data |
+| Issue                     | Solution                                               |
+| ------------------------- | ------------------------------------------------------ |
+| 404 - endpoint not found  | Verify `/google` route added to `auth.ts` and exported |
+| 500 - Internal error      | Check server logs for database/Prisma errors           |
+| CORS error                | Add CORS headers in backend server config              |
+| "googleId does not exist" | Prisma schema not migrated - run `prisma migrate dev`  |
+| Empty response            | Backend returning `null` or incomplete data            |
 
 ---
 
@@ -145,6 +151,7 @@ NEXT_PUBLIC_API_URL=https://gig-book.onrender.com/api
 ## Next Steps:
 
 1. **Run dev server:**
+
    ```bash
    cd apps/server
    npm run dev

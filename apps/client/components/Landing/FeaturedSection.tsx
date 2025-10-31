@@ -14,7 +14,7 @@ const FeaturedSection = () => {
       </div>
 
       {/* Featured Artists */}
-      <div className="mb-16">
+      <div className="mb-16 px-2 md:px-0">
         <h3 className="subheading mb-8 flex items-center gap-3">
           <span className="bg-primary h-8 w-1 rounded-full"></span>
           Top Artists
@@ -39,7 +39,7 @@ const FeaturedSection = () => {
       </div>
 
       {/* Featured Venues */}
-      <div>
+      <div className="mb-16 px-2 md:px-0">
         <h3 className="subheading mb-8 flex items-center gap-3">
           <span className="h-8 w-1 rounded-full bg-blue-500"></span>
           Premier Venues

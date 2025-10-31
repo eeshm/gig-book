@@ -38,21 +38,25 @@ export default function Navbar() {
   }, []);
 
   const handleLogout = async () => {
-    console.log("🚪 Logging out...");
-    
     // Clear Redux state
     dispatch(logout());
     dispatch(clearArtistProfile());
     dispatch(clearVenueProfile());
-    
-    // Sign out from NextAuth (handles OAuth sessions)
-    await signOut({ 
-      redirect: false, // We'll handle redirect manually
-      callbackUrl: "/" 
-    });
-    
-    // Redirect to home
-    router.push("/");
+    // Immediately navigate away so dashboard pages don't briefly render
+    // an empty create form while the signOut call completes.
+    // Use replace so logout doesn't remain in history.
+    router.replace("/");
+
+    // Fire-and-forget NextAuth signOut to clear server/session cookies.
+    // We don't await here to avoid UI flicker — any cleanup errors will be
+    // handled by NextAuth itself and the user is already redirected.
+    try {
+      signOut({ redirect: false, callbackUrl: "/" }).catch((err) => {
+        console.warn("signOut failed:", err);
+      });
+    } catch (err) {
+      console.warn("signOut error:", err);
+    }
   };
 
   // Memoize dashboard link
@@ -74,10 +78,7 @@ export default function Navbar() {
     if (isAuthenticated && user) {
       return (
         <>
-          <Link
-            href={dashboardLink}
-            className="h-full"
-          >
+          <Link href={dashboardLink} className="h-full">
             <button className="lg:hover:bg-primary hover:bg-pink flex h-full w-full items-center justify-center bg-white text-lg text-black transition-colors duration-200 hover:text-black lg:w-auto lg:border-l-[1px] lg:px-6 lg:py-2">
               Dashboard
             </button>

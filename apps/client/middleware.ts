@@ -35,9 +35,9 @@ export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // Check for NextAuth session (for OAuth users)
-  const nextAuthToken = await getToken({ 
-    req, 
-    secret: process.env.NEXTAUTH_SECRET 
+  const nextAuthToken = await getToken({
+    req,
+    secret: process.env.NEXTAUTH_SECRET,
   });
 
   // User is authenticated if they have either:
@@ -47,7 +47,7 @@ export async function middleware(req: NextRequest) {
 
   // Get user's role
   let userRole: string | null = null;
-  
+
   if (nextAuthToken?.role) {
     userRole = nextAuthToken.role as string;
   } else if (token) {

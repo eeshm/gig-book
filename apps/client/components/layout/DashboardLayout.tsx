@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useAppSelector } from "@/store/hooks";
 import { User, Music, Calendar, Home, X } from "lucide-react";
 import { useState, useMemo } from "react";
+import Image from "next/image";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -36,16 +37,37 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       {/* Mobile Header */}
       <div className="bg-card/80 border-primary/10 sticky top-0 z-40 flex items-center justify-between border-b border-dashed p-4 shadow-lg backdrop-blur-sm lg:hidden">
         <div className="flex items-center gap-3">
-          <button
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="hover:bg-muted/10 rounded-lg border p-2 text-white transition-colors"
-            aria-label="Toggle menu"
-          >
-            {isSidebarOpen ? <X size={24} /> : <User size={24} />}
-          </button>
-          <div>
-            <p className="text-sm font-semibold text-white">{user?.name.toUpperCase()}</p>
-            <p className="text-xs text-white/50 capitalize">{user?.role?.toLowerCase()}</p>
+          {/* Profile avatar (clickable to toggle sidebar) */}
+          <div className="flex items-center gap-3">
+            {user?.image ? (
+              <button
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                className="relative h-10 w-10 overflow-hidden rounded-full border border-white/20 transition-opacity hover:opacity-80"
+                aria-label="Toggle menu"
+              >
+                <Image src={user.image} alt={`${user.name ?? "User"} avatar`} fill sizes="40px" className="object-cover" />
+              </button>
+            ) : (
+              <button
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-primary/20 transition-opacity hover:opacity-80"
+                aria-label="Toggle menu"
+              >
+                <span className="text-xs font-bold text-white">
+                  {user?.name
+                    ?.split(" ")
+                    .map((n) => n[0])
+                    .join("")
+                    .toUpperCase()
+                    .slice(0, 2) || "U"}
+                </span>
+              </button>
+            )}
+
+            <div>
+              <p className="text-sm font-semibold text-white">{user?.name?.toUpperCase()}</p>
+              <p className="text-xs text-white/50 capitalize">{user?.role?.toLowerCase()}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -66,13 +88,27 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           {/* User Info Card */}
           <div className="mb-8 p-4">
             <div className="flex items-center gap-2">
-              {isArtist ? (
-                <div className="rounded-full border border-white/40 p-4">
-                  <Music className="h-4 w-4 text-white" />
+              {/* Show provider image if available, otherwise show initials */}
+              {user?.image ? (
+                <div className="relative h-12 w-12 overflow-hidden rounded-full border border-white/20">
+                  <Image
+                    src={user.image}
+                    alt={`${user.name ?? "User"} avatar`}
+                    fill
+                    sizes="48px"
+                    className="object-cover"
+                  />
                 </div>
               ) : (
-                <div className="rounded-full border border-white/40 p-4">
-                  <User className="h-4 w-4 text-white" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/40 bg-primary/20">
+                  <span className="text-sm font-bold text-white">
+                    {user?.name
+                      ?.split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .toUpperCase()
+                      .slice(0, 2) || "U"}
+                  </span>
                 </div>
               )}
               <div>

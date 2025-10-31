@@ -6,6 +6,8 @@ export interface User {
   name: string;
   email: string;
   role: UserRole;
+  // Optional profile image (e.g. from OAuth providers like Google)
+  image?: string;
 }
 
 export interface AuthResponse {

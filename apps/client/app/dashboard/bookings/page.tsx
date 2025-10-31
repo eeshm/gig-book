@@ -20,7 +20,6 @@ export default function BookingsPage() {
   useEffect(() => {
     // Only fetch bookings when auth is ready
     if (authUser && !authLoading) {
-      console.log("📡 Fetching bookings for user:", authUser.id);
       dispatch(fetchMyBookings());
     }
   }, [authUser, authLoading, dispatch]);

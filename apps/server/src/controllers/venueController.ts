@@ -5,10 +5,9 @@ import prisma from "../prisma.js";
 
 export const createVenue = async (req: Request, res: Response) => {
   try {
-    console.log("Creating venue with data:", JSON.stringify(req.body, null, 2));
     const parsed = venueCreateSchema.safeParse(req.body);
     if (!parsed.success) {
-      console.log("Validation failed:", JSON.stringify(parsed.error.format(), null, 2));
+      console.error("Validation failed:", JSON.stringify(parsed.error.format(), null, 2));
       return res.status(400).json({ message: "Invalid data", errors: parsed.error.format() });
     }
     const data = parsed.data;
@@ -56,7 +55,6 @@ export const createVenue = async (req: Request, res: Response) => {
 
 export const getMyVenueProfile = async (req: Request, res: Response) => {
   try {
-    console.log("Getting venue profile for user:", req.user?.id);
     if (!req.user) {
       return res.status(401).json({ message: "Unauthorized" });
     }
@@ -68,13 +66,11 @@ export const getMyVenueProfile = async (req: Request, res: Response) => {
       include: { user: { select: { id: true, name: true, email: true } } },
     });
     if (!venue) {
-      console.log("No venue profile found for user:", req.user.id);
       return res.status(404).json({ message: "Venue profile not found" });
     }
-    console.log("Venue profile found:", venue.id);
     return res.status(200).json(venue);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json("Internal server error !");
   }
 };
@@ -111,7 +107,7 @@ export const getVenues = async (req: Request, res: Response) => {
     ]);
     return res.status(200).json({ total, venues });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json("Internal server error !");
   }
 };
@@ -136,7 +132,7 @@ export const getVenueById = async (req: Request, res: Response) => {
     }
     return res.status(200).json(venue);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json("Internal server error !");
   }
 };
@@ -235,7 +231,7 @@ export const deleteVenue = async (req: Request, res: Response) => {
     });
     return res.status(200).json({ message: "Venue deleted successfully" });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json("Internal server error !");
   }
 };

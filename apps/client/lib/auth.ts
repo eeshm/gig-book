@@ -47,15 +47,9 @@ const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user, account, profile }) {
       try {
-        console.log("🔐 Google Auth - signIn callback triggered");
-        console.log("📧 Email:", user.email);
-        console.log("👤 Name:", user.name);
-        console.log("🆔 Google ID:", account?.providerAccountId);
-
         // Check if we have a signup role stored in sessionStorage
-        const signupRole = typeof window !== "undefined" 
-          ? sessionStorage.getItem("googleSignupRole") 
-          : null;
+        const signupRole =
+          typeof window !== "undefined" ? sessionStorage.getItem("googleSignupRole") : null;
 
         // Call backend to handle Google OAuth
         // Backend will either:
@@ -69,32 +63,18 @@ const authOptions: NextAuthOptions = {
           role: signupRole || "ARTIST", // Send the role from signup flow
         });
 
-        console.log("✅ Backend response:", response.data);
-
         const { token, user: userData } = response.data;
 
         if (!token) {
           console.error("❌ No token in response");
           return false;
         }
-
-        // Extend user object with role and id from backend
         user.id = userData.id;
         user.role = userData.role as UserRole;
-
-        // Store token in user object to pass to jwt callback
         (user as any).accessToken = token;
 
-        console.log("✅ User authenticated successfully");
-        console.log("👤 User ID:", user.id);
-        console.log("🎭 User Role:", user.role);
-        
         return true;
       } catch (error: any) {
-        console.error("❌ Google sign-in error: ", error);
-        console.error("❌ Error response:", error.response?.data);
-        console.error("❌ Error status:", error.response?.status);
-        console.error("❌ Error message:", error.message);
         return false;
       }
     },
@@ -105,7 +85,6 @@ const authOptions: NextAuthOptions = {
         // Store the access token from backend in JWT
         if ((user as any).accessToken) {
           token.accessToken = (user as any).accessToken;
-          console.log("🔐 JWT callback - accessToken stored in JWT token");
         }
       }
       return token;
@@ -118,7 +97,6 @@ const authOptions: NextAuthOptions = {
       // Store access token in session so we can access it client-side
       if (token.accessToken) {
         (session as any).accessToken = token.accessToken;
-        console.log("🔐 Session callback - accessToken added to session");
       }
       return session;
     },

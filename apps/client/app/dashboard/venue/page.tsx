@@ -30,8 +30,14 @@ export default function VenueDashboardPage() {
 
   useEffect(() => {
     // Only fetch profile once when auth is ready AND user is VENUE role
-    if (!profile && !loading && !hasFetchedRef.current && authUser && !authLoading && authUser.role === "VENUE") {
-      console.log("📡 Fetching venue profile for user:", authUser.id);
+    if (
+      !profile &&
+      !loading &&
+      !hasFetchedRef.current &&
+      authUser &&
+      !authLoading &&
+      authUser.role === "VENUE"
+    ) {
       hasFetchedRef.current = true;
       dispatch(fetchMyVenueProfile());
     }
@@ -47,7 +53,6 @@ export default function VenueDashboardPage() {
       const error = result.payload as string;
       // If profile already exists, force refetch to load it
       if (error?.includes("already exists")) {
-        console.log("Profile exists, fetching...");
         const fetchResult = await dispatch(fetchMyVenueProfile());
         if (fetchMyVenueProfile.fulfilled.match(fetchResult)) {
           toast.success("Profile loaded successfully!");
@@ -73,7 +78,13 @@ export default function VenueDashboardPage() {
     }
   };
 
-  if (loading && !profile) {
+  // Determine whether auth and fetch state are ready. While auth is resolving
+  // or we haven't yet attempted to fetch the profile, show a loading state
+  // to avoid briefly rendering the "create profile" form on refresh.
+  const authReady = !!authUser && !authLoading;
+  const fetchAttempted = hasFetchedRef.current;
+
+  if (authLoading || (authReady && !fetchAttempted) || (loading && !profile)) {
     return (
       <DashboardLayout>
         <LoadingSpinner size="lg" text="Loading your profile..." />
@@ -81,8 +92,8 @@ export default function VenueDashboardPage() {
     );
   }
 
-  // No profile exists - Show create form
-  if (!profile && !loading) {
+  // No profile exists - Show create form (only after we've attempted fetching)
+  if (!profile && !loading && fetchAttempted) {
     return (
       <DashboardLayout>
         <div className="mx-auto max-w-3xl">
