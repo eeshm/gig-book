@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
@@ -19,12 +19,29 @@ import Image from "next/image";
 
 export default function VenueDashboardPage() {
   const dispatch = useAppDispatch();
-  const { profile, loading } = useAppSelector((state) => state.venue);
+  // Check auth state first
+  const authUser = useAppSelector((state) => state.auth.user);
+  const authLoading = useAppSelector((state) => state.auth.loading);
+  // Venue state
+  const profile = useAppSelector((state) => state.venue.profile);
+  const loading = useAppSelector((state) => state.venue.loading);
   const [isEditing, setIsEditing] = useState(false);
+  const hasFetchedRef = useRef(false);
 
   useEffect(() => {
-    dispatch(fetchMyVenueProfile());
-  }, [dispatch]);
+    // Only fetch profile once when auth is ready AND user is VENUE role
+    if (
+      !profile &&
+      !loading &&
+      !hasFetchedRef.current &&
+      authUser &&
+      !authLoading &&
+      authUser.role === "VENUE"
+    ) {
+      hasFetchedRef.current = true;
+      dispatch(fetchMyVenueProfile());
+    }
+  }, [authUser, authLoading, profile, loading, dispatch]); // Add proper dependencies
 
   const handleCreateProfile = async (data: CreateVenueData | CreateArtistData) => {
     const venueData = data as CreateVenueData;
@@ -36,7 +53,6 @@ export default function VenueDashboardPage() {
       const error = result.payload as string;
       // If profile already exists, force refetch to load it
       if (error?.includes("already exists")) {
-        console.log("Profile exists, fetching...");
         const fetchResult = await dispatch(fetchMyVenueProfile());
         if (fetchMyVenueProfile.fulfilled.match(fetchResult)) {
           toast.success("Profile loaded successfully!");
@@ -62,7 +78,13 @@ export default function VenueDashboardPage() {
     }
   };
 
-  if (loading && !profile) {
+  // Determine whether auth and fetch state are ready. While auth is resolving
+  // or we haven't yet attempted to fetch the profile, show a loading state
+  // to avoid briefly rendering the "create profile" form on refresh.
+  const authReady = !!authUser && !authLoading;
+  const fetchAttempted = hasFetchedRef.current;
+
+  if (authLoading || (authReady && !fetchAttempted) || (loading && !profile)) {
     return (
       <DashboardLayout>
         <LoadingSpinner size="lg" text="Loading your profile..." />
@@ -70,8 +92,8 @@ export default function VenueDashboardPage() {
     );
   }
 
-  // No profile exists - Show create form
-  if (!profile && !loading) {
+  // No profile exists - Show create form (only after we've attempted fetching)
+  if (!profile && !loading && fetchAttempted) {
     return (
       <DashboardLayout>
         <div className="mx-auto max-w-3xl">

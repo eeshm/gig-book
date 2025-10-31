@@ -5,7 +5,6 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { Toaster } from "react-hot-toast";
 import ConditionalNavbar from "@/components/layout/ConditionalNavbar";
-import AuthInitializer from "@/components/shared/AuthInitializer";
 import { Analytics } from "@vercel/analytics/react";
 
 const geistSans = localFont({
@@ -72,12 +71,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${manrope.variable} ${oswald.variable} selection:text-primary-foreground font-sans selection:bg-blue-900`}
       >
         <Providers>
-          <AuthInitializer>
-            <ConditionalNavbar />
-            {children}
-            <Analytics />
-            <Toaster position="bottom-left" />
-          </AuthInitializer>
+          <ConditionalNavbar />
+          {children}
+          <Analytics />
+          <Toaster position="bottom-left" />
         </Providers>
       </body>
     </html>

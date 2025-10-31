@@ -111,8 +111,69 @@ export const me = async (req: AuthenticatedRequest, res: Response) => {
 
     return res.status(200).json(user);
   } catch (error) {
-    console.error(error);
+    console.error("/me endpoint error:", error);
     res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const googleAuth = async (req: Request, res: Response) => {
+  try {
+    const { email, name, googleId, image, role } = req.body;
+
+    // Validate required fields
+    if (!email || !googleId) {
+      return res.status(400).json({ error: "Email and googleId required" });
+    }
+
+    // Check if user already exists
+    let user = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (!user) {
+      // New user (Signup) - Create with role from frontend
+      user = await prisma.user.create({
+        data: {
+          email,
+          name: name || email.split("@")[0],
+          googleId,
+          image,
+          role: role || "ARTIST",
+          emailVerified: new Date(),
+        },
+      });
+    } else if (!user.googleId) {
+      // Existing user linking Google - Update googleId
+      user = await prisma.user.update({
+        where: { email },
+        data: { googleId },
+      });
+    }
+
+    // Generate JWT token
+    const token = jwt.sign(
+      {
+        userId: user.id,
+        email: user.email,
+        role: user.role,
+      },
+      process.env.JWT_SECRET!,
+      { expiresIn: "7d" }
+    );
+
+    return res.status(200).json({
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        image: user.image,
+      },
+    });
+  } catch (error) {
+    console.error("❌ Google auth error:", error);
+    res.status(500).json({ error: "Authentication failed" });
   }
 };
 
@@ -121,4 +182,5 @@ export const authController = {
   login,
   logout,
   me,
+  googleAuth,
 };

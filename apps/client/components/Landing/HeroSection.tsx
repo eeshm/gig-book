@@ -12,12 +12,12 @@ export default function HeroSection() {
   return (
     <>
       <section className="flex w-full justify-center">
-        <div className="">
+        <div className="px-2 ">
           <div className="grid gap-16 lg:grid-cols-2 lg:gap-12">
             {/* Left Content */}
             <div className="relative flex flex-col gap-8">
               {/* White Dots Background */}
-              <div className="absolute top-0 right-5 bottom-60 left-5 opacity-30 sm:top-0 sm:right-40 sm:bottom-60 sm:left-5">
+              {/* <div className="absolute top-0 right-5 bottom-60 left-5 opacity-30 sm:top-0 sm:right-40 sm:bottom-60 sm:left-5">
                 <div
                   className="w-ful h-full"
                   style={{
@@ -26,7 +26,7 @@ export default function HeroSection() {
                     backgroundSize: "14px 14px",
                   }}
                 />
-              </div>
+              </div> */}
               <div className="relative z-10 space-y-4">
                 <h1
                   className={cn(

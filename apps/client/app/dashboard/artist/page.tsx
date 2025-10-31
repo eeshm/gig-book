@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   fetchMyArtistProfile,
@@ -18,37 +18,65 @@ import Image from "next/image";
 
 export default function ArtistDashboardPage() {
   const dispatch = useAppDispatch();
-  const { profile, loading } = useAppSelector((state) => state.artist);
+  // Select auth state to check if properly authenticated
+  const authUser = useAppSelector((state) => state.auth.user);
+  const authLoading = useAppSelector((state) => state.auth.loading);
+  // Only select what we need to minimize rerenders
+  const profile = useAppSelector((state) => state.artist.profile);
+  const loading = useAppSelector((state) => state.artist.loading);
   const [isEditing, setIsEditing] = useState(false);
+  const hasFetchedRef = useRef(false);
 
   useEffect(() => {
-    dispatch(fetchMyArtistProfile());
-  }, [dispatch]);
-
-  const handleCreateProfile = async (data: CreateArtistData | CreateVenueData) => {
-    const artistData = data as CreateArtistData;
-    const result = await dispatch(createArtistProfile(artistData));
-    if (createArtistProfile.fulfilled.match(result)) {
-      toast.success("Profile created successfully!");
-      setIsEditing(false);
-    } else if (createArtistProfile.rejected.match(result)) {
-      toast.error("Failed to create profile. Please try again.");
+    // Only fetch profile once when auth is ready AND user is ARTIST role
+    if (
+      !profile &&
+      !loading &&
+      !hasFetchedRef.current &&
+      authUser &&
+      !authLoading &&
+      authUser.role === "ARTIST"
+    ) {
+      hasFetchedRef.current = true;
+      dispatch(fetchMyArtistProfile());
     }
-  };
+  }, [authUser, authLoading, profile, loading, dispatch]);
+  const handleCreateProfile = useCallback(
+    async (data: CreateArtistData | CreateVenueData) => {
+      const artistData = data as CreateArtistData;
+      const result = await dispatch(createArtistProfile(artistData));
+      if (createArtistProfile.fulfilled.match(result)) {
+        toast.success("Profile created successfully!");
+        setIsEditing(false);
+      } else if (createArtistProfile.rejected.match(result)) {
+        toast.error("Failed to create profile. Please try again.");
+      }
+    },
+    [dispatch]
+  );
 
-  const handleUpdateProfile = async (data: CreateArtistData | CreateVenueData) => {
-    if (!profile) return;
-    const artistData = data as CreateArtistData;
-    const result = await dispatch(updateArtistProfile({ id: profile.id, data: artistData }));
-    if (updateArtistProfile.fulfilled.match(result)) {
-      toast.success("Profile updated successfully!");
-      setIsEditing(false);
-    } else if (updateArtistProfile.rejected.match(result)) {
-      toast.error("Failed to update profile. Please try again.");
-    }
-  };
+  const handleUpdateProfile = useCallback(
+    async (data: CreateArtistData | CreateVenueData) => {
+      if (!profile) return;
+      const artistData = data as CreateArtistData;
+      const result = await dispatch(updateArtistProfile({ id: profile.id, data: artistData }));
+      if (updateArtistProfile.fulfilled.match(result)) {
+        toast.success("Profile updated successfully!");
+        setIsEditing(false);
+      } else if (updateArtistProfile.rejected.match(result)) {
+        toast.error("Failed to update profile. Please try again.");
+      }
+    },
+    [dispatch, profile]
+  );
 
-  if (loading && !profile) {
+  // Determine whether auth and fetch state are ready. While auth is resolving
+  // or we haven't yet attempted to fetch the profile, show a loading state
+  // to avoid briefly rendering the "create profile" form on refresh.
+  const authReady = !!authUser && !authLoading;
+  const fetchAttempted = hasFetchedRef.current;
+
+  if (authLoading || (authReady && !fetchAttempted) || (loading && !profile)) {
     return (
       <DashboardLayout>
         <LoadingSpinner size="lg" text="Loading your profile..." />
@@ -56,8 +84,8 @@ export default function ArtistDashboardPage() {
     );
   }
 
-  // No profile exists - Show create form
-  if (!profile && !loading) {
+  // No profile exists - Show create form (only after we've attempted fetching)
+  if (!profile && !loading && fetchAttempted) {
     return (
       <DashboardLayout>
         <div className="mx-auto max-w-3xl">

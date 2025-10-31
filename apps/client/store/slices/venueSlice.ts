@@ -20,9 +20,7 @@ export const fetchMyVenueProfile = createAsyncThunk(
   "venue/fetchMyProfile",
   async (_, { rejectWithValue }) => {
     try {
-      console.log("Fetching venue profile...");
       const response = await api.get<Venue>("/venues/me");
-      console.log("Venue profile fetched:", response.data);
       return response.data;
     } catch (err: any) {
       console.error("Error fetching venue profile:", err.response?.data || err.message);
@@ -34,9 +32,7 @@ export const createVenueProfile = createAsyncThunk(
   "venue/createProfile",
   async (data: CreateVenueData, { rejectWithValue }) => {
     try {
-      console.log("Creating venue with data:", data);
       const response = await api.post<Venue>("/venues", data);
-      console.log("Venue created successfully:", response.data);
       // Don't show toast here - let the component handle it
       return response.data;
     } catch (err: any) {

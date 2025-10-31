@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export function WhyChooseGigBook() {
   return (
-    <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-4 lg:grid-cols-3">
+    <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-4 lg:grid-cols-3 px-2">
       <WobbleCard
         containerClassName="col-span-1 lg:col-span-2 h-full bg-primary min-h-[500px] lg:min-h-[300px]"
         className=""

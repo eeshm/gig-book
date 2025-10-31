@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
+import { signOut } from "next-auth/react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { logout } from "@/store/slices/authSlice";
 import { clearArtistProfile } from "@/store/slices/artistSlice";
@@ -20,7 +21,10 @@ import SidebarMenu from "@/public/src/assets/sidebar-menu";
 export default function Navbar() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { user, isAuthenticated, loading } = useAppSelector((state) => state.auth);
+  // Only select what we need
+  const user = useAppSelector((state) => state.auth.user);
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+  const loading = useAppSelector((state) => state.auth.loading);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -33,12 +37,33 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    // Clear Redux state
     dispatch(logout());
     dispatch(clearArtistProfile());
     dispatch(clearVenueProfile());
-    router.push("/");
+    // Immediately navigate away so dashboard pages don't briefly render
+    // an empty create form while the signOut call completes.
+    // Use replace so logout doesn't remain in history.
+    router.replace("/");
+
+    // Fire-and-forget NextAuth signOut to clear server/session cookies.
+    // We don't await here to avoid UI flicker — any cleanup errors will be
+    // handled by NextAuth itself and the user is already redirected.
+    try {
+      signOut({ redirect: false, callbackUrl: "/" }).catch((err) => {
+        console.warn("signOut failed:", err);
+      });
+    } catch (err) {
+      console.warn("signOut error:", err);
+    }
   };
+
+  // Memoize dashboard link
+  const dashboardLink = useMemo(
+    () => (user?.role === "ARTIST" ? "/dashboard/artist" : "/dashboard/venue"),
+    [user?.role]
+  );
 
   // Show skeleton/loading state while checking authentication
   const renderAuthButtons = () => {
@@ -53,10 +78,7 @@ export default function Navbar() {
     if (isAuthenticated && user) {
       return (
         <>
-          <Link
-            href={user.role === "ARTIST" ? "/dashboard/artist" : "/dashboard/venue"}
-            className="h-full"
-          >
+          <Link href={dashboardLink} className="h-full">
             <button className="lg:hover:bg-primary hover:bg-pink flex h-full w-full items-center justify-center bg-white text-lg text-black transition-colors duration-200 hover:text-black lg:w-auto lg:border-l-[1px] lg:px-6 lg:py-2">
               Dashboard
             </button>
@@ -189,7 +211,7 @@ export default function Navbar() {
               {isAuthenticated && user ? (
                 <>
                   <Link
-                    href={user.role === "ARTIST" ? "/dashboard/artist" : "/dashboard/venue"}
+                    href={dashboardLink}
                     className="w-full"
                     onClick={() => setIsMobileOpen(false)}
                   >
@@ -197,8 +219,8 @@ export default function Navbar() {
                   </Link>
                   <Button2
                     onClick={() => {
-                      handleLogout();
                       setIsMobileOpen(false);
+                      handleLogout();
                     }}
                     className="w-full"
                   >
