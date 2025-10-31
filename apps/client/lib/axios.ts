@@ -1,5 +1,4 @@
 import axios from "axios";
-
 import Cookies from "js-cookie";
 
 const api = axios.create({
@@ -29,6 +28,14 @@ api.interceptors.response.use(
         (window.location.pathname === "/login" || window.location.pathname === "/register");
 
       Cookies.remove("token");
+
+      // Clear NextAuth session as well
+      if (typeof window !== "undefined") {
+        // Import dynamically to avoid circular dependency
+        import("next-auth/react").then(({ signOut }) => {
+          signOut({ redirect: false });
+        });
+      }
 
       if (typeof window !== "undefined" && !isAuthPage) {
         window.location.href = "/login";

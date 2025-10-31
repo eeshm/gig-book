@@ -23,7 +23,7 @@ export function CursorHeroSection() {
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <MousePointer2 className="h-6 w-6 fill-[rgb(255,108,16)] stroke-gray-800  outline-none stroke-2" />
+          <MousePointer2 className="h-6 w-6 fill-[rgb(255,108,16)] stroke-gray-800 stroke-2 outline-none" />
         </motion.div>
 
         {/* Text box positioned at bottom-right of the cursor */}

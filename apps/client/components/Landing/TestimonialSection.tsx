@@ -7,7 +7,7 @@ const TestimonialSection = () => {
         <div className="from-primary via-primary mx-auto h-1 w-24 bg-gradient-to-r to-transparent"></div>
       </div>
 
-      <div className="grid gap-8 md:grid-cols-3 px-2 md:px-0">
+      <div className="grid gap-8 px-2 md:grid-cols-3 md:px-0">
         {/* Testimonial 1 - Artist */}
         <div className="group relative">
           <div className="border-border/40 relative rounded-md border p-8">
