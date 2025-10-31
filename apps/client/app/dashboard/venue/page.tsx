@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   fetchMyVenueProfile,
@@ -18,15 +19,32 @@ import { Building2, Edit, MapPin, Users, X } from "lucide-react";
 import Image from "next/image";
 
 export default function VenueDashboardPage() {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   // Check auth state first
   const authUser = useAppSelector((state) => state.auth.user);
   const authLoading = useAppSelector((state) => state.auth.loading);
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   // Venue state
   const profile = useAppSelector((state) => state.venue.profile);
   const loading = useAppSelector((state) => state.venue.loading);
   const [isEditing, setIsEditing] = useState(false);
   const hasFetchedRef = useRef(false);
+  const [hasRedirected, setHasRedirected] = useState(false);
+
+  // Redirect if user logs out while on this page
+  useEffect(() => {
+    // If auth has finished loading and user is not authenticated, redirect to login
+    if (!authLoading && !isAuthenticated && !hasRedirected) {
+      setHasRedirected(true);
+      router.replace("/login");
+    }
+  }, [isAuthenticated, authLoading, router, hasRedirected]);
+
+  // If not authenticated, don't render anything - user will be redirected
+  if (!isAuthenticated && !authLoading) {
+    return null;
+  }
 
   useEffect(() => {
     // Only fetch profile once when auth is ready AND user is VENUE role

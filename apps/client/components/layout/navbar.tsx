@@ -42,21 +42,18 @@ export default function Navbar() {
     dispatch(logout());
     dispatch(clearArtistProfile());
     dispatch(clearVenueProfile());
-    // Immediately navigate away so dashboard pages don't briefly render
-    // an empty create form while the signOut call completes.
-    // Use replace so logout doesn't remain in history.
-    router.replace("/");
 
-    // Fire-and-forget NextAuth signOut to clear server/session cookies.
-    // We don't await here to avoid UI flicker — any cleanup errors will be
-    // handled by NextAuth itself and the user is already redirected.
     try {
-      signOut({ redirect: false, callbackUrl: "/" }).catch((err) => {
-        console.warn("signOut failed:", err);
-      });
+      // MUST await signOut to ensure NextAuth session is cleared before navigation
+      // This ensures AuthSyncHandler can detect the status change
+      await signOut({ redirect: false, callbackUrl: "/" });
     } catch (err) {
       console.warn("signOut error:", err);
     }
+
+    // Navigate away AFTER session is cleared
+    // Use replace so logout doesn't remain in history.
+    router.replace("/");
   };
 
   // Memoize dashboard link
