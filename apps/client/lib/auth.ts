@@ -66,7 +66,7 @@ const authOptions: NextAuthOptions = {
         const { token, user: userData } = response.data;
 
         if (!token) {
-          console.error("❌ No token in response");
+          console.error("No token in response");
           return false;
         }
         user.id = userData.id;
