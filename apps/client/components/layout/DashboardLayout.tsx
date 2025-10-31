@@ -45,12 +45,18 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 className="relative h-10 w-10 overflow-hidden rounded-full border border-white/20 transition-opacity hover:opacity-80"
                 aria-label="Toggle menu"
               >
-                <Image src={user.image} alt={`${user.name ?? "User"} avatar`} fill sizes="40px" className="object-cover" />
+                <Image
+                  src={user.image}
+                  alt={`${user.name ?? "User"} avatar`}
+                  fill
+                  sizes="40px"
+                  className="object-cover"
+                />
               </button>
             ) : (
               <button
                 onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-primary/20 transition-opacity hover:opacity-80"
+                className="bg-primary/20 flex h-10 w-10 items-center justify-center rounded-full border border-white/40 transition-opacity hover:opacity-80"
                 aria-label="Toggle menu"
               >
                 <span className="text-xs font-bold text-white">
@@ -100,7 +106,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                   />
                 </div>
               ) : (
-                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/40 bg-primary/20">
+                <div className="bg-primary/20 flex h-12 w-12 items-center justify-center rounded-full border border-white/40">
                   <span className="text-sm font-bold text-white">
                     {user?.name
                       ?.split(" ")

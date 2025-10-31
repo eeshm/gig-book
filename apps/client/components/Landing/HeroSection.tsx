@@ -12,7 +12,7 @@ export default function HeroSection() {
   return (
     <>
       <section className="flex w-full justify-center">
-        <div className="px-2 ">
+        <div className="px-2">
           <div className="grid gap-16 lg:grid-cols-2 lg:gap-12">
             {/* Left Content */}
             <div className="relative flex flex-col gap-8">
