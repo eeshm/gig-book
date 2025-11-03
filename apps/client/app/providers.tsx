@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 import AuthInitializer from "@/components/shared/AuthInitializer";
 
 function AuthSyncHandler() {
-  const { data: session, status } = useSession();
+  const { data: session, status, update } = useSession();
   const syncedRef = useRef(false);
   const lastStatusRef = useRef<string | null>(null);
   const isInitializedRef = useRef(false);
@@ -70,11 +70,17 @@ function AuthSyncHandler() {
         store.dispatch(clearUser());
       }
     }
-    // Handle logout - transition from authenticated to unauthenticated
-    else if (status === "unauthenticated" && lastStatusRef.current === "authenticated") {
-      syncedRef.current = false;
-      reduxAuthStateRef.current = false;
-      store.dispatch(clearUser());
+    // Handle logout - ALWAYS clear Redux state when NextAuth becomes unauthenticated
+    // This handles both OAuth and email-password logouts
+    else if (status === "unauthenticated" && isInitializedRef.current) {
+      // If we were previously authenticated (either OAuth or Redux), clear everything
+      if (lastStatusRef.current === "authenticated" || reduxHasAuth) {
+        syncedRef.current = false;
+        reduxAuthStateRef.current = false;
+        // Clear the token cookie immediately
+        Cookies.remove("token");
+        store.dispatch(clearUser());
+      }
       lastStatusRef.current = "unauthenticated";
     }
   }, [status]); // Only depend on status, not session

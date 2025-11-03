@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   fetchMyArtistProfile,
@@ -17,15 +18,32 @@ import { Edit, MapPin, Music, X } from "lucide-react";
 import Image from "next/image";
 
 export default function ArtistDashboardPage() {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   // Select auth state to check if properly authenticated
   const authUser = useAppSelector((state) => state.auth.user);
   const authLoading = useAppSelector((state) => state.auth.loading);
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   // Only select what we need to minimize rerenders
   const profile = useAppSelector((state) => state.artist.profile);
   const loading = useAppSelector((state) => state.artist.loading);
   const [isEditing, setIsEditing] = useState(false);
   const hasFetchedRef = useRef(false);
+  const [hasRedirected, setHasRedirected] = useState(false);
+
+  // Redirect if user logs out while on this page
+  useEffect(() => {
+    // If auth has finished loading and user is not authenticated, redirect to login
+    if (!authLoading && !isAuthenticated && !hasRedirected) {
+      setHasRedirected(true);
+      router.replace("/login");
+    }
+  }, [isAuthenticated, authLoading, router, hasRedirected]);
+
+  // If not authenticated, don't render anything - user will be redirected
+  if (!isAuthenticated && !authLoading) {
+    return null;
+  }
 
   useEffect(() => {
     // Only fetch profile once when auth is ready AND user is ARTIST role
