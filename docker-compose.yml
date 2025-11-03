@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+    container_name: monorepo-server
+    ports:
+      - "5000:5000"
+    env_file: .env
+
+  client:
+    build:
+      context: .
+      dockerfile: apps/client/Dockerfile
+    container_name: monorepo_client
+    env_file: .env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
