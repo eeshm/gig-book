@@ -13,7 +13,7 @@ export function WhyChooseGigBook() {
       >
         <div className="max-w-xs">
           <h3 className="text-foreground heading mb-3 text-2xl font-bold">Discover Talent</h3>
-          <p className="mt-4 text-left text-base text-neutral-200">
+          <p className="mt-4 text-left text-sm text-neutral-200 md:text-base">
             Browse through a diverse collection of talented artists, from DJs to live performers.
           </p>
         </div>
@@ -27,14 +27,14 @@ export function WhyChooseGigBook() {
       </WobbleCard>
       <WobbleCard containerClassName="col-span-1 min-h-[300px] bg-gray-800">
         <h3 className="heading mb-3 text-2xl font-bold text-black">Easy Booking</h3>
-        <p className="mt-4 max-w-[26rem] text-left text-base text-neutral-200">
+        <p className="mt-4 max-w-[26rem] text-left text-sm text-neutral-200 md:text-base">
           Send booking requests with just a few clicks and manage everything in one place.
         </p>
       </WobbleCard>
       <WobbleCard containerClassName="col-span-1 group  lg:col-span-3 bg-black min-h-[500px] lg:min-h-[600px] xl:min-h-[300px]">
         <div className="max-w-sm">
           <h3 className="text-foreground heading mb-3 text-2xl font-bold">Build Connections</h3>
-          <p className="mt-4 max-w-[26rem] text-left text-base text-neutral-200">
+          <p className="mt-4 max-w-[26rem] text-left text-sm text-neutral-200 md:text-base">
             Connect venues with artists to create memorable events and lasting partnerships.
           </p>
         </div>

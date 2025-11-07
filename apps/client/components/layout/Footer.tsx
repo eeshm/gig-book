@@ -14,8 +14,7 @@ export default function Footer() {
               Connecting artists with perfect venues to create unforgettable events and lasting
               partnerships.
             </p>
-            <div className="flex justify-center gap-0 md:justify-start">
-              {/* Social Media Icons */}
+            {/* <div className="flex justify-center gap-0 md:justify-start">
               <a
                 href="https://x.com/eeshmidha1"
                 className="flex h-10 w-10 items-center justify-center rounded-full transition-colors"
@@ -28,7 +27,7 @@ export default function Footer() {
               >
                 <Github className="h-5 w-5 stroke-2" />
               </a>
-            </div>
+            </div> */}
           </div>
 
           <div className="font-family-oswald flex justify-center md:justify-end">

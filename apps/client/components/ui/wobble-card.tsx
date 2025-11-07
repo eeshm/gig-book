@@ -36,7 +36,7 @@ export const WobbleCard = ({
       )}
     >
       <div className="relative h-full overflow-hidden [background-image:radial-gradient(88%_100%_at_top,rgba(255,255,255,0.5),rgba(255,255,255,0))] sm:mx-0 sm:rounded-2xl">
-        <motion.div className={cn("h-full px-4 py-20 sm:px-10", className)}>
+        <motion.div className={cn("h-full px-4 py-5 sm:px-10", className)}>
           <Noise />
           {children}
         </motion.div>

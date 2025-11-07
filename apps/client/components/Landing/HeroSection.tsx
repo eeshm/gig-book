@@ -45,12 +45,12 @@ export default function HeroSection() {
 
               <div className="font-family-oswald relative z-10 flex flex-col gap-4 pt-4 sm:flex-row sm:gap-5">
                 <Link href="/register?role=artist">
-                  <button className="bg-primary h-12 w-full items-center justify-center px-8 text-xl text-white transition-all duration-150 lg:h-16 lg:w-auto lg:px-10 lg:text-xl">
+                  <button className="bg-primary hover:bg-primary/80 h-12 w-full items-center justify-center px-8 text-xl text-white transition-all duration-200 lg:h-16 lg:w-auto lg:px-10 lg:text-xl">
                     I am an Artist
                   </button>
                 </Link>
                 <Link href="/register?role=venue">
-                  <button className="relative h-12 w-full items-center justify-center overflow-hidden bg-black px-8 text-xl transition-all duration-150 hover:opacity-80 lg:h-16 lg:w-auto lg:px-10 lg:text-xl">
+                  <button className="relative h-12 w-full items-center justify-center overflow-hidden bg-black px-8 text-xl transition-all duration-200 hover:opacity-80 lg:h-16 lg:w-auto lg:px-10 lg:text-xl">
                     <div
                       className="absolute inset-0 opacity-30"
                       style={{

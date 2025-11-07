@@ -68,7 +68,10 @@ const HowItWorks = () => {
             </div>
           </div>
           <Link href="/register?role=artist">
-            <Button size="default" className="bg-foreground mt-0 w-full rounded-xl text-black">
+            <Button
+              size="default"
+              className="bg-foreground mt-0 w-full rounded-xl text-black transition-colors duration-200"
+            >
               Join as Artist
             </Button>
           </Link>
@@ -135,7 +138,10 @@ const HowItWorks = () => {
           </div>
 
           <Link href="/register?role=venue">
-            <Button size="lg" className="mt-0 w-full rounded-xl bg-black text-[rgb(255,108,16)]">
+            <Button
+              size="lg"
+              className="mt-0 w-full rounded-xl bg-black text-[rgb(255,108,16)] transition-colors duration-200 hover:bg-black/90"
+            >
               Join as Venue
             </Button>
           </Link>

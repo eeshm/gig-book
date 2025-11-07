@@ -6,9 +6,9 @@ const FeaturedSection = () => {
   return (
     <div className="w-full">
       <div className="mb-20 text-center">
-        <h2 className="heading mb-2">Featured on GigBook</h2>
+        <h2 className="heading mb-2">Featured</h2>
         <div className="from-primary via-primary mx-auto h-1 w-24 bg-gradient-to-r to-transparent"></div>
-        <p className="subtext mx-auto mt-6">
+        <p className="subtext mx-auto mt-4">
           Discover talented artists and premier venues making waves in the industry
         </p>
       </div>

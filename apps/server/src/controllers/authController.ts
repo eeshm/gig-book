@@ -172,7 +172,7 @@ export const googleAuth = async (req: Request, res: Response) => {
       },
     });
   } catch (error) {
-    console.error("❌ Google auth error:", error);
+    console.error(" Google auth error:", error);
     res.status(500).json({ error: "Authentication failed" });
   }
 };
