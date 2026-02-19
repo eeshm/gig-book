@@ -176,9 +176,8 @@ export default function Navbar() {
 
         {/* Mobile Navigation - Half Width Slide from Right */}
         <div
-          className={`font-family-oswald fixed top-0 right-0 bottom-0 z-50 w-[300px] transform border-l border-gray-400/20 bg-[#080706] transition-transform duration-600 ease-in-out lg:hidden ${
-            isMobileOpen ? "translate-x-0" : "translate-x-full"
-          }`}
+          className={`font-family-oswald fixed top-0 right-0 bottom-0 z-50 w-[300px] transform border-l border-gray-400/20 bg-[#080706] transition-transform duration-600 ease-in-out lg:hidden ${isMobileOpen ? "translate-x-0" : "translate-x-full"
+            }`}
         >
           <div className="text-md flex h-full flex-col items-center font-normal text-white">
             <div className="flex w-full justify-between border-b border-gray-400/20 p-4">
