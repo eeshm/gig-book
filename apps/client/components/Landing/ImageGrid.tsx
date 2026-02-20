@@ -5,6 +5,33 @@ import Image from "next/image";
 import { useScroll, useTransform, motion } from "motion/react";
 import { useRef } from "react";
 
+export default function GridSection() {
+  return (
+    <div className="w-full">
+      {/* Section label */}
+      <div className="mb-12 flex items-start gap-8">
+        <div className="flex flex-col gap-2">
+          <h2
+            className="font-family-oswald font-bold uppercase leading-none"
+            style={{
+              fontSize: "clamp(48px,8vw,96px)",
+              WebkitTextFillColor: "transparent",
+              WebkitTextStroke: "2px rgba(255,255,255,0.12)",
+            }}
+          >
+            Gallery
+          </h2>
+          <div className="bg-primary h-0.5 w-24" />
+        </div>
+        <p className="font-family-manrope mt-4 max-w-xs text-[12px] leading-relaxed text-white/30">
+          Real artists, real stages — every night a new performance.
+        </p>
+      </div>
+      <Grid />
+    </div>
+  );
+}
+
 export const Grid = () => {
   const containerRef = useRef(null);
 
@@ -208,5 +235,3 @@ const Card = ({
 const Column = ({ children }: { children: React.ReactNode }) => {
   return <div>{children}</div>;
 };
-
-export default Grid;

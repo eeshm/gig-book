@@ -1,84 +1,100 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "motion/react";
+
+const TESTIMONIALS = [
+  {
+    quote: "GigBook transformed my career. I've booked more gigs in 3 months than I did all last year. The venues are professional, and the platform just works.",
+    name: "Marcus Chen",
+    role: "DJ & Producer",
+    img: "/images/image3.jpg",
+    accent: true,
+  },
+  {
+    quote: "Finding quality artists used to take weeks. Now we discover and book amazing talent in days. Our events have never been better.",
+    name: "Jessica Williams",
+    role: "Venue Manager",
+    img: "/images/image1.jpg",
+    accent: false,
+  },
+  {
+    quote: "Coordinating with venues was always chaotic for us as a band. GigBook streamlined everything — from first contact to confirmed booking. Game changer.",
+    name: "Tom Rodriguez",
+    role: "Band Leader",
+    img: "/images/image2.jpg",
+    accent: false,
+  },
+];
+
 const TestimonialSection = () => {
   return (
     <div className="w-full">
-      <div className="mb-20 text-center">
-        <h2 className="heading mb-6">What Our Users Say</h2>
-        <div className="from-primary via-primary mx-auto h-1 w-24 bg-gradient-to-r to-transparent"></div>
+      {/* Section header */}
+      <div className="mb-16">
+        <div className="flex items-baseline gap-6">
+          <h2
+            className="font-family-oswald font-bold uppercase leading-none"
+            style={{ fontSize: "clamp(40px,7vw,80px)" }}
+          >
+            Voices
+          </h2>
+          <div className="mb-1 flex-1 border-b border-white/8" />
+          <span className="font-family-oswald text-xs tracking-[0.3em] text-white/25 uppercase">
+            From the Community
+          </span>
+        </div>
+        <div className="bg-primary mt-1 h-0.5 w-16" />
       </div>
 
-      <div className="grid gap-8 px-2 md:grid-cols-3 md:px-0">
-        {/* Testimonial 1 - Artist */}
-        <div className="group relative">
-          <div className="border-border/40 relative rounded-md border p-8">
-            <p className="subtext mb-6 flex-grow italic">
-              &rdquo;GigBook transformed my career! I&apos;ve booked more gigs in the past 3 months
-              than I did all last year. The platform is incredibly easy to use and the venues are
-              professional.&rdquo;
-            </p>
-            <div className="flex items-center gap-4">
-              <Image
-                src="/images/image3.jpg"
-                width={48}
-                height={48}
-                alt="Marcus Chen"
-                className="h-12 w-12 rounded-full"
-              />
-              <div>
-                <h4 className="text-foreground font-semibold">Marcus Chen</h4>
-                <p className="subtext">DJ & Producer</p>
-              </div>
+      <div className="grid gap-px border border-white/6 md:grid-cols-3">
+        {TESTIMONIALS.map((t, i) => (
+          <motion.div
+            key={t.name}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: i * 0.1 }}
+            className="group relative flex flex-col justify-between border border-white/6 p-8 transition-colors duration-500 hover:bg-white/2"
+          >
+            {/* Large decorative quote mark */}
+            <div
+              className="font-family-oswald absolute top-3 right-5 select-none text-[72px] font-black leading-none"
+              style={{
+                WebkitTextFillColor: "transparent",
+                WebkitTextStroke: t.accent ? "1px rgba(255,108,16,0.2)" : "1px rgba(255,255,255,0.06)",
+              }}
+            >
+              &ldquo;
             </div>
-          </div>
-        </div>
 
-        {/* Testimonial 2 - Venue */}
-        <div className="group relative">
-          <div className="border-border/40 relative rounded-md border p-8">
-            <p className="subtext mb-6 flex-grow italic">
-              &rdquo;Finding quality artists used to take weeks. Now we discover and book amazing
-              talent in days. Our events have never been better, and our guests love the
-              entertainment.&rdquo;
+            {/* Quote text */}
+            <p className="font-family-manrope relative z-10 mb-8 text-[13px] leading-[1.75] text-white/55 italic">
+              &ldquo;{t.quote}&rdquo;
             </p>
-            <div className="flex items-center gap-4">
-              <Image
-                src="/images/image1.jpg"
-                width={48}
-                height={48}
-                alt="Jessica Williams"
-                className="h-12 w-12 rounded-full"
-              />
-              <div>
-                <h4 className="text-foreground font-semibold">Jessica Williams</h4>
-                <p className="subtext">Venue Manager</p>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        {/* Testimonial 3 - Artist */}
-        <div className="group relative">
-          <div className="border-border/40 relative rounded-md border p-8">
-            <p className="subtext mb-6 flex-grow italic">
-              &rdquo;As a band, coordinating with venues was always chaotic. GigBook streamlined
-              everything - from initial contact to payment. It&apos;s a game changer for working
-              musicians.&rdquo;
-            </p>
+            {/* Attribution */}
             <div className="flex items-center gap-4">
-              <Image
-                src="/images/image2.jpg"
-                width={48}
-                height={48}
-                alt="Tom Rodriguez"
-                className="h-12 w-12 rounded-full"
-              />
+              <div className="relative h-10 w-10 overflow-hidden border border-white/15">
+                <Image src={t.img} fill alt={t.name} className="object-cover" />
+              </div>
               <div>
-                <h4 className="text-foreground font-semibold">Tom Rodriguez</h4>
-                <p className="subtext">Band Leader</p>
+                <div className={`font-family-oswald text-sm font-bold uppercase tracking-wide ${
+                  t.accent ? "text-primary" : "text-white/80"
+                }`}>
+                  {t.name}
+                </div>
+                <div className="font-family-manrope text-[10px] tracking-[0.2em] text-white/30 uppercase">
+                  {t.role}
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+
+            {t.accent && (
+              <div className="bg-primary absolute bottom-0 left-0 right-0 h-0.5" />
+            )}
+          </motion.div>
+        ))}
       </div>
     </div>
   );

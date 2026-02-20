@@ -1,6 +1,6 @@
 "use client";
 
-import Grid from "@/components/Landing/ImageGrid";
+import GridSection from "@/components/Landing/ImageGrid";
 import Footer from "@/components/layout/Footer";
 import FeaturedSection from "@/components/Landing/FeaturedSection";
 import HowItWorks from "@/components/Landing/HowItWorks";
@@ -11,55 +11,55 @@ import HeroSection from "@/components/Landing/HeroSection";
 export default function HomePage() {
   return (
     <>
-      {/* Add two lines add borders one at extreme right and one at left */}
-      <div className="bg-background relative mx-auto flex max-w-[85rem] flex-col px-2 sm:px-6 lg:px-4">
-        {/* <div className="border-r border-l border-b px-2"> */}
-        {/* Hero Section */}
-        <section id="hero" className="w-full pt-10 pb-8">
+      <div className="relative mx-auto flex max-w-[88rem] flex-col px-4 sm:px-8 lg:px-10">
+        {/* Hero */}
+        <section id="hero" className="w-full pt-10 pb-4">
           <HeroSection />
         </section>
 
-        {/* <div className="w-full h-px bg-gray-700 my-2 -ml-2"></div>
-          <div className="w-full h-px bg-gray-700 my-2 -mx-2"></div>
-           */}
-        <section id="why-choose" className="flex w-full justify-center py-24">
+        {/* Why GigBook */}
+        <section id="why-choose" className="w-full py-24">
           <WhyChooseGigBook />
         </section>
 
-        {/* Image Gallery Section */}
+        {/* Gallery */}
         <section id="gallery" className="py-24">
-          <Grid />
+          <GridSection />
         </section>
 
-        {/* Featured Artists & Venues Section */}
+        {/* Featured */}
         <section id="featured" className="w-full py-24">
           <FeaturedSection />
         </section>
 
-        {/* How It Works Section */}
+        {/* How It Works */}
         <section id="how-it-works" className="py-24">
-          <div className="dotted-background mb-10 w-full rounded-2xl bg-[rgb(22,22,22)] px-0 py-2">
+          <div className="border border-white/6 bg-[rgb(10,10,10)]">
             <HowItWorks />
           </div>
         </section>
 
-        {/* Testimonials Section */}
+        {/* Testimonials */}
         <section id="testimonials" className="w-full py-24">
           <TestimonialSection />
         </section>
-
-        {/* </div> */}
       </div>
 
-      <div
-        style={{
-          fontSize: "min(27vw, 510px)",
-          backgroundImage: "linear-gradient(to bottom, rgb(255,108,16), transparent)",
-        }}
-        className="font-family-oswald my-10 bg-clip-text text-center leading-[0.7] font-semibold text-nowrap text-[rgb(255,108,16)] uppercase select-none md:mb-20"
-      >
-        GigBook
+      {/* Bottom wordmark */}
+      <div className="relative overflow-hidden border-t border-white/6 py-16">
+        <div
+          className="font-family-oswald select-none text-center font-bold leading-none uppercase"
+          style={{
+            fontSize: "min(24vw, 500px)",
+            WebkitTextFillColor: "transparent",
+            WebkitTextStroke: "1px rgba(255,108,16,0.18)",
+          }}
+        >
+          GigBook
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/60 pointer-events-none" />
       </div>
+
       <Footer />
     </>
   );

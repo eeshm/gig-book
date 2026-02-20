@@ -7,7 +7,6 @@ import DashboardLayout from "@/components/layout/DashboardLayout";
 import BookingCard from "@/components/booking/BookingCard";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
 import EmptyState from "@/components/shared/EmptyState";
-import { Button } from "@/components/ui/button";
 import { Calendar } from "lucide-react";
 import { BookingStatus } from "@/types";
 
@@ -29,6 +28,16 @@ export default function BookingsPage() {
 
   const filters: Array<BookingStatus | "ALL"> = ["ALL", "PENDING", "ACCEPTED", "REJECTED"];
 
+  const statusCount = (s: BookingStatus | "ALL") =>
+    s === "ALL" ? bookings.length : bookings.filter((b) => b.status === s).length;
+
+  const statColors: Record<string, string> = {
+    ALL: "text-foreground",
+    PENDING: "text-amber-400",
+    ACCEPTED: "text-emerald-500",
+    REJECTED: "text-red-400",
+  };
+
   if (loading) {
     return (
       <DashboardLayout>
@@ -39,39 +48,54 @@ export default function BookingsPage() {
 
   return (
     <DashboardLayout>
-      <div className="mx-auto max-w-5xl px-4 sm:px-6">
+      <div className="mx-auto max-w-4xl">
         {/* Header */}
-        <div className="mb-6 sm:mb-8">
-          <h1 className="text-foreground heading mb-2 text-2xl font-bold sm:text-3xl">
+        <div className="mb-8">
+          <p className="font-[family-name:var(--font-family-oswald)] mb-1 text-xs tracking-widest text-muted-foreground uppercase">
+            Dashboard
+          </p>
+          <h1 className="font-[family-name:var(--font-family-oswald)] text-3xl font-bold tracking-wide text-foreground uppercase sm:text-4xl">
             My Bookings
           </h1>
-          <p className="text-muted-foreground subtext text-sm sm:text-base">
+          <p className="mt-2 text-sm text-muted-foreground">
             {authUser?.role === "ARTIST"
               ? "Manage your booking requests from venues"
               : "Track your booking requests to artists"}
           </p>
+          <div className="mt-4 h-px bg-gradient-to-r from-amber-400/60 to-transparent" />
         </div>
 
-        {/* Filter Tabs */}
-        <div className="mb-6 grid grid-cols-4 gap-2 sm:flex sm:flex-wrap">
+        {/* Stats row */}
+        <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {filters.map((s) => (
+            <div key={s} className="border-border/40 bg-card rounded-xl border p-4">
+              <p className={`font-mono text-2xl font-bold tabular-nums ${statColors[s]}`}>
+                {statusCount(s)}
+              </p>
+              <p className="mt-1 text-xs text-muted-foreground capitalize">
+                {s === "ALL" ? "Total" : s.toLowerCase()}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Filter tabs */}
+        <div className="border-border/30 mb-6 flex gap-1 border-b">
           {filters.map((status) => (
-            <Button
+            <button
               key={status}
-              variant={filter === status ? "default" : "outline"}
               onClick={() => setFilter(status)}
-              size="sm"
-              className="w-full whitespace-nowrap sm:w-auto"
+              className={`font-[family-name:var(--font-family-oswald)] relative px-4 py-2 text-xs font-semibold tracking-wider uppercase transition-colors ${
+                filter === status
+                  ? "text-amber-400"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
             >
-              <span className="block text-xs sm:hidden">
-                {status === "ALL" ? "All" : status.slice(0, 3)}
-              </span>
-              <span className="hidden sm:block">{status}</span>
-              {status !== "ALL" && (
-                <span className="ml-2 hidden text-xs opacity-75 sm:inline">
-                  ({bookings.filter((b) => b.status === status).length})
-                </span>
+              {status}
+              {filter === status && (
+                <span className="absolute inset-x-0 bottom-0 h-0.5 rounded-t-full bg-amber-400" />
               )}
-            </Button>
+            </button>
           ))}
         </div>
 
@@ -82,12 +106,12 @@ export default function BookingsPage() {
             title={filter === "ALL" ? "No Bookings Yet" : `No ${filter.toLowerCase()} bookings`}
             description={
               authUser?.role === "ARTIST"
-                ? "When venues send you booking requests, they will appear here."
+                ? "When venues send you booking requests, they'll appear here."
                 : "Start booking artists to see your requests here."
             }
           />
         ) : (
-          <div className="grid gap-4">
+          <div className="grid gap-3">
             {filteredBookings.map((booking) => (
               <BookingCard key={booking.id} booking={booking} />
             ))}

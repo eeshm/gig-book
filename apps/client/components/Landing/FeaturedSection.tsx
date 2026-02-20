@@ -1,81 +1,135 @@
+"use client";
+
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import ArtistCard from "@/components/browse/ArtistCard";
-import VenueCard from "@/components/browse/VenueCard";
+import Image from "next/image";
+import { motion } from "motion/react";
+
+const ARTISTS = [
+  { name: "DJ Nexus", genres: "Electronic · House · Techno", img: "/images/image1.jpg", tag: "DJ" },
+  { name: "The Smooth Notes", genres: "Jazz · Blues · Soul", img: "/images/image2.jpg", tag: "Band" },
+  { name: "Sarah Melody", genres: "Acoustic · Pop · Indie", img: "/images/image3.jpg", tag: "Solo" },
+];
+
+const VENUES = [
+  { name: "The Grand Hall", location: "Downtown", capacity: 500, img: "/images/image4.jpg" },
+  { name: "Skyline Rooftop", location: "Midtown", capacity: 200, img: "/images/image5.jpg" },
+  { name: "The Underground Club", location: "East Side", capacity: 350, img: "/images/image6.jpg" },
+];
+
 const FeaturedSection = () => {
   return (
     <div className="w-full">
-      <div className="mb-20 text-center">
-        <h2 className="heading mb-2">Featured</h2>
-        <div className="from-primary via-primary mx-auto h-1 w-24 bg-gradient-to-r to-transparent"></div>
-        <p className="subtext mx-auto mt-4">
-          Discover talented artists and premier venues making waves in the industry
-        </p>
+      {/* Section header */}
+      <div className="mb-16">
+        <div className="flex items-baseline gap-6">
+          <h2
+            className="font-family-oswald font-bold uppercase leading-none"
+            style={{ fontSize: "clamp(40px,7vw,80px)" }}
+          >
+            Featured
+          </h2>
+          <div className="mb-1 flex-1 border-b border-white/8" />
+          <span className="font-family-oswald text-xs tracking-[0.3em] text-white/25 uppercase">
+            2026 Roster
+          </span>
+        </div>
+        <div className="bg-primary mt-1 h-0.5 w-16" />
       </div>
 
-      {/* Featured Artists */}
-      <div className="mb-16 px-2 md:px-0">
-        <h3 className="subheading mb-8 flex items-center gap-3">
-          <span className="bg-primary h-8 w-1 rounded-full"></span>
-          Top Artists
-        </h3>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          <ArtistCard
-            name="DJ Nexus"
-            genres="Electronic · House · Techno"
-            imageSrc="/images/image1.jpg"
-          />
-          <ArtistCard
-            name="The Smooth Notes"
-            genres="Jazz · Blues · Soul"
-            imageSrc="/images/image2.jpg"
-          />
-          <ArtistCard
-            name="Sarah Melody"
-            genres="Acoustic · Pop · Indie"
-            imageSrc="/images/image3.jpg"
-          />
+      {/* Artists */}
+      <div className="mb-16">
+        <div className="mb-8 flex items-center gap-4">
+          <div className="bg-primary h-5 w-0.5" />
+          <span className="font-family-oswald text-sm tracking-[0.25em] text-white/60 uppercase">
+            Top Artists
+          </span>
+        </div>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {ARTISTS.map((a, i) => (
+            <motion.div
+              key={a.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.08 }}
+              className="group relative h-72 overflow-hidden border border-white/8 transition-colors duration-300 hover:border-white/20"
+            >
+              <Image
+                src={a.img}
+                fill
+                alt={a.name}
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+              {/* Tag */}
+              <div className="absolute top-3 right-3 border border-white/20 px-2 py-0.5">
+                <span className="font-family-oswald text-[10px] tracking-[0.2em] text-white/60 uppercase">
+                  {a.tag}
+                </span>
+              </div>
+              {/* Info */}
+              <div className="absolute bottom-0 left-0 right-0 p-5">
+                <div className="font-family-oswald text-lg font-bold uppercase text-white transition-colors duration-300 group-hover:text-primary">
+                  {a.name}
+                </div>
+                <div className="font-family-manrope mt-1 text-[11px] text-white/40">{a.genres}</div>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
 
-      {/* Featured Venues */}
-      <div className="mb-16 px-2 md:px-0">
-        <h3 className="subheading mb-8 flex items-center gap-3">
-          <span className="h-8 w-1 rounded-full bg-blue-500"></span>
-          Premier Venues
-        </h3>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          <VenueCard
-            name="The Grand Hall"
-            location="Downtown"
-            capacity={500}
-            imageSrc="/images/image4.jpg"
-          />
-          <VenueCard
-            name="Skyline Rooftop"
-            location="Midtown"
-            capacity={200}
-            imageSrc="/images/image5.jpg"
-          />
-          <VenueCard
-            name="The Underground Club"
-            location="East Side"
-            capacity={350}
-            imageSrc="/images/image6.jpg"
-          />
+      {/* Venues */}
+      <div className="mb-12">
+        <div className="mb-8 flex items-center gap-4">
+          <div className="h-5 w-0.5 bg-blue-500" />
+          <span className="font-family-oswald text-sm tracking-[0.25em] text-white/60 uppercase">
+            Premier Venues
+          </span>
+        </div>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {VENUES.map((v, i) => (
+            <motion.div
+              key={v.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.08 }}
+              className="group relative h-60 overflow-hidden border border-white/8 transition-colors duration-300 hover:border-blue-500/40"
+            >
+              <Image
+                src={v.img}
+                fill
+                alt={v.name}
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-5">
+                <div className="font-family-oswald text-lg font-bold uppercase text-white transition-colors duration-300 group-hover:text-blue-400">
+                  {v.name}
+                </div>
+                <div className="font-family-manrope mt-1 flex items-center gap-3 text-[11px] text-white/40">
+                  <span>{v.location}</span>
+                  <span className="text-white/20">·</span>
+                  <span>Cap. {v.capacity.toLocaleString()}</span>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
 
-      <div className="mt-12 text-center text-white">
+      {/* CTAs */}
+      <div className="flex flex-col items-center gap-3 border-t border-white/8 pt-10 sm:flex-row sm:justify-center">
         <Link href="/artists">
-          <Button size="lg" variant="outline" className="hover:bg-primary mr-4">
+          <button className="font-family-oswald border border-white/20 px-10 py-3.5 text-sm tracking-[0.2em] text-white/70 uppercase transition-all duration-300 hover:border-white/50 hover:text-white">
             Browse All Artists
-          </Button>
+          </button>
         </Link>
         <Link href="/venues">
-          <Button size="lg" variant="outline" className="hover:bg-primary">
+          <button className="bg-primary/90 hover:bg-primary font-family-oswald px-10 py-3.5 text-sm tracking-[0.2em] text-white uppercase transition-all duration-300">
             Explore All Venues
-          </Button>
+          </button>
         </Link>
       </div>
     </div>
