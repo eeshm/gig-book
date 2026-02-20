@@ -15,13 +15,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button2 } from "../ui/CustomButton";
 import SidebarMenu from "@/public/src/assets/sidebar-menu";
 
 export default function Navbar() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  // Only select what we need
   const user = useAppSelector((state) => state.auth.user);
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const loading = useAppSelector((state) => state.auth.loading);
@@ -29,60 +27,44 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleLogout = async () => {
-    // Clear Redux state
     dispatch(logout());
     dispatch(clearArtistProfile());
     dispatch(clearVenueProfile());
-
     try {
-      // MUST await signOut to ensure NextAuth session is cleared before navigation
-      // This ensures AuthSyncHandler can detect the status change
       await signOut({ redirect: false, callbackUrl: "/" });
     } catch (err) {
       console.warn("signOut error:", err);
     }
-
-    // Navigate away AFTER session is cleared
-    // Use replace so logout doesn't remain in history.
     router.replace("/");
   };
 
-  // Memoize dashboard link
   const dashboardLink = useMemo(
     () => (user?.role === "ARTIST" ? "/dashboard/artist" : "/dashboard/venue"),
     [user?.role]
   );
 
-  // Show skeleton/loading state while checking authentication
   const renderAuthButtons = () => {
     if (loading) {
-      return (
-        <div className="hidden h-full flex-1 items-center justify-end lg:flex">
-          <div className="bg-muted h-10 w-24 animate-pulse rounded"></div>
-        </div>
-      );
+      return <div className="h-5 w-20 animate-pulse bg-white/10" />;
     }
 
     if (isAuthenticated && user) {
       return (
         <>
-          <Link href={dashboardLink} className="h-full">
-            <button className="lg:hover:bg-primary hover:bg-pink flex h-full w-full items-center justify-center bg-white text-lg text-black transition-colors duration-200 hover:text-black lg:w-auto lg:border-l-[1px] lg:px-6 lg:py-2">
+          <Link href={dashboardLink}>
+            <button className="font-family-oswald border border-white/15 px-6 py-2 text-sm tracking-[0.18em] text-white/70 uppercase transition-all duration-200 hover:border-white/40 hover:text-white">
               Dashboard
             </button>
           </Link>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="lg:hover:bg-primary hover:bg-pink flex h-full w-full items-center justify-center border-black bg-black p-4 text-lg text-white transition-colors duration-200 hover:text-black lg:w-auto lg:border-l lg:px-6 lg:py-2">
+              <button className="bg-primary hover:bg-primary/85 font-family-oswald px-6 py-2 text-sm tracking-[0.18em] text-white uppercase transition-colors duration-200">
                 {user.name}
               </button>
             </DropdownMenuTrigger>
@@ -98,11 +80,11 @@ export default function Navbar() {
       <>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="bg-secondary lg:hover:bg-primary flex h-full w-full items-center justify-center text-lg text-black transition-colors duration-200 hover:text-black lg:w-auto lg:px-6">
-              Get started
+            <button className="font-family-oswald border border-white/15 px-6 py-2 text-sm tracking-[0.18em] text-white/60 uppercase transition-all duration-200 hover:border-white/40 hover:text-white">
+              Get Started
             </button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          <DropdownMenuContent align="end">
             <DropdownMenuItem asChild>
               <Link href="/register?role=artist">Sign up as Artist</Link>
             </DropdownMenuItem>
@@ -111,9 +93,9 @@ export default function Navbar() {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <Link href="/login" className="h-full">
-          <button className="lg:hover:bg-primary flex h-full w-full items-center justify-center border-black bg-black p-4 text-lg text-white transition-colors duration-200 hover:text-black lg:w-auto lg:px-6">
-            Log in
+        <Link href="/login">
+          <button className="bg-primary hover:bg-primary/85 font-family-oswald px-6 py-2 text-sm tracking-[0.18em] text-white uppercase transition-colors duration-200">
+            Log In
           </button>
         </Link>
       </>
@@ -123,133 +105,142 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`font-family-oswald bg-background fixed inset-x-0 top-0 z-50 w-full ${isScrolled ? "border-b border-gray-400/20" : ""}`}
+        className={`font-family-oswald fixed inset-x-0 top-0 z-50 w-full transition-all duration-300 ${
+          isScrolled
+            ? "border-b border-white/8 bg-black/90 backdrop-blur-md"
+            : "bg-transparent"
+        }`}
       >
-        <div className="flex w-full justify-center">
-          <div className="flex h-16 w-full px-4 sm:px-6 lg:h-20 lg:pr-0 lg:pl-9">
-            {/* Left - Logo */}
-            <div className="flex flex-1 items-center">
-              <Link href="/" className="flex flex-shrink-0 items-center gap-3">
-                <span className="text-secondary text-2xl font-bold tracking-tight">GigBook</span>
-              </Link>
-            </div>
+        <div className="mx-auto flex h-16 max-w-[88rem] items-center justify-between px-4 sm:px-8 lg:h-[60px] lg:px-10">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2">
+            <div className="bg-primary h-4 w-0.5" />
+            <span className="font-family-oswald text-xl font-bold tracking-[0.1em] text-white uppercase">
+              GigBook
+            </span>
+          </Link>
 
-            {/* Center - Desktop Navigation */}
-            <div className="hidden flex-1 items-center justify-center gap-12 text-gray-200 lg:flex">
-              <Link href="/artists" className="text-sm font-medium transition-colors duration-200">
-                Browse Artists
-              </Link>
-              <Link href="/venues" className="text-sm font-medium transition-colors duration-200">
-                Browse Venues
-              </Link>
-            </div>
-
-            {/* Right - Desktop Sign In & CTA */}
-            <div className="hidden h-full flex-1 items-center justify-end lg:flex">
-              {renderAuthButtons()}
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileOpen(!isMobileOpen)}
-              className="text-white lg:hidden"
-              aria-label="Toggle menu"
-            >
-              {isMobileOpen ? (
-                <X size={24} />
-              ) : (
-                <span className="relative inline-block opacity-70 transition duration-300 hover:opacity-100">
-                  <SidebarMenu />
-                </span>
-              )}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Navigation Overlay */}
-        {isMobileOpen && (
-          <div
-            className="fixed inset-0 z-40 bg-black/80 lg:hidden"
-            onClick={() => setIsMobileOpen(false)}
-          />
-        )}
-
-        {/* Mobile Navigation - Half Width Slide from Right */}
-        <div
-          className={`font-family-oswald fixed top-0 right-0 bottom-0 z-50 w-[300px] transform border-l border-gray-400/20 bg-[#080706] transition-transform duration-600 ease-in-out lg:hidden ${isMobileOpen ? "translate-x-0" : "translate-x-full"
-            }`}
-        >
-          <div className="text-md flex h-full flex-col items-center font-normal text-white">
-            <div className="flex w-full justify-between border-b border-gray-400/20 p-4">
-              <h3 className="text-secondary text-2xl font-bold tracking-tight">GigBook</h3>
-              <button
-                onClick={() => setIsMobileOpen(false)}
-                className="text-white hover:text-gray-300"
+          {/* Desktop nav */}
+          <nav className="hidden items-center gap-10 lg:flex">
+            {[
+              { href: "/artists", label: "Artists" },
+              { href: "/venues", label: "Venues" },
+            ].map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="group relative text-xs tracking-[0.25em] text-white/45 uppercase transition-colors duration-200 hover:text-white"
               >
-                <X size={24} />
-              </button>
-            </div>
-            <Link
-              href="/artists"
-              className="w-full py-4 text-center transition-colors"
-              onClick={() => setIsMobileOpen(false)}
-            >
-              Browse Artists
-            </Link>
-            <Link
-              href="/venues"
-              className="w-full py-4 text-center transition-colors"
-              onClick={() => setIsMobileOpen(false)}
-            >
-              Browse Venues
-            </Link>
-            <div className="flex w-full flex-col items-center">
-              {isAuthenticated && user ? (
-                <>
-                  <Link
-                    href={dashboardLink}
-                    className="w-full"
-                    onClick={() => setIsMobileOpen(false)}
-                  >
-                    <Button2 className="w-full">Dashboard</Button2>
-                  </Link>
-                  <Button2
-                    onClick={() => {
-                      setIsMobileOpen(false);
-                      handleLogout();
-                    }}
-                    className="w-full"
-                  >
-                    Logout
-                  </Button2>
-                </>
-              ) : (
-                <>
-                  <Link href="/login" className="w-full" onClick={() => setIsMobileOpen(false)}>
-                    <Button2 className="w-full">Sign In</Button2>
-                  </Link>
-                  <Link
-                    href="/register?role=artist"
-                    className="w-full"
-                    onClick={() => setIsMobileOpen(false)}
-                  >
-                    <Button2 className="w-full">Sign up as Artist</Button2>
-                  </Link>
-                  <Link
-                    href="/register?role=venue"
-                    className="w-full"
-                    onClick={() => setIsMobileOpen(false)}
-                  >
-                    <Button2 className="w-full">Sign up as Venue</Button2>
-                  </Link>
-                </>
-              )}
-            </div>
-          </div>
+                {link.label}
+                <span className="bg-primary absolute -bottom-0.5 left-0 h-px w-0 transition-[width] duration-300 group-hover:w-full" />
+              </Link>
+            ))}
+          </nav>
+
+          {/* Desktop auth */}
+          <div className="hidden items-center gap-3 lg:flex">{renderAuthButtons()}</div>
+
+          {/* Mobile menu toggle */}
+          <button
+            onClick={() => setIsMobileOpen(!isMobileOpen)}
+            className="text-white/70 transition-colors hover:text-white lg:hidden"
+            aria-label="Toggle menu"
+          >
+            {isMobileOpen ? (
+              <X size={22} />
+            ) : (
+              <span className="relative inline-block opacity-70 transition-opacity hover:opacity-100">
+                <SidebarMenu />
+              </span>
+            )}
+          </button>
         </div>
       </header>
-      {/* Spacer to prevent content from being blocked by fixed navbar */}
-      <div className="h-16 lg:h-20" />
+
+      {/* Spacer */}
+      <div className="h-16 lg:h-[60px]" />
+
+      {/* Mobile overlay */}
+      {isMobileOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm lg:hidden"
+          onClick={() => setIsMobileOpen(false)}
+        />
+      )}
+
+      {/* Mobile drawer */}
+      <div
+        className={`font-family-oswald fixed top-0 right-0 bottom-0 z-50 w-[280px] transform border-l border-white/8 bg-[#060605] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden ${
+          isMobileOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="flex flex-col h-full text-white">
+          {/* Drawer header */}
+          <div className="flex items-center justify-between border-b border-white/8 px-6 py-5">
+            <div className="flex items-center gap-2">
+              <div className="bg-primary h-4 w-0.5" />
+              <span className="text-lg font-bold tracking-[0.1em] uppercase">GigBook</span>
+            </div>
+            <button onClick={() => setIsMobileOpen(false)} className="text-white/50 hover:text-white">
+              <X size={20} />
+            </button>
+          </div>
+
+          {/* Nav links */}
+          <div className="flex flex-col border-b border-white/8">
+            {[
+              { href: "/artists", label: "Browse Artists" },
+              { href: "/venues", label: "Browse Venues" },
+            ].map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setIsMobileOpen(false)}
+                className="border-b border-white/5 px-6 py-4 text-sm tracking-[0.2em] text-white/55 uppercase last:border-0 hover:text-white"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Auth */}
+          <div className="flex flex-col gap-3 p-6">
+            {isAuthenticated && user ? (
+              <>
+                <Link href={dashboardLink} onClick={() => setIsMobileOpen(false)}>
+                  <button className="w-full border border-white/20 py-3 text-sm tracking-[0.2em] text-white uppercase hover:border-white/40">
+                    Dashboard
+                  </button>
+                </Link>
+                <button
+                  onClick={() => { setIsMobileOpen(false); handleLogout(); }}
+                  className="bg-primary w-full py-3 text-sm tracking-[0.2em] text-white uppercase hover:bg-primary/85"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link href="/login" onClick={() => setIsMobileOpen(false)}>
+                  <button className="bg-primary w-full py-3 text-sm tracking-[0.2em] text-white uppercase">
+                    Log In
+                  </button>
+                </Link>
+                <Link href="/register?role=artist" onClick={() => setIsMobileOpen(false)}>
+                  <button className="w-full border border-white/20 py-3 text-sm tracking-[0.2em] text-white/60 uppercase hover:border-white/40 hover:text-white">
+                    Join as Artist
+                  </button>
+                </Link>
+                <Link href="/register?role=venue" onClick={() => setIsMobileOpen(false)}>
+                  <button className="w-full border border-white/20 py-3 text-sm tracking-[0.2em] text-white/60 uppercase hover:border-white/40 hover:text-white">
+                    Join as Venue
+                  </button>
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
     </>
   );
 }

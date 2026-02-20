@@ -1,150 +1,120 @@
+"use client";
+
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { MoveRight } from "lucide-react";
+import { motion } from "motion/react";
+
+const ARTIST_STEPS = [
+  { n: "1", title: "Create Profile", body: "Showcase your talent with photos, videos, and performance history." },
+  { n: "2", title: "Add Your Skills", body: "Highlight genres, experience level, and your equipment setup." },
+  { n: "3", title: "Get Discovered", body: "Venues browse and reach out to artists that match their needs." },
+  { n: "4", title: "Receive Offers", body: "Get booking requests from venues looking for your talent." },
+  { n: "5", title: "Manage Bookings", body: "Accept, coordinate, and grow your performance career." },
+];
+
+const VENUE_STEPS = [
+  { n: "1", title: "List Your Venue", body: "Add your space details, capacity, and event types." },
+  { n: "2", title: "Set Requirements", body: "Define your budget, preferred genres, and technical needs." },
+  { n: "3", title: "Browse Artists", body: "Search talented performers and find your perfect match." },
+  { n: "4", title: "Send Requests", body: "Reach out to artists with your event details directly." },
+  { n: "5", title: "Book & Host", body: "Confirm bookings and create unforgettable events together." },
+];
+
 const HowItWorks = () => {
   return (
-    <div className="w-full p-4">
-      <div className="mb-20 text-center">
-        <h2 className="heading mb-4">How It Works</h2>
-        <div className="from-primary via-primary mx-auto h-1 w-24 bg-gradient-to-r to-transparent"></div>
+    <div className="w-full px-4 py-12">
+      {/* Section header */}
+      <div className="mb-14 flex items-baseline gap-6">
+        <h2
+          className="font-family-oswald font-bold uppercase leading-none"
+          style={{ fontSize: "clamp(40px,7vw,80px)" }}
+        >
+          How It Works
+        </h2>
+        <div className="mb-1 flex-1 border-b border-white/10" />
       </div>
 
-      <div className="mx-auto grid max-w-sm gap-8 sm:max-w-md md:max-w-3xl md:grid-cols-2 lg:gap-12">
-        {/* For Artists */}
-        <div className="flex flex-col space-y-8 rounded-lg bg-black p-8">
-          <div className="flex-1">
-            <div className="mb-8 flex items-center gap-4">
-              <h3 className="subheading">For Artists</h3>
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex gap-2">
-                <MoveRight width={12} className="text-primary" />
-                <div>
-                  <h4 className="mb-1 font-semibold">Create Your Profile</h4>
-                  <p className="subtext">
-                    Showcase your talent with photos, videos, and performance history.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-2">
-                <MoveRight width={12} className="text-primary" />
-                <div>
-                  <h4 className="mb-1 font-semibold">Add Your Skills</h4>
-                  <p className="subtext">Highlight your genres, experience level, and equipment.</p>
-                </div>
-              </div>
-
-              <div className="flex gap-2">
-                <MoveRight width={12} className="text-primary" />
-                <div>
-                  <h4 className="mb-1 font-semibold">Get Discovered</h4>
-                  <p className="subtext">
-                    Venues browse and reach out to artists that match their event needs.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-2">
-                <MoveRight width={12} className="text-primary" />
-                <div>
-                  <h4 className="mb-1 font-semibold">Receive Offers</h4>
-                  <p className="subtext">
-                    Get booking requests from venues looking for your specific talent.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-2">
-                <MoveRight width={12} className="text-primary" />
-                <div>
-                  <h4 className="mb-1 font-semibold">Manage Bookings</h4>
-                  <p className="subtext text-gray-300">
-                    Accept requests, coordinate details, and grow your performance career.
-                  </p>
-                </div>
-              </div>
+      {/* Two-column program layout */}
+      <div className="grid gap-0 md:grid-cols-2">
+        {/* ARTISTS column */}
+        <div className="border-b border-white/8 md:border-b-0 md:border-r">
+          <div className="border-b border-white/8 px-6 py-4">
+            <div className="flex items-center gap-3">
+              <div className="bg-primary h-4 w-0.5" />
+              <span className="font-family-oswald text-primary text-xs tracking-[0.3em] uppercase">
+                For Artists
+              </span>
             </div>
           </div>
-          <Link href="/register?role=artist">
-            <Button
-              size="default"
-              className="bg-foreground mt-0 w-full rounded-xl text-black transition-colors duration-200"
-            >
-              Join as Artist
-            </Button>
-          </Link>
+          <div className="space-y-0">
+            {ARTIST_STEPS.map((step, i) => (
+              <motion.div
+                key={step.n}
+                initial={{ opacity: 0, x: -12 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.06 }}
+                className="group flex gap-0 border-b border-white/5 last:border-0"
+              >
+                <div className="flex w-14 items-start justify-center border-r border-white/5 pt-5 pb-5">
+                  <span className="font-family-oswald text-primary text-xl font-bold">{step.n}</span>
+                </div>
+                <div className="flex-1 px-6 py-5">
+                  <div className="font-family-oswald mb-1 text-sm font-bold tracking-wide text-white uppercase">
+                    {step.title}
+                  </div>
+                  <p className="font-family-manrope text-[12px] leading-relaxed text-white/35">{step.body}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          <div className="border-t border-white/8 px-6 py-5">
+            <Link href="/register?role=artist">
+              <button className="bg-primary hover:bg-primary/85 font-family-oswald w-full py-3.5 text-sm tracking-[0.2em] text-white uppercase transition-colors duration-300">
+                Join as Artist
+              </button>
+            </Link>
+          </div>
         </div>
 
-        {/* For Venues */}
-        <div className="flex flex-col space-y-8 rounded-lg bg-[rgb(255,108,16)] p-8">
-          <div className="flex-1">
-            <div className="mb-8 flex items-center gap-4">
-              <h3 className="subheadingblack">For Venues</h3>
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex gap-2">
-                <MoveRight width={12} className="text-black" />
-                <div>
-                  <h4 className="mb-1 font-semibold text-black">List Your Venue</h4>
-                  <p className="text-xs text-black/60">
-                    Add details about your space, capacity, and event types you host.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-2">
-                <MoveRight width={12} className="text-black" />
-                <div>
-                  <h4 className="mb-1 font-semibold text-black">Set Your Requirements</h4>
-                  <p className="text-xs text-black/60">
-                    Define your budget, preferred genres, and technical needs.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-2">
-                <MoveRight width={12} className="text-black" />
-                <div>
-                  <h4 className="mb-1 font-semibold text-black">Browse Artists</h4>
-                  <p className="text-xs text-black/60">
-                    Search through talented performers and find the perfect match.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-2">
-                <MoveRight width={12} className="text-black" />
-                <div>
-                  <h4 className="mb-1 font-semibold text-black">Send Requests</h4>
-                  <p className="text-xs text-black/60">
-                    Reach out to artists with your event details and requirements.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-2">
-                <MoveRight width={12} className="text-black" />
-                <div>
-                  <h4 className="mb-1 font-semibold text-black">Book & Host</h4>
-                  <p className="text-xs text-black/60">
-                    Send booking requests and create unforgettable events together.
-                  </p>
-                </div>
-              </div>
+        {/* VENUES column */}
+        <div>
+          <div className="border-b border-white/8 px-6 py-4">
+            <div className="flex items-center gap-3">
+              <div className="h-4 w-0.5 bg-white/30" />
+              <span className="font-family-oswald text-xs tracking-[0.3em] text-white/50 uppercase">
+                For Venues
+              </span>
             </div>
           </div>
-
-          <Link href="/register?role=venue">
-            <Button
-              size="lg"
-              className="mt-0 w-full rounded-xl bg-black text-[rgb(255,108,16)] transition-colors duration-200 hover:bg-black/90"
-            >
-              Join as Venue
-            </Button>
-          </Link>
+          <div className="space-y-0">
+            {VENUE_STEPS.map((step, i) => (
+              <motion.div
+                key={step.n}
+                initial={{ opacity: 0, x: 12 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.06 }}
+                className="group flex gap-0 border-b border-white/5 last:border-0"
+              >
+                <div className="flex w-14 items-start justify-center border-r border-white/5 pt-5 pb-5">
+                  <span className="font-family-oswald text-xl font-bold text-white/25">{step.n}</span>
+                </div>
+                <div className="flex-1 px-6 py-5">
+                  <div className="font-family-oswald mb-1 text-sm font-bold tracking-wide text-white uppercase">
+                    {step.title}
+                  </div>
+                  <p className="font-family-manrope text-[12px] leading-relaxed text-white/35">{step.body}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          <div className="border-t border-white/8 px-6 py-5">
+            <Link href="/register?role=venue">
+              <button className="font-family-oswald w-full border border-white/20 py-3.5 text-sm tracking-[0.2em] text-white/70 uppercase transition-all duration-300 hover:border-white/50 hover:text-white">
+                Join as Venue
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@ export default function TwitterIcon() {
       <g
         fill="none"
         fillRule="nonzero"
-        stroke="black"
+        stroke="white"
         strokeWidth="2"
         strokeLinecap="butt"
         strokeLinejoin="miter"
