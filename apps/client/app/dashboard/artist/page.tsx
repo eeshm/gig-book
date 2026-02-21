@@ -108,19 +108,19 @@ export default function ArtistDashboardPage() {
       <DashboardLayout>
         <div className="mx-auto max-w-2xl">
           <div className="mb-8">
-            <p className="font-[family-name:var(--font-family-oswald)] mb-1 text-xs tracking-widest text-muted-foreground uppercase">
+            <p className="text-muted-foreground mb-1 font-[family-name:var(--font-family-oswald)] text-xs tracking-widest uppercase">
               Setup
             </p>
-            <h1 className="font-[family-name:var(--font-family-oswald)] text-3xl font-bold tracking-wide text-foreground uppercase">
+            <h1 className="text-foreground font-[family-name:var(--font-family-oswald)] text-3xl font-bold tracking-wide uppercase">
               Create Your Artist Profile
             </h1>
-            <p className="mt-2 text-sm text-muted-foreground">
+            <p className="text-muted-foreground mt-2 text-sm">
               Set up your profile to start receiving booking requests from venues.
             </p>
             <div className="mt-4 h-px bg-gradient-to-r from-amber-400/60 to-transparent" />
           </div>
           <div className="border-border/40 bg-card rounded-xl border p-6 sm:p-8">
-            <h2 className="font-[family-name:var(--font-family-oswald)] mb-6 text-lg font-semibold tracking-wide text-foreground uppercase">
+            <h2 className="text-foreground mb-6 font-[family-name:var(--font-family-oswald)] text-lg font-semibold tracking-wide uppercase">
               Artist Information
             </h2>
             <ProfileForm role="ARTIST" onSubmit={handleCreateProfile} loading={loading} />
@@ -138,10 +138,10 @@ export default function ArtistDashboardPage() {
         <div className="mb-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <p className="font-[family-name:var(--font-family-oswald)] mb-1 text-xs tracking-widest text-muted-foreground uppercase">
+              <p className="text-muted-foreground mb-1 font-[family-name:var(--font-family-oswald)] text-xs tracking-widest uppercase">
                 Artist Dashboard
               </p>
-              <h1 className="font-[family-name:var(--font-family-oswald)] text-3xl font-bold tracking-wide text-foreground uppercase sm:text-4xl">
+              <h1 className="text-foreground font-[family-name:var(--font-family-oswald)] text-3xl font-bold tracking-wide uppercase sm:text-4xl">
                 My Profile
               </h1>
               <div className="mt-3 h-px w-48 bg-gradient-to-r from-amber-400/60 to-transparent" />
@@ -149,7 +149,7 @@ export default function ArtistDashboardPage() {
             {!isEditing && (
               <Button
                 onClick={() => setIsEditing(true)}
-                className="border-amber-400/40 bg-amber-400/10 text-amber-400 hover:bg-amber-400/20 h-10 rounded-lg border px-5 text-sm font-medium transition-all"
+                className="h-10 rounded-lg border border-amber-400/40 bg-amber-400/10 px-5 text-sm font-medium text-amber-400 transition-all hover:bg-amber-400/20"
               >
                 <Edit className="mr-2 h-4 w-4" />
                 Edit Profile
@@ -161,7 +161,7 @@ export default function ArtistDashboardPage() {
         {isEditing ? (
           <div className="border-border/40 bg-card rounded-xl border p-6 sm:p-8">
             <div className="mb-6 flex items-center justify-between">
-              <h2 className="font-[family-name:var(--font-family-oswald)] text-lg font-semibold tracking-wide text-foreground uppercase">
+              <h2 className="text-foreground font-[family-name:var(--font-family-oswald)] text-lg font-semibold tracking-wide uppercase">
                 Edit Profile
               </h2>
               <button
@@ -188,31 +188,43 @@ export default function ArtistDashboardPage() {
               <div className="border-border/40 bg-card rounded-xl border">
                 <div className="border-border/20 flex items-center gap-3 border-b px-6 py-4">
                   <Music className="h-4 w-4 text-amber-400" />
-                  <h3 className="font-[family-name:var(--font-family-oswald)] text-sm font-semibold tracking-widest text-foreground uppercase">
+                  <h3 className="text-foreground font-[family-name:var(--font-family-oswald)] text-sm font-semibold tracking-widest uppercase">
                     Artist Details
                   </h3>
                 </div>
                 <div className="divide-border/20 divide-y">
                   <div className="flex items-center justify-between px-6 py-4">
-                    <span className="text-xs font-medium tracking-wide text-muted-foreground uppercase">Artist Type</span>
-                    <span className="font-[family-name:var(--font-family-oswald)] text-base font-semibold text-foreground">
+                    <span className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
+                      Artist Type
+                    </span>
+                    <span className="text-foreground font-[family-name:var(--font-family-oswald)] text-base font-semibold">
                       {profile?.artistType}
                     </span>
                   </div>
                   <div className="flex items-center justify-between px-6 py-4">
-                    <span className="text-xs font-medium tracking-wide text-muted-foreground uppercase">Location</span>
+                    <span className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
+                      Location
+                    </span>
                     <div className="flex items-center gap-1.5">
                       <MapPin className="h-3.5 w-3.5 text-amber-400/70" />
-                      <span className="text-sm font-medium text-foreground">{profile?.location}</span>
+                      <span className="text-foreground text-sm font-medium">
+                        {profile?.location}
+                      </span>
                     </div>
                   </div>
                   <div className="flex items-center justify-between px-6 py-4">
-                    <span className="text-xs font-medium tracking-wide text-muted-foreground uppercase">Price Per Gig</span>
-                    <span className="font-mono text-xl font-bold text-amber-400">${profile?.pricePerGig}</span>
+                    <span className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
+                      Price Per Gig
+                    </span>
+                    <span className="font-mono text-xl font-bold text-amber-400">
+                      ${profile?.pricePerGig}
+                    </span>
                   </div>
                   <div className="px-6 py-4">
-                    <p className="mb-2 text-xs font-medium tracking-wide text-muted-foreground uppercase">Bio</p>
-                    <p className="text-sm leading-relaxed text-foreground/80">{profile?.bio}</p>
+                    <p className="text-muted-foreground mb-2 text-xs font-medium tracking-wide uppercase">
+                      Bio
+                    </p>
+                    <p className="text-foreground/80 text-sm leading-relaxed">{profile?.bio}</p>
                   </div>
                 </div>
               </div>
@@ -227,18 +239,20 @@ export default function ArtistDashboardPage() {
                     Active
                   </span>
                 </div>
-                <p className="mt-3 text-sm text-muted-foreground">
+                <p className="text-muted-foreground mt-3 text-sm">
                   Your artist profile is live and ready to receive booking requests.
                 </p>
               </div>
               <div className="border-border/40 bg-card rounded-xl border p-5">
-                <h4 className="font-[family-name:var(--font-family-oswald)] mb-4 text-xs font-semibold tracking-widest text-muted-foreground uppercase">
+                <h4 className="text-muted-foreground mb-4 font-[family-name:var(--font-family-oswald)] text-xs font-semibold tracking-widest uppercase">
                   Quick Stats
                 </h4>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-muted-foreground">Media Files</span>
-                    <span className="font-mono font-bold text-foreground">{profile?.mediaUrls?.length || 0}</span>
+                    <span className="text-foreground font-mono font-bold">
+                      {profile?.mediaUrls?.length || 0}
+                    </span>
                   </div>
                   <div className="border-border/20 border-t pt-3">
                     <div className="flex items-center justify-between text-sm">
@@ -257,11 +271,11 @@ export default function ArtistDashboardPage() {
           <div className="border-border/40 bg-card mt-6 rounded-xl border">
             <div className="border-border/20 flex items-center gap-3 border-b px-6 py-4">
               <Music className="h-4 w-4 text-amber-400" />
-              <h3 className="font-[family-name:var(--font-family-oswald)] text-sm font-semibold tracking-widest text-foreground uppercase">
+              <h3 className="text-foreground font-[family-name:var(--font-family-oswald)] text-sm font-semibold tracking-widest uppercase">
                 Media Gallery
               </h3>
               {profile?.mediaUrls && profile.mediaUrls.length > 0 && (
-                <span className="font-mono ml-auto text-xs text-muted-foreground">
+                <span className="text-muted-foreground ml-auto font-mono text-xs">
                   {profile.mediaUrls.length} files
                 </span>
               )}
@@ -295,7 +309,7 @@ export default function ArtistDashboardPage() {
               ) : (
                 <div className="py-10 text-center">
                   <Music className="text-muted-foreground/20 mx-auto mb-3 h-10 w-10" />
-                  <p className="text-sm text-muted-foreground">No media uploaded yet</p>
+                  <p className="text-muted-foreground text-sm">No media uploaded yet</p>
                 </div>
               )}
             </div>

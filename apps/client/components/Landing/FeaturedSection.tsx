@@ -1,13 +1,21 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "motion/react";
+import FadeInView from "./FadeInView";
 
 const ARTISTS = [
   { name: "DJ Nexus", genres: "Electronic · House · Techno", img: "/images/image1.jpg", tag: "DJ" },
-  { name: "The Smooth Notes", genres: "Jazz · Blues · Soul", img: "/images/image2.jpg", tag: "Band" },
-  { name: "Sarah Melody", genres: "Acoustic · Pop · Indie", img: "/images/image3.jpg", tag: "Solo" },
+  {
+    name: "The Smooth Notes",
+    genres: "Jazz · Blues · Soul",
+    img: "/images/image2.jpg",
+    tag: "Band",
+  },
+  {
+    name: "Sarah Melody",
+    genres: "Acoustic · Pop · Indie",
+    img: "/images/image3.jpg",
+    tag: "Solo",
+  },
 ];
 
 const VENUES = [
@@ -23,7 +31,7 @@ const FeaturedSection = () => {
       <div className="mb-16">
         <div className="flex items-baseline gap-6">
           <h2
-            className="font-family-oswald font-bold uppercase leading-none"
+            className="font-family-oswald leading-none font-bold uppercase"
             style={{ fontSize: "clamp(40px,7vw,80px)" }}
           >
             Featured
@@ -46,12 +54,9 @@ const FeaturedSection = () => {
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {ARTISTS.map((a, i) => (
-            <motion.div
+            <FadeInView
               key={a.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
+              delay={i * 0.08}
               className="group relative h-72 overflow-hidden border border-white/8 transition-colors duration-300 hover:border-white/20"
             >
               <Image
@@ -68,13 +73,13 @@ const FeaturedSection = () => {
                 </span>
               </div>
               {/* Info */}
-              <div className="absolute bottom-0 left-0 right-0 p-5">
-                <div className="font-family-oswald text-lg font-bold uppercase text-white transition-colors duration-300 group-hover:text-primary">
+              <div className="absolute right-0 bottom-0 left-0 p-5">
+                <div className="font-family-oswald group-hover:text-primary text-lg font-bold text-white uppercase transition-colors duration-300">
                   {a.name}
                 </div>
                 <div className="font-family-manrope mt-1 text-[11px] text-white/40">{a.genres}</div>
               </div>
-            </motion.div>
+            </FadeInView>
           ))}
         </div>
       </div>
@@ -89,12 +94,9 @@ const FeaturedSection = () => {
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {VENUES.map((v, i) => (
-            <motion.div
+            <FadeInView
               key={v.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
+              delay={i * 0.08}
               className="group relative h-60 overflow-hidden border border-white/8 transition-colors duration-300 hover:border-blue-500/40"
             >
               <Image
@@ -104,8 +106,8 @@ const FeaturedSection = () => {
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-5">
-                <div className="font-family-oswald text-lg font-bold uppercase text-white transition-colors duration-300 group-hover:text-blue-400">
+              <div className="absolute right-0 bottom-0 left-0 p-5">
+                <div className="font-family-oswald text-lg font-bold text-white uppercase transition-colors duration-300 group-hover:text-blue-400">
                   {v.name}
                 </div>
                 <div className="font-family-manrope mt-1 flex items-center gap-3 text-[11px] text-white/40">
@@ -114,7 +116,7 @@ const FeaturedSection = () => {
                   <span>Cap. {v.capacity.toLocaleString()}</span>
                 </div>
               </div>
-            </motion.div>
+            </FadeInView>
           ))}
         </div>
       </div>

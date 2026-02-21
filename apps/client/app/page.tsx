@@ -1,12 +1,11 @@
-"use client";
-
-import GridSection from "@/components/Landing/ImageGrid";
-import Footer from "@/components/layout/Footer";
+import HeroSection from "@/components/Landing/HeroSection";
+import { WhyChooseGigBook } from "@/components/Landing/WhyChooseGigBook";
 import FeaturedSection from "@/components/Landing/FeaturedSection";
 import HowItWorks from "@/components/Landing/HowItWorks";
 import TestimonialSection from "@/components/Landing/TestimonialSection";
-import { WhyChooseGigBook } from "@/components/Landing/WhyChooseGigBook";
-import HeroSection from "@/components/Landing/HeroSection";
+import Footer from "@/components/layout/Footer";
+// GridSection uses scroll hooks — wrapped in a Client Component with ssr:false
+import GridSection from "@/components/Landing/GridSectionClient";
 
 export default function HomePage() {
   return (
@@ -48,7 +47,7 @@ export default function HomePage() {
       {/* Bottom wordmark */}
       <div className="relative overflow-hidden border-t border-white/6 py-16">
         <div
-          className="font-family-oswald select-none text-center font-bold leading-none uppercase"
+          className="font-family-oswald text-center leading-none font-bold uppercase select-none"
           style={{
             fontSize: "min(24vw, 500px)",
             WebkitTextFillColor: "transparent",
@@ -57,7 +56,7 @@ export default function HomePage() {
         >
           GigBook
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/60 pointer-events-none" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/60" />
       </div>
 
       <Footer />

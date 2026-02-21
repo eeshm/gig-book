@@ -35,7 +35,7 @@ export default function Footer() {
                 rel="noreferrer"
                 className="flex h-8 w-8 items-center justify-center border border-white/10 text-white/35 transition-colors hover:border-white/30 hover:text-white"
               >
-                <TwitterIcon  />
+                <TwitterIcon />
               </a>
               <a
                 href="https://github.com/eeshm"

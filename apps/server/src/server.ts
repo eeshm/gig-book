@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import compression from "compression";
 import artistRoutes from "./routes/artists.js";
 import authRoutes from "./routes/auth.js";
 import bookingRoutes from "./routes/bookings.js";
@@ -42,6 +43,7 @@ app.use(
   })
 );
 
+app.use(compression());
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(express.json());

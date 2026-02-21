@@ -5,44 +5,41 @@ import Image from "next/image";
 import { motion } from "motion/react";
 
 const GENRES = [
-  "Electronic", "◆", "House", "◆", "Techno", "◆", "Jazz", "◆", "Blues", "◆",
-  "Soul", "◆", "Acoustic", "◆", "Pop", "◆", "Indie", "◆", "Hip-Hop", "◆",
-  "R&B", "◆", "Rock", "◆", "Folk", "◆", "Classical", "◆", "Ambient", "◆",
+  "Electronic",
+  "◆",
+  "House",
+  "◆",
+  "Techno",
+  "◆",
+  "Jazz",
+  "◆",
+  "Blues",
+  "◆",
+  "Soul",
+  "◆",
+  "Acoustic",
+  "◆",
+  "Pop",
+  "◆",
+  "Indie",
+  "◆",
+  "Hip-Hop",
+  "◆",
+  "R&B",
+  "◆",
+  "Rock",
+  "◆",
+  "Folk",
+  "◆",
+  "Classical",
+  "◆",
+  "Ambient",
+  "◆",
 ];
 
 export default function HeroSection() {
   return (
     <section className="relative w-full overflow-hidden">
-      <style>{`
-        @keyframes marquee {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
-        .marquee-inner {
-          animation: marquee 28s linear infinite;
-          display: flex;
-          width: max-content;
-        }
-        @keyframes grain-move {
-          0%, 100% { transform: translate(0, 0); }
-          20% { transform: translate(-2%, 3%); }
-          40% { transform: translate(3%, -2%); }
-          60% { transform: translate(-1%, -3%); }
-          80% { transform: translate(2%, 1%); }
-        }
-        .grain-overlay::before {
-          content: '';
-          position: absolute;
-          inset: -50%;
-          width: 200%;
-          height: 200%;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-          opacity: 0.035;
-          pointer-events: none;
-          animation: grain-move 6s steps(1) infinite;
-        }
-      `}</style>
-
       {/* Grain overlay */}
       <div className="grain-overlay pointer-events-none absolute inset-0 z-10 overflow-hidden" />
 
@@ -65,20 +62,24 @@ export default function HeroSection() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
             <h1
-              className="font-family-oswald font-bold uppercase leading-[0.88] tracking-tight"
+              className="font-family-oswald leading-[0.88] font-bold tracking-tight uppercase"
               style={{ fontSize: "clamp(62px, 11vw, 148px)" }}
             >
-              <span className="block text-white">Where</span>
-              <span className="text-primary block">Talent</span>
-              <span className="block text-white">Meets</span>
-              <span
-                className="block"
-                style={{
-                  WebkitTextFillColor: "transparent",
-                  WebkitTextStroke: "2px rgba(255,255,255,0.22)",
-                }}
-              >
-                Stage.
+              <span className="block">
+                <span className="inline text-white">Where </span>
+                <span className="text-primary inline">Talent</span>
+              </span>
+              <span className="block">
+                <span className="inline text-white">Meets </span>
+                <span
+                  className="inline"
+                  style={{
+                    WebkitTextFillColor: "transparent",
+                    WebkitTextStroke: "2px rgba(255,255,255,0.22)",
+                  }}
+                >
+                  Stage.
+                </span>
               </span>
             </h1>
           </motion.div>
@@ -89,8 +90,8 @@ export default function HeroSection() {
             transition={{ duration: 0.6, delay: 0.35 }}
             className="font-family-manrope max-w-sm text-[13px] leading-relaxed text-white/45"
           >
-            The trusted platform connecting independent artists with venues — from underground
-            clubs to rooftop bars. Book faster. Perform better.
+            The trusted platform connecting independent artists with venues — from underground clubs
+            to rooftop bars. Book faster. Perform better.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -126,7 +127,7 @@ export default function HeroSection() {
               { num: "12K+", label: "Gigs Booked" },
             ].map((stat) => (
               <div key={stat.label}>
-                <div className="font-family-oswald text-primary text-3xl font-bold leading-none">
+                <div className="font-family-oswald text-primary text-3xl leading-none font-bold">
                   {stat.num}
                 </div>
                 <div className="font-family-manrope mt-1 text-[10px] tracking-[0.3em] text-white/35 uppercase">
@@ -174,7 +175,7 @@ function ImageMosaic() {
       <div className="absolute top-0 left-0 z-20 h-7 w-7 border-t-2 border-l-2 border-white/25" />
       <div className="absolute top-0 right-0 z-20 h-7 w-7 border-t-2 border-r-2 border-white/25" />
       <div className="absolute bottom-0 left-0 z-20 h-7 w-7 border-b-2 border-l-2 border-white/25" />
-      <div className="absolute right-0 bottom-0 z-20 h-7 w-7 border-b-2 border-r-2 border-white/25" />
+      <div className="absolute right-0 bottom-0 z-20 h-7 w-7 border-r-2 border-b-2 border-white/25" />
 
       {/* Top-left large image */}
       <div className="absolute top-0 left-0 h-[60%] w-[57%] overflow-hidden">
@@ -182,6 +183,7 @@ function ImageMosaic() {
           src="/images/image12.jpg"
           fill
           alt="Artist performing"
+          priority
           className="object-cover transition-all duration-700 hover:scale-105"
         />
         <div className="absolute inset-0 bg-black/10" />
@@ -219,7 +221,7 @@ function ImageMosaic() {
         <div className="bg-primary/15 absolute inset-0" />
       </div>
       {/* Bottom-right image */}
-      <div className="absolute bottom-0 right-0 h-[25%] w-[61%] overflow-hidden">
+      <div className="absolute right-0 bottom-0 h-[25%] w-[61%] overflow-hidden">
         <Image
           src="/images/image6.jpg"
           fill

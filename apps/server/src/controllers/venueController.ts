@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import venueCreateSchema from "../schemas/venue.js";
 import { Prisma } from "@prisma/client";
 import prisma from "../prisma.js";
+import cache, { invalidatePrefix } from "../utils/cache.js";
 
 export const createVenue = async (req: Request, res: Response) => {
   try {
@@ -45,6 +46,7 @@ export const createVenue = async (req: Request, res: Response) => {
       data: createdData,
       include: { user: { select: { id: true, name: true, email: true } } },
     });
+    invalidatePrefix("venues:");
     return res.status(201).json(venue);
   } catch (error) {
     console.error("Error creating venue:", error);
@@ -96,6 +98,13 @@ export const getVenues = async (req: Request, res: Response) => {
       where.location = { contains: location as string, mode: "insensitive" };
     }
 
+    const cacheKey = `venues:${parsedPage}:${parsedLimit}:${location ?? ""}`;
+    const cached = cache.get(cacheKey);
+    if (cached) {
+      res.set("Cache-Control", "public, max-age=60, stale-while-revalidate=30");
+      return res.status(200).json(cached);
+    }
+
     const [total, venues] = await Promise.all([
       prisma.venueProfile.count({ where }),
       prisma.venueProfile.findMany({
@@ -105,7 +114,11 @@ export const getVenues = async (req: Request, res: Response) => {
         include: { user: { select: { id: true, name: true, email: true } } },
       }),
     ]);
-    return res.status(200).json({ total, venues });
+
+    const payload = { total, venues };
+    cache.set(cacheKey, payload);
+    res.set("Cache-Control", "public, max-age=60, stale-while-revalidate=30");
+    return res.status(200).json(payload);
   } catch (error) {
     console.error(error);
     res.status(500).json("Internal server error !");
@@ -193,6 +206,7 @@ export const updateVenue = async (req: Request, res: Response) => {
       data: updatedData,
       include: { user: { select: { id: true, name: true, email: true } } },
     });
+    invalidatePrefix("venues:");
     return res.status(200).json(venue);
   } catch (error) {
     console.error("Error updating venue:", error);
@@ -229,6 +243,7 @@ export const deleteVenue = async (req: Request, res: Response) => {
       where: { id },
       include: { user: { select: { id: true, name: true, email: true } } },
     });
+    invalidatePrefix("venues:");
     return res.status(200).json({ message: "Venue deleted successfully" });
   } catch (error) {
     console.error(error);

@@ -1,8 +1,6 @@
-"use client";
-
 import React from "react";
 import Image from "next/image";
-import { motion } from "motion/react";
+import FadeInView from "./FadeInView";
 
 const FEATURES = [
   {
@@ -42,12 +40,9 @@ export function WhyChooseGigBook() {
 
       <div className="space-y-px">
         {FEATURES.map((f, i) => (
-          <motion.div
+          <FadeInView
             key={f.num}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+            delay={i * 0.1}
             className="group relative grid grid-cols-1 border border-white/6 transition-colors duration-500 hover:border-white/12 md:grid-cols-[auto_1fr_280px]"
           >
             {/* Number column */}
@@ -57,11 +52,13 @@ export function WhyChooseGigBook() {
               }`}
             >
               <span
-                className="font-family-oswald font-bold leading-none"
+                className="font-family-oswald leading-none font-bold"
                 style={{
                   fontSize: "clamp(48px,6vw,72px)",
                   WebkitTextFillColor: "transparent",
-                  WebkitTextStroke: f.accent ? "2px rgba(255,108,16,0.6)" : "2px rgba(255,255,255,0.12)",
+                  WebkitTextStroke: f.accent
+                    ? "2px rgba(255,108,16,0.6)"
+                    : "2px rgba(255,255,255,0.12)",
                 }}
               >
                 {f.num}
@@ -70,7 +67,7 @@ export function WhyChooseGigBook() {
 
             {/* Content column */}
             <div className="flex flex-col justify-center gap-3 border-l border-white/6 px-8 py-8 md:py-10">
-              <h3 className="font-family-oswald text-foreground text-2xl font-bold uppercase tracking-wide md:text-3xl">
+              <h3 className="font-family-oswald text-foreground text-2xl font-bold tracking-wide uppercase md:text-3xl">
                 {f.accent ? (
                   <>
                     <span className="text-primary">{f.title}</span>
@@ -93,11 +90,9 @@ export function WhyChooseGigBook() {
                 className="object-cover transition-all duration-700 group-hover:scale-105 group-hover:brightness-110"
               />
               <div className="absolute inset-0 bg-black/40 transition-opacity duration-500 group-hover:bg-black/20" />
-              {f.accent && (
-                <div className="bg-primary absolute bottom-0 left-0 right-0 h-0.5" />
-              )}
+              {f.accent && <div className="bg-primary absolute right-0 bottom-0 left-0 h-0.5" />}
             </div>
-          </motion.div>
+          </FadeInView>
         ))}
       </div>
     </div>

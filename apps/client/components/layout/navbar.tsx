@@ -106,9 +106,7 @@ export default function Navbar() {
     <>
       <header
         className={`font-family-oswald fixed inset-x-0 top-0 z-50 w-full transition-all duration-300 ${
-          isScrolled
-            ? "border-b border-white/8 bg-black/90 backdrop-blur-md"
-            : "bg-transparent"
+          isScrolled ? "border-b border-white/8 bg-black/90 backdrop-blur-md" : "bg-transparent"
         }`}
       >
         <div className="mx-auto flex h-16 max-w-[88rem] items-center justify-between px-4 sm:px-8 lg:h-[60px] lg:px-10">
@@ -174,14 +172,17 @@ export default function Navbar() {
           isMobileOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex flex-col h-full text-white">
+        <div className="flex h-full flex-col text-white">
           {/* Drawer header */}
           <div className="flex items-center justify-between border-b border-white/8 px-6 py-5">
             <div className="flex items-center gap-2">
               <div className="bg-primary h-4 w-0.5" />
               <span className="text-lg font-bold tracking-[0.1em] uppercase">GigBook</span>
             </div>
-            <button onClick={() => setIsMobileOpen(false)} className="text-white/50 hover:text-white">
+            <button
+              onClick={() => setIsMobileOpen(false)}
+              className="text-white/50 hover:text-white"
+            >
               <X size={20} />
             </button>
           </div>
@@ -213,8 +214,11 @@ export default function Navbar() {
                   </button>
                 </Link>
                 <button
-                  onClick={() => { setIsMobileOpen(false); handleLogout(); }}
-                  className="bg-primary w-full py-3 text-sm tracking-[0.2em] text-white uppercase hover:bg-primary/85"
+                  onClick={() => {
+                    setIsMobileOpen(false);
+                    handleLogout();
+                  }}
+                  className="bg-primary hover:bg-primary/85 w-full py-3 text-sm tracking-[0.2em] text-white uppercase"
                 >
                   Logout
                 </button>

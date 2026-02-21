@@ -1,22 +1,56 @@
-"use client";
-
 import Link from "next/link";
-import { motion } from "motion/react";
+import FadeInView from "./FadeInView";
 
 const ARTIST_STEPS = [
-  { n: "1", title: "Create Profile", body: "Showcase your talent with photos, videos, and performance history." },
-  { n: "2", title: "Add Your Skills", body: "Highlight genres, experience level, and your equipment setup." },
-  { n: "3", title: "Get Discovered", body: "Venues browse and reach out to artists that match their needs." },
-  { n: "4", title: "Receive Offers", body: "Get booking requests from venues looking for your talent." },
-  { n: "5", title: "Manage Bookings", body: "Accept, coordinate, and grow your performance career." },
+  {
+    n: "1",
+    title: "Create Profile",
+    body: "Showcase your talent with photos, videos, and performance history.",
+  },
+  {
+    n: "2",
+    title: "Add Your Skills",
+    body: "Highlight genres, experience level, and your equipment setup.",
+  },
+  {
+    n: "3",
+    title: "Get Discovered",
+    body: "Venues browse and reach out to artists that match their needs.",
+  },
+  {
+    n: "4",
+    title: "Receive Offers",
+    body: "Get booking requests from venues looking for your talent.",
+  },
+  {
+    n: "5",
+    title: "Manage Bookings",
+    body: "Accept, coordinate, and grow your performance career.",
+  },
 ];
 
 const VENUE_STEPS = [
   { n: "1", title: "List Your Venue", body: "Add your space details, capacity, and event types." },
-  { n: "2", title: "Set Requirements", body: "Define your budget, preferred genres, and technical needs." },
-  { n: "3", title: "Browse Artists", body: "Search talented performers and find your perfect match." },
-  { n: "4", title: "Send Requests", body: "Reach out to artists with your event details directly." },
-  { n: "5", title: "Book & Host", body: "Confirm bookings and create unforgettable events together." },
+  {
+    n: "2",
+    title: "Set Requirements",
+    body: "Define your budget, preferred genres, and technical needs.",
+  },
+  {
+    n: "3",
+    title: "Browse Artists",
+    body: "Search talented performers and find your perfect match.",
+  },
+  {
+    n: "4",
+    title: "Send Requests",
+    body: "Reach out to artists with your event details directly.",
+  },
+  {
+    n: "5",
+    title: "Book & Host",
+    body: "Confirm bookings and create unforgettable events together.",
+  },
 ];
 
 const HowItWorks = () => {
@@ -25,7 +59,7 @@ const HowItWorks = () => {
       {/* Section header */}
       <div className="mb-14 flex items-baseline gap-6">
         <h2
-          className="font-family-oswald font-bold uppercase leading-none"
+          className="font-family-oswald leading-none font-bold uppercase"
           style={{ fontSize: "clamp(40px,7vw,80px)" }}
         >
           How It Works
@@ -36,7 +70,7 @@ const HowItWorks = () => {
       {/* Two-column program layout */}
       <div className="grid gap-0 md:grid-cols-2">
         {/* ARTISTS column */}
-        <div className="border-b border-white/8 md:border-b-0 md:border-r">
+        <div className="border-b border-white/8 md:border-r md:border-b-0">
           <div className="border-b border-white/8 px-6 py-4">
             <div className="flex items-center gap-3">
               <div className="bg-primary h-4 w-0.5" />
@@ -47,24 +81,26 @@ const HowItWorks = () => {
           </div>
           <div className="space-y-0">
             {ARTIST_STEPS.map((step, i) => (
-              <motion.div
+              <FadeInView
                 key={step.n}
-                initial={{ opacity: 0, x: -12 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.06 }}
+                direction="left"
+                delay={i * 0.06}
                 className="group flex gap-0 border-b border-white/5 last:border-0"
               >
                 <div className="flex w-14 items-start justify-center border-r border-white/5 pt-5 pb-5">
-                  <span className="font-family-oswald text-primary text-xl font-bold">{step.n}</span>
+                  <span className="font-family-oswald text-primary text-xl font-bold">
+                    {step.n}
+                  </span>
                 </div>
                 <div className="flex-1 px-6 py-5">
                   <div className="font-family-oswald mb-1 text-sm font-bold tracking-wide text-white uppercase">
                     {step.title}
                   </div>
-                  <p className="font-family-manrope text-[12px] leading-relaxed text-white/35">{step.body}</p>
+                  <p className="font-family-manrope text-[12px] leading-relaxed text-white/35">
+                    {step.body}
+                  </p>
                 </div>
-              </motion.div>
+              </FadeInView>
             ))}
           </div>
           <div className="border-t border-white/8 px-6 py-5">
@@ -88,24 +124,26 @@ const HowItWorks = () => {
           </div>
           <div className="space-y-0">
             {VENUE_STEPS.map((step, i) => (
-              <motion.div
+              <FadeInView
                 key={step.n}
-                initial={{ opacity: 0, x: 12 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.06 }}
+                direction="right"
+                delay={i * 0.06}
                 className="group flex gap-0 border-b border-white/5 last:border-0"
               >
                 <div className="flex w-14 items-start justify-center border-r border-white/5 pt-5 pb-5">
-                  <span className="font-family-oswald text-xl font-bold text-white/25">{step.n}</span>
+                  <span className="font-family-oswald text-xl font-bold text-white/25">
+                    {step.n}
+                  </span>
                 </div>
                 <div className="flex-1 px-6 py-5">
                   <div className="font-family-oswald mb-1 text-sm font-bold tracking-wide text-white uppercase">
                     {step.title}
                   </div>
-                  <p className="font-family-manrope text-[12px] leading-relaxed text-white/35">{step.body}</p>
+                  <p className="font-family-manrope text-[12px] leading-relaxed text-white/35">
+                    {step.body}
+                  </p>
                 </div>
-              </motion.div>
+              </FadeInView>
             ))}
           </div>
           <div className="border-t border-white/8 px-6 py-5">

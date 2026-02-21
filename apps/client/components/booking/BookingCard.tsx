@@ -70,7 +70,7 @@ export default function BookingCard({ booking }: BookingCardProps) {
         {/* Header */}
         <div className="mb-4 flex items-start justify-between gap-4">
           <div className="min-w-0 flex-1">
-            <h3 className="font-[family-name:var(--font-family-oswald)] truncate text-base font-semibold tracking-wide text-foreground uppercase">
+            <h3 className="text-foreground truncate font-[family-name:var(--font-family-oswald)] text-base font-semibold tracking-wide uppercase">
               {isArtist
                 ? booking.venue?.venueName || "Venue Booking"
                 : booking.artist?.artistType || "Artist Booking"}
@@ -83,10 +83,10 @@ export default function BookingCard({ booking }: BookingCardProps) {
         </div>
 
         {/* Info row */}
-        <div className="border-border/30 mb-4 flex flex-wrap gap-4 border-t pt-4 text-xs text-muted-foreground">
+        <div className="border-border/30 text-muted-foreground mb-4 flex flex-wrap gap-4 border-t pt-4 text-xs">
           <div className="flex items-center gap-1.5">
             <Calendar className="h-3.5 w-3.5 text-amber-400/70" />
-            <span className="font-mono text-foreground/80">{formattedDate}</span>
+            <span className="text-foreground/80 font-mono">{formattedDate}</span>
           </div>
           {booking.artist?.location && (
             <div className="flex items-center gap-1.5">

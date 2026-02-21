@@ -1,31 +1,23 @@
-"use client";
-
-import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchAllVenues } from "@/store/slices/venueSlice";
 import BrowseCard from "@/components/browse/BrowseCard";
-import LoadingSpinner from "@/components/shared/LoadingSpinner";
 import EmptyState from "@/components/shared/EmptyState";
 import { Building2 } from "lucide-react";
+import { Venue } from "@/types";
 
-export default function BrowseVenuesPage() {
-  const dispatch = useAppDispatch();
-  const { venues, loading } = useAppSelector((state) => state.venue);
-
-  useEffect(() => {
-    dispatch(fetchAllVenues());
-  }, [dispatch]);
-
-  if (loading) {
-    return (
-      <div className="bg-background min-h-screen">
-        <LoadingSpinner size="lg" text="Loading venues..." />
-      </div>
-    );
+async function getVenues(): Promise<Venue[]> {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/venues`, {
+      next: { revalidate: 60 }, // ISR: revalidate every 60 seconds
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data.venues) ? data.venues : [];
+  } catch {
+    return [];
   }
+}
 
-  // Ensure venues is always an array
-  const venuesList = Array.isArray(venues) ? venues : [];
+export default async function BrowseVenuesPage() {
+  const venues = await getVenues();
 
   return (
     <div className="bg-background min-h-screen">
@@ -37,7 +29,7 @@ export default function BrowseVenuesPage() {
         </div>
 
         {/* Venues Grid */}
-        {venuesList.length === 0 ? (
+        {venues.length === 0 ? (
           <EmptyState
             icon={Building2}
             title="No Venues Found"
@@ -45,7 +37,7 @@ export default function BrowseVenuesPage() {
           />
         ) : (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {venuesList.map((venue) => (
+            {venues.map((venue) => (
               <BrowseCard key={venue.id} type="venue" data={venue} />
             ))}
           </div>

@@ -67,6 +67,13 @@ export const fetchAllVenues = createAsyncThunk(
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || "Failed to fetch venues");
     }
+  },
+  {
+    // Skip the API call if we already have venues in the store
+    condition: (_, { getState }) => {
+      const state = getState() as { venue: VenueState };
+      return state.venue.venues.length === 0 && !state.venue.loading;
+    },
   }
 );
 

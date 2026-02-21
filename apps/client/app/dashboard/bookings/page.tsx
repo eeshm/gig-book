@@ -51,13 +51,13 @@ export default function BookingsPage() {
       <div className="mx-auto max-w-4xl">
         {/* Header */}
         <div className="mb-8">
-          <p className="font-[family-name:var(--font-family-oswald)] mb-1 text-xs tracking-widest text-muted-foreground uppercase">
+          <p className="text-muted-foreground mb-1 font-[family-name:var(--font-family-oswald)] text-xs tracking-widest uppercase">
             Dashboard
           </p>
-          <h1 className="font-[family-name:var(--font-family-oswald)] text-3xl font-bold tracking-wide text-foreground uppercase sm:text-4xl">
+          <h1 className="text-foreground font-[family-name:var(--font-family-oswald)] text-3xl font-bold tracking-wide uppercase sm:text-4xl">
             My Bookings
           </h1>
-          <p className="mt-2 text-sm text-muted-foreground">
+          <p className="text-muted-foreground mt-2 text-sm">
             {authUser?.role === "ARTIST"
               ? "Manage your booking requests from venues"
               : "Track your booking requests to artists"}
@@ -72,7 +72,7 @@ export default function BookingsPage() {
               <p className={`font-mono text-2xl font-bold tabular-nums ${statColors[s]}`}>
                 {statusCount(s)}
               </p>
-              <p className="mt-1 text-xs text-muted-foreground capitalize">
+              <p className="text-muted-foreground mt-1 text-xs capitalize">
                 {s === "ALL" ? "Total" : s.toLowerCase()}
               </p>
             </div>
@@ -85,10 +85,8 @@ export default function BookingsPage() {
             <button
               key={status}
               onClick={() => setFilter(status)}
-              className={`font-[family-name:var(--font-family-oswald)] relative px-4 py-2 text-xs font-semibold tracking-wider uppercase transition-colors ${
-                filter === status
-                  ? "text-amber-400"
-                  : "text-muted-foreground hover:text-foreground"
+              className={`relative px-4 py-2 font-[family-name:var(--font-family-oswald)] text-xs font-semibold tracking-wider uppercase transition-colors ${
+                filter === status ? "text-amber-400" : "text-muted-foreground hover:text-foreground"
               }`}
             >
               {status}

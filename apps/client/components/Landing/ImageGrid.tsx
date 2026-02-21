@@ -12,7 +12,7 @@ export default function GridSection() {
       <div className="mb-12 flex items-start gap-8">
         <div className="flex flex-col gap-2">
           <h2
-            className="font-family-oswald font-bold uppercase leading-none"
+            className="font-family-oswald leading-none font-bold uppercase"
             style={{
               fontSize: "clamp(48px,8vw,96px)",
               WebkitTextFillColor: "transparent",

@@ -2,6 +2,7 @@ import { artistCreateSchema } from "../schemas/artist.js";
 import type { Request, Response } from "express";
 import { Prisma, ArtistType } from "@prisma/client";
 import prisma from "../prisma.js";
+import cache, { invalidatePrefix } from "../utils/cache.js";
 
 type ArtistWithUser = Prisma.ArtistProfileGetPayload<{
   include: { user: { select: { id: true; name: true; email: true } } };
@@ -62,6 +63,7 @@ export const createArtist = async (req: Request, res: Response) => {
       data: createData,
       include: { user: { select: { id: true, name: true, email: true } } },
     });
+    invalidatePrefix("artists:");
     res.status(201).json(formatArtist(artist));
   } catch (error) {
     console.error(error);
@@ -135,6 +137,14 @@ export const getArtists = async (req: Request, res: Response) => {
       where.pricePerGig = priceFilter;
     }
 
+    // Build a deterministic cache key from the query parameters
+    const cacheKey = `artists:${parsedPage}:${parsedLimit}:${location ?? ""}:${artistType ?? ""}:${minPrice ?? ""}:${maxPrice ?? ""}`;
+    const cached = cache.get(cacheKey);
+    if (cached) {
+      res.set("Cache-Control", "public, max-age=60, stale-while-revalidate=30");
+      return res.status(200).json(cached);
+    }
+
     const [total, artists] = await Promise.all([
       prisma.artistProfile.count({ where }),
       prisma.artistProfile.findMany({
@@ -145,12 +155,15 @@ export const getArtists = async (req: Request, res: Response) => {
       }),
     ]);
 
-    res.status(200).json({
+    const payload = {
       total,
       page: parsedPage,
       limit: parsedLimit,
       artists: artists.map(formatArtist),
-    });
+    };
+    cache.set(cacheKey, payload);
+    res.set("Cache-Control", "public, max-age=60, stale-while-revalidate=30");
+    res.status(200).json(payload);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -262,6 +275,7 @@ export const updateArtist = async (req: Request, res: Response) => {
       data: updateData,
       include: { user: { select: { id: true, name: true, email: true } } },
     });
+    invalidatePrefix("artists:");
     res.json(formatArtist(artist));
   } catch (error) {
     console.error(error);
@@ -298,7 +312,7 @@ export const deleteArtist = async (req: Request, res: Response) => {
       where: { id },
       include: { user: { select: { id: true, name: true, email: true } } },
     });
-
+    invalidatePrefix("artists:");
     return res.status(200).json(formatArtist(deletedArtist));
   } catch (error) {
     console.error(error);

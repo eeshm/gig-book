@@ -65,7 +65,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             </div>
           )}
           <div className="text-left">
-            <p className="font-[family-name:var(--font-family-oswald)] text-sm font-semibold tracking-wider text-foreground uppercase">
+            <p className="text-foreground font-[family-name:var(--font-family-oswald)] text-sm font-semibold tracking-wider uppercase">
               {user?.name}
             </p>
             <p className="text-muted-foreground text-xs capitalize">{user?.role?.toLowerCase()}</p>
@@ -110,7 +110,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                   </div>
                 )}
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-semibold text-foreground">{user?.name}</p>
+                  <p className="text-foreground truncate text-sm font-semibold">{user?.name}</p>
                   <p className="font-[family-name:var(--font-family-oswald)] text-xs tracking-widest text-amber-400/70 uppercase">
                     {user?.role}
                   </p>
@@ -121,7 +121,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
           {/* Nav */}
           <nav className="flex-1 px-3 py-6">
-            <p className="font-[family-name:var(--font-family-oswald)] mb-3 px-3 text-xs tracking-widest text-muted-foreground/60 uppercase">
+            <p className="text-muted-foreground/60 mb-3 px-3 font-[family-name:var(--font-family-oswald)] text-xs tracking-widest uppercase">
               Navigation
             </p>
             <div className="space-y-1">
@@ -141,9 +141,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                   >
                     <Icon className={`h-4 w-4 shrink-0 ${isActive ? "text-amber-400" : ""}`} />
                     <span className="font-medium">{item.label}</span>
-                    {isActive && (
-                      <ChevronRight className="ml-auto h-3 w-3 text-amber-400/60" />
-                    )}
+                    {isActive && <ChevronRight className="ml-auto h-3 w-3 text-amber-400/60" />}
                   </Link>
                 );
               })}

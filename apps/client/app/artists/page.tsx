@@ -1,31 +1,23 @@
-"use client";
-
-import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchAllArtists } from "@/store/slices/artistSlice";
 import BrowseCard from "@/components/browse/BrowseCard";
-import LoadingSpinner from "@/components/shared/LoadingSpinner";
 import EmptyState from "@/components/shared/EmptyState";
 import { Music } from "lucide-react";
+import { Artist } from "@/types";
 
-export default function BrowseArtistsPage() {
-  const dispatch = useAppDispatch();
-  const { artists, loading } = useAppSelector((state) => state.artist);
-
-  useEffect(() => {
-    dispatch(fetchAllArtists());
-  }, [dispatch]);
-
-  if (loading) {
-    return (
-      <div className="bg-background min-h-screen">
-        <LoadingSpinner size="lg" text="Loading artists..." />
-      </div>
-    );
+async function getArtists(): Promise<Artist[]> {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/artists`, {
+      next: { revalidate: 60 }, // ISR: revalidate every 60 seconds
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data.artists) ? data.artists : [];
+  } catch {
+    return [];
   }
+}
 
-  // Ensure artists is always an array
-  const artistsList = Array.isArray(artists) ? artists : [];
+export default async function BrowseArtistsPage() {
+  const artists = await getArtists();
 
   return (
     <div className="bg-background min-h-screen">
@@ -37,7 +29,7 @@ export default function BrowseArtistsPage() {
         </div>
 
         {/* Artists Grid */}
-        {artistsList.length === 0 ? (
+        {artists.length === 0 ? (
           <EmptyState
             icon={Music}
             title="No Artists Found"
@@ -45,7 +37,7 @@ export default function BrowseArtistsPage() {
           />
         ) : (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {artistsList.map((artist) => (
+            {artists.map((artist) => (
               <BrowseCard key={artist.id} type="artist" data={artist} />
             ))}
           </div>

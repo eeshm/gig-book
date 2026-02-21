@@ -68,6 +68,13 @@ export const fetchAllArtists = createAsyncThunk(
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || "Failed to fetch artists");
     }
+  },
+  {
+    // Skip the API call if we already have artists in the store
+    condition: (_, { getState }) => {
+      const state = getState() as { artist: ArtistState };
+      return state.artist.artists.length === 0 && !state.artist.loading;
+    },
   }
 );
 export const fetchArtistById = createAsyncThunk(
