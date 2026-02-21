@@ -8,7 +8,7 @@
 <img src="https://img.shields.io/badge/Prisma-000000?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io">
 </p>
 
-![GigBook Preview](/public/landing2.png)
+![GigBook Preview](/public/image.png)
 **<p align="center">Fivver for Gigs - https://gig-book.vercel.app</p>**
 
 GigBook is a modern full-stack web application designed to bridge the gap between **artists** and **venues** for live event bookings.
